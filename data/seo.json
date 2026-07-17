@@ -1,0 +1,37 @@
+{
+  "siteName": "Somen Biswas",
+  "siteUrl": "https://somenbiswas.me",
+  "defaultTitle": "Somen Biswas — Solo AI Builder | AI-Powered Web Platforms",
+  "titleTemplate": "%s | Somen Biswas",
+  "defaultDescription": "Somen Biswas is a solo AI builder from West Bengal, India, shipping production-ready AI-powered web platforms — NexGuild, xtoolkit.live, and StarScoopDaily — using Claude Code.",
+  "ogImage": "/images/og-default.png",
+  "twitterHandle": "@somen_2k",
+  "ga4Id": "",
+  "gscVerification": "",
+  "pages": {
+    "home": {
+      "title": "Somen Biswas — Solo AI Builder | AI-Powered Web Platforms",
+      "description": "I build production-ready AI-powered web platforms as a solo founder — NexGuild, xtoolkit.live, and StarScoopDaily. No formal coding background, three live products."
+    },
+    "about": {
+      "title": "About Somen Biswas — Solo AI Builder",
+      "description": "From ads quality rating and social media evaluation to shipping three live AI-powered platforms solo — the story, skills, and timeline behind Somen Biswas."
+    },
+    "portfolio": {
+      "title": "Portfolio — NexGuild, xtoolkit.live, StarScoopDaily",
+      "description": "Case studies of three live, production-grade platforms built solo with Claude Code: NexGuild, xtoolkit.live, and StarScoopDaily."
+    },
+    "blog": {
+      "title": "Blog — AI Building, Online Earning & Remote Work",
+      "description": "Writing on AI building, online earning in India, remote work and freelancing, and web development with AI — from someone shipping in public."
+    },
+    "hireMe": {
+      "title": "Hire Me — AI-Powered Web Platform Building",
+      "description": "Hire Somen Biswas for AI-powered platform builds, automated content sites, free tools platforms, and AI feature integration — plus NexGuild's contributor network for human-powered work."
+    },
+    "contact": {
+      "title": "Contact Somen Biswas",
+      "description": "Get in touch with Somen Biswas via email, WhatsApp, or LinkedIn."
+    }
+  }
+}

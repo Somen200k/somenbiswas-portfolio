@@ -1,0 +1,20 @@
+{
+  "note": "Every build is scoped individually based on complexity, timeline, and integrations required — get in touch for an exact quote.",
+  "tiers": [
+    {
+      "name": "Free Tools / Landing Site",
+      "price": "Custom quote",
+      "description": "A focused tool page or marketing site — scoped, built, and shipped fast."
+    },
+    {
+      "name": "Full AI-Powered Platform",
+      "price": "Custom quote",
+      "description": "Auth, database, admin panel, and a real product — NexGuild-grade builds."
+    },
+    {
+      "name": "Automated Content System",
+      "price": "Custom quote",
+      "description": "AI generation pipeline, publishing flow, and monetization — StarScoopDaily-grade builds."
+    }
+  ]
+}

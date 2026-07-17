@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#0c1613"/>
+    </linearGradient>
+    <radialGradient id="glow2" cx="10%" cy="90%" r="80%">
+      <stop offset="0%" stop-color="#02b491" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#02b491" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="text2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fcd34d"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg2)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+  <g fill="none" stroke="#02b491" stroke-opacity="0.4" stroke-width="2">
+    <circle cx="1030" cy="150" r="60"/>
+    <circle cx="1030" cy="150" r="30"/>
+  </g>
+  <text x="90" y="230" font-family="monospace" font-size="22" letter-spacing="6" fill="#a3a3a3">ONLINE EARNING INDIA</text>
+  <text x="88" y="300" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="url(#text2)">Earn NexCoins, Redeem Real Cash</text>
+</svg>

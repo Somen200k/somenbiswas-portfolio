@@ -1,0 +1,85 @@
+{
+  "photoUrl": "/images/founder.jpg",
+  "cvUrl": "/cv/somen-biswas-cv.pdf",
+  "location": "Gobardanga, West Bengal, India",
+  "yearsExperience": "5+",
+  "bio": [
+    "My name is Somen Biswas. I'm a solo AI builder and founder from Gobardanga, West Bengal, India. I have no formal coding background — I build production-ready digital products by directing Claude and Claude Code with strong prompting judgment, architectural thinking, and relentless iteration.",
+    "My path here wasn't a straight line into tech. I spent years in freelance digital operations — rating ad quality for TELUS International, evaluating social media content for Appen, leading data projects at Beyond Digital, and managing community for KGeN. That work taught me how large platforms actually operate behind the scenes: quality systems, moderation, task design, contributor management.",
+    "In 2026 I turned that operational knowledge into products. I used Claude Code to design and ship NexGuild, a global digital workforce platform with a 6-tier RBAC system and a real NexCoin economy; xtoolkit.live, a 44-tool platform with a published Chrome extension; and StarScoopDaily, a fully automated AI content site. All three are live, all three are solo builds, and all three make real money or serve real users today.",
+    "I make every product, architecture, and business decision independently. I build reusable systems instead of one-off fixes, and I automate anything repetitive. My wife provides operational support along the way."
+  ],
+  "certifications": [
+    {
+      "name": "Agentic AI Starter Course with Certification",
+      "issuer": "Saumya Singh",
+      "year": "2024"
+    },
+    {
+      "name": "Diploma in Information Technology Application",
+      "issuer": "DOEACC-affiliated program",
+      "year": "2024"
+    },
+    {
+      "name": "Domestic Data Entry Operator – English",
+      "issuer": "Skill certification",
+      "year": "2024"
+    }
+  ],
+  "timeline": [
+    {
+      "year": "2016–2018",
+      "title": "Secondary & Higher Secondary Education",
+      "org": "Khantura Pritilata Shiksha Niketan High School",
+      "description": "Completed secondary (2016) and higher secondary (2018) education."
+    },
+    {
+      "year": "2018–2020",
+      "title": "ITI Electrician Engineering",
+      "org": "Modern Vocational Industrial Training Institute",
+      "description": "Technical trade training — first exposure to systematic, hands-on problem solving."
+    },
+    {
+      "year": "2021–2022",
+      "title": "Project Lead / Data Analyst",
+      "org": "Beyond Digital",
+      "description": "Managed digital projects, coordinated teams, and oversaw quality assurance."
+    },
+    {
+      "year": "2022–2023",
+      "title": "Social Media Evaluator (Freelance)",
+      "org": "Appen",
+      "description": "Evaluated social media content for quality, relevance, and policy compliance."
+    },
+    {
+      "year": "2024",
+      "title": "Ads Quality Rater (Freelance)",
+      "org": "TELUS International AI Data Solutions",
+      "description": "Evaluated online advertisements for quality, relevance, and user intent — direct exposure to how AI training data pipelines work."
+    },
+    {
+      "year": "2024",
+      "title": "Customer Support Executive",
+      "org": "Maxicus",
+      "description": "Resolved customer inquiries and managed escalations."
+    },
+    {
+      "year": "2024–Present",
+      "title": "Clan Chief (Freelance)",
+      "org": "KGeN",
+      "description": "Leading community engagement, campaigns, and contributor management."
+    },
+    {
+      "year": "2023–2026",
+      "title": "Bachelor of Arts",
+      "org": "Netaji Subhas Open University",
+      "description": "Ongoing undergraduate degree."
+    },
+    {
+      "year": "2026",
+      "title": "Solo AI Builder — NexGuild, xtoolkit.live, StarScoopDaily",
+      "org": "Independent",
+      "description": "Turned years of platform-operations experience into three live, production-grade AI-powered products — built and shipped solo using Claude Code."
+    }
+  ]
+}

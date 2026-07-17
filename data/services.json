@@ -1,0 +1,97 @@
+{
+  "intro": "I offer two kinds of work: hands-on product builds I ship personally, and access to NexGuild's verified contributor network for teams that need human-powered work done at scale.",
+  "personal": [
+    {
+      "icon": "Rocket",
+      "title": "AI-Powered Web Platform Building",
+      "description": "Full-stack platforms architected and shipped end-to-end — auth, database, admin panels, and everything between.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "Newspaper",
+      "title": "Automated Content Website Development",
+      "description": "AI-driven content pipelines that generate, publish, and monetize — the same system running StarScoopDaily.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "Wrench",
+      "title": "Free Tools Website Development",
+      "description": "Multi-tool platforms built for organic SEO traffic, no paywalls — the model behind xtoolkit's 44 tools.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "Sparkles",
+      "title": "AI Feature Integration",
+      "description": "Adding LLM-powered features to an existing product — generation, detection, chat, or automation, wired in cleanly.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    }
+  ],
+  "nexguild": [
+    {
+      "icon": "Database",
+      "title": "AI Data Collection",
+      "description": "Structured data gathering at scale from a verified contributor network across India.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "Tags",
+      "title": "Data Annotation & Labeling",
+      "description": "Accurate, human-reviewed annotation for training and evaluation datasets.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "MessagesSquare",
+      "title": "Social Media Evaluation",
+      "description": "Quality, relevance, and policy evaluation of social content at volume.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "ShieldCheck",
+      "title": "Content Moderation",
+      "description": "Human review of user-generated content against your policy guidelines.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "ClipboardList",
+      "title": "Survey & Research Tasks",
+      "description": "Structured surveys and research tasks completed by real, verified contributors.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "FlaskConical",
+      "title": "User Testing",
+      "description": "Real-user testing and structured feedback on products, flows, and interfaces.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "BadgeCheck",
+      "title": "Quality Assurance",
+      "description": "Manual QA passes across products, content, and datasets before release.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "ImagePlus",
+      "title": "Image & Audio Labeling",
+      "description": "Human-labeled image and audio data for computer vision and speech models.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    }
+  ],
+  "ctaBand": {
+    "heading": "Need human-powered digital work done fast?",
+    "body": "NexGuild connects you with verified contributors across India.",
+    "buttonText": "Post a Task",
+    "buttonLink": "mailto:admin@nexguild.in"
+  }
+}

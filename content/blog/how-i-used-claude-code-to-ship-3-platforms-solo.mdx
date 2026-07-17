@@ -1,0 +1,33 @@
+---
+title: "How I Used Claude Code to Ship 3 Production AI Platforms Solo"
+date: "2026-07-15"
+category: "AI Building"
+excerpt: "No formal coding background, three live products. Here's the actual workflow behind NexGuild, xtoolkit.live, and StarScoopDaily — and what I'd tell anyone trying to do the same."
+tags: ["Claude Code", "AI Building", "Solo Founder", "Next.js"]
+coverImage: "/images/blog/ai-building-cover.svg"
+published: true
+---
+
+I don't have a computer science degree. I don't have a background in software engineering. What I have is a few years of grinding through freelance data-operations work — rating ads for TELUS, evaluating social content for Appen, running projects at Beyond Digital — and a very clear idea of how digital platforms actually work behind the scenes. In 2026 I turned that into three live products: NexGuild, xtoolkit.live, and StarScoopDaily. All shipped solo. All directed through Claude Code.
+
+This isn't a "no-code" story. It's a "no traditional dev team" story — there's a real difference.
+
+## The workflow that actually works
+
+The biggest mistake people make when directing an AI coding tool is treating it like a search engine — one question, one answer, move on. That doesn't build a 74-route platform with row-level security and a live payment ledger. What works is treating each build like an actual engineering project, with Claude Code as the engineer and you as the person who owns the architecture decisions:
+
+1. **Decide the data model before you touch UI.** For NexGuild, that meant designing the `profiles`, `tasks`, `submissions`, and `coin_transactions` tables — and the RLS policies around them — before a single dashboard screen existed. Every feature after that had somewhere to live.
+2. **Specify constraints, not just features.** "Build a task verification system" is a bad prompt. "Build 8 independent verification types that can be mixed per task step, where proof codes are SHA-256 hashes valid for the current and previous hour window" is a spec Claude Code can actually execute against.
+3. **Review every integration point yourself.** I don't read every line of generated code, but I do read every API boundary — postback handlers, payment logic, auth checks. That's where real money and real user trust live.
+
+## The unglamorous part: fixing platform constraints
+
+StarScoopDaily taught me the most important lesson of the year: Vercel's production filesystem is read-only. My AI article generator needed to publish new articles at runtime, and `fs.writeFileSync` simply fails in production. The fix was routing every "write" through the GitHub Contents API instead — the git repository itself becomes the database, and every publish is a commit that triggers a redeploy.
+
+That's not a workaround I found in a tutorial. It came from hitting the wall in production, understanding *why* it existed, and directing Claude Code toward the actual constraint instead of a generic "add a database" suggestion. That pattern is now something I reuse everywhere — including in this portfolio's own admin panel.
+
+## What "solo" actually means here
+
+Every product decision — pricing the NexCoin economy at 1,000 coins per dollar, choosing a 66/10/24 commission split for NexGuild's referral system, deciding xtoolkit stays free with 44 tools instead of gating half of them — was mine. Claude Code doesn't make product calls. It executes them precisely, at a speed no single human developer could match alone, which is the entire point.
+
+If you're evaluating whether to start building this way: start with one real constraint you understand deeply — not a toy app. The tool is only as good as the judgment directing it.
