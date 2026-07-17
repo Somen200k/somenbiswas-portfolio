@@ -25,7 +25,7 @@ export function Footer() {
               <Logo />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-              Solo AI builder from West Bengal, India — shipping production-ready
+              Solo AI builder from Kolkata, India — shipping production-ready
               AI-powered web platforms, tools, and content systems.
             </p>
             <div className="mt-6 flex items-center gap-3">

@@ -12,7 +12,7 @@ Every product I ship starts with roughly the same decision: Next.js 15 on Vercel
 
 ## The core reason: RLS replaces a permissions layer
 
-NexGuild has six admin roles — owner, admin, reviewer, finance, support, moderator — plus regular contributors. Building that access control as application-layer middleware means writing (and re-checking) permission logic in every single API route. Supabase's Row-Level Security pushes that enforcement into the database itself: a policy on the `submissions` table decides who can read or write a row, full stop, regardless of which route touches it.
+NexGuild has six distinct admin roles plus regular contributors. Building that access control as application-layer middleware means writing (and re-checking) permission logic in every single API route. Supabase's Row-Level Security pushes that enforcement into the database itself: a policy on the table decides who can read or write a row, full stop, regardless of which route touches it.
 
 That matters enormously when you're building solo and fast. Every new feature inherits the same security guarantees automatically, because the guarantee lives in Postgres, not in a file that has to be remembered and re-applied.
 
@@ -20,7 +20,7 @@ That matters enormously when you're building solo and fast. Every new feature in
 
 Server Components let me fetch data — reading `data/*.json` config files, querying Supabase, checking a user's session — without shipping that logic to the client at all. For a platform like NexGuild with real financial data (NexCoin balances, commission ledgers), that's not a performance nicety, it's a security boundary. The admin dashboard's sensitive queries never touch client-side JavaScript in the first place.
 
-Route groups are the other underrated feature. NexGuild splits into `(teal)` contributor pages, `(gold)` organisation pages, `(auth)`, `/dashboard`, and `/admin` — all sharing one codebase, one deploy, one domain, with completely different layouts and auth requirements per group.
+Route groups are the other underrated feature. NexGuild splits contributor-facing pages, organisation-facing pages, auth flows, the dashboard, and the admin panel into separate groups — all sharing one codebase, one deploy, one domain, with completely different layouts and auth requirements per group.
 
 ## What breaks without Postgres and real auth
 

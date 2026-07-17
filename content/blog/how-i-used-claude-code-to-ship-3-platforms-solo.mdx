@@ -16,8 +16,8 @@ This isn't a "no-code" story. It's a "no traditional dev team" story — there's
 
 The biggest mistake people make when building this way is treating AI tooling like a search engine — one question, one answer, move on. That doesn't build a 74-route platform with row-level security and a live payment ledger. What works is treating each build like an actual engineering project, where you own every architecture decision and the tooling just executes at speed:
 
-1. **Decide the data model before you touch UI.** For NexGuild, that meant designing the `profiles`, `tasks`, `submissions`, and `coin_transactions` tables — and the RLS policies around them — before a single dashboard screen existed. Every feature after that had somewhere to live.
-2. **Specify constraints, not just features.** "Build a task verification system" is a bad spec. "Build 8 independent verification types that can be mixed per task step, where proof codes are SHA-256 hashes valid for the current and previous hour window" is a spec that actually gets executed correctly.
+1. **Decide the data model before you touch UI.** For NexGuild, that meant designing the core schema — contributors, tasks, submissions, and the coin ledger — and the row-level security policies around them — before a single dashboard screen existed. Every feature after that had somewhere to live.
+2. **Specify constraints, not just features.** "Build a task verification system" is a bad spec. "Build several independent verification types that can be mixed per task step, each with its own fraud-resistant validation logic" is a spec that actually gets executed correctly.
 3. **Review every integration point yourself.** I don't read every line of generated code, but I do read every API boundary — postback handlers, payment logic, auth checks. That's where real money and real user trust live.
 
 ## The unglamorous part: fixing platform constraints
@@ -28,6 +28,6 @@ That's not a workaround I found in a tutorial. It came from hitting the wall in 
 
 ## What "solo" actually means here
 
-Every product decision — pricing the NexCoin economy at 1,000 coins per dollar, choosing a 66/10/24 commission split for NexGuild's referral system, deciding xtoolkit stays free with 44 tools instead of gating half of them — was mine. The tooling doesn't make product calls. It executes precisely, at a speed no single human developer could match alone, which is the entire point.
+Every product decision — pricing the NexCoin economy at 1,000 coins per dollar, structuring NexGuild's referral commission system, deciding xtoolkit stays free with 44 tools instead of gating half of them — was mine. The tooling doesn't make product calls. It executes precisely, at a speed no single human developer could match alone, which is the entire point.
 
 If you're evaluating whether to start building this way: start with one real constraint you understand deeply — not a toy app. The tooling is only as good as the judgment directing it.

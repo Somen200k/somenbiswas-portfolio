@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
   <defs>
     <linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#0a0a0a"/>
       <stop offset="100%" stop-color="#0f1216"/>
     </linearGradient>
-    <radialGradient id="glow4" cx="50%" cy="50%" r="60%">
+    <radialGradient id="glow4" cx="50%" cy="50%" r="55%">
       <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22"/>
       <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
     </radialGradient>
@@ -13,12 +13,12 @@
       <stop offset="100%" stop-color="#f59e0b"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg4)"/>
-  <circle cx="600" cy="315" r="360" fill="url(#glow4)"/>
+  <rect width="1200" height="750" fill="url(#bg4)"/>
+  <circle cx="600" cy="375" r="340" fill="url(#glow4)"/>
   <g fill="none" stroke="#f59e0b" stroke-opacity="0.12" stroke-width="1">
-    <circle cx="600" cy="315" r="270"/>
-    <circle cx="600" cy="315" r="200"/>
+    <circle cx="600" cy="375" r="250"/>
+    <circle cx="600" cy="375" r="185"/>
   </g>
-  <text x="600" y="280" text-anchor="middle" font-family="monospace" font-size="22" letter-spacing="6" fill="#a3a3a3">WEB DEVELOPMENT WITH AI</text>
-  <text x="600" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="url(#text4)">Next.js + Supabase, Every Time</text>
+  <text x="600" y="340" text-anchor="middle" font-family="monospace" font-size="18" letter-spacing="4" fill="#a3a3a3">WEB DEVELOPMENT WITH AI</text>
+  <text x="600" y="398" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="url(#text4)">Next.js + Supabase Stack</text>
 </svg>
