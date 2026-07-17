@@ -13,7 +13,7 @@
     {
       "name": "Agentic AI Starter Course with Certification",
       "issuer": "Saumya Singh",
-      "year": "2024"
+      "year": "2026"
     },
     {
       "name": "Diploma in Information Technology Application",
@@ -52,6 +52,12 @@
       "description": "Evaluated social media content for quality, relevance, and policy compliance."
     },
     {
+      "year": "2023–2026",
+      "title": "Bachelor of Arts",
+      "org": "Netaji Subhas Open University",
+      "description": "Ongoing undergraduate degree."
+    },
+    {
       "year": "2024",
       "title": "Ads Quality Rater (Freelance)",
       "org": "TELUS International AI Data Solutions",
@@ -70,16 +76,10 @@
       "description": "Leading community engagement, campaigns, and contributor management."
     },
     {
-      "year": "2023–2026",
-      "title": "Bachelor of Arts",
-      "org": "Netaji Subhas Open University",
-      "description": "Ongoing undergraduate degree."
-    },
-    {
-      "year": "2026",
-      "title": "Solo AI Builder — NexGuild, xtoolkit.live, StarScoopDaily",
-      "org": "Independent",
-      "description": "Turned years of platform-operations experience into three live, production-grade AI-powered products — architected and shipped solo."
+      "year": "May 2026–Present",
+      "title": "Founder",
+      "org": "NexGuild",
+      "description": "Turned years of platform-operations experience into NexGuild, xtoolkit.live, and StarScoopDaily — three live, production-grade AI-powered products architected and shipped solo."
     }
   ]
 }
