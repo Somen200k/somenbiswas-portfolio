@@ -71,6 +71,7 @@ function LoginScreen({ onSuccess }: { onSuccess: () => void }) {
 
         <input
           type="password"
+          aria-label="Admin password"
           autoFocus
           className={`${inputClass} mt-6`}
           placeholder="Password"

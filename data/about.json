@@ -1,10 +1,10 @@
 {
   "photoUrl": "/images/founder.jpg",
   "cvUrl": "/cv/somen-biswas-cv.pdf",
-  "location": "Gobardanga, West Bengal, India",
+  "location": "Kolkata, India",
   "yearsExperience": "5+",
   "bio": [
-    "My name is Somen Biswas. I'm a solo AI builder and founder from Gobardanga, West Bengal, India. I have no formal coding background — I architect and ship production-ready digital products myself, using AI-assisted development, strong technical judgment, and relentless iteration to make up the difference.",
+    "My name is Somen Biswas. I'm a solo AI builder and founder from Kolkata, India. I have no formal coding background — I architect and ship production-ready digital products myself, using AI-assisted development, strong technical judgment, and relentless iteration to make up the difference.",
     "My path here wasn't a straight line into tech. I spent years in freelance digital operations — rating ad quality for TELUS International, evaluating social media content for Appen, leading data projects at Beyond Digital, and managing community for KGeN. That work taught me how large platforms actually operate behind the scenes: quality systems, moderation, task design, contributor management.",
     "In 2026 I turned that operational knowledge into products. I designed and shipped NexGuild, a global digital workforce platform with a 6-tier RBAC system and a real NexCoin economy; xtoolkit.live, a 44-tool platform with a published Chrome extension; and StarScoopDaily, a fully automated AI content site. All three are live, all three are solo builds, and all three make real money or serve real users today.",
     "I make every product, architecture, and business decision independently. I build reusable systems instead of one-off fixes, and I automate anything repetitive. My wife provides operational support along the way."

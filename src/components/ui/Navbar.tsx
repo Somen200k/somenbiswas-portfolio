@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui/Logo";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -55,12 +56,8 @@ export function Navbar() {
             scrolled ? "glass-strong" : "bg-transparent"
           )}
         >
-          <Link
-            href="/"
-            data-cursor-hover
-            className="font-mono text-sm font-semibold tracking-wide text-foreground"
-          >
-            Somen<span className="text-gold">.</span>Biswas
+          <Link href="/" data-cursor-hover>
+            <Logo />
           </Link>
 
           <nav className="hidden items-center gap-1 md:flex">

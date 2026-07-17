@@ -44,10 +44,11 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     <form onSubmit={handleSubmit} className={compact ? "space-y-4" : "space-y-5"}>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-xs uppercase tracking-wide text-dim">
+          <label htmlFor="contact-name" className="mb-1.5 block text-xs uppercase tracking-wide text-dim">
             Name
           </label>
           <input
+            id="contact-name"
             required
             type="text"
             name="name"
@@ -56,10 +57,11 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs uppercase tracking-wide text-dim">
+          <label htmlFor="contact-email" className="mb-1.5 block text-xs uppercase tracking-wide text-dim">
             Email
           </label>
           <input
+            id="contact-email"
             required
             type="email"
             name="email"
@@ -70,10 +72,11 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       </div>
 
       <div>
-        <label className="mb-1.5 block text-xs uppercase tracking-wide text-dim">
+        <label htmlFor="contact-message" className="mb-1.5 block text-xs uppercase tracking-wide text-dim">
           Message
         </label>
         <textarea
+          id="contact-message"
           required
           name="message"
           rows={compact ? 4 : 6}

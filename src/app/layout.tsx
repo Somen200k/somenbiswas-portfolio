@@ -53,7 +53,7 @@ const personSchema = {
   jobTitle: "Solo AI Builder & Founder",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Gobardanga",
+    addressLocality: "Kolkata",
     addressRegion: "West Bengal",
     addressCountry: "IN",
   },

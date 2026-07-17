@@ -114,7 +114,14 @@ export default async function BlogPostPage({
         </div>
 
         <div className="relative mt-8 h-56 w-full overflow-hidden rounded-2xl sm:h-72 md:h-96">
-          <Image src={post.coverImage} alt={post.title} fill className="object-cover" priority />
+          <Image
+            src={post.coverImage}
+            alt={post.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 768px"
+            className="object-cover"
+            priority
+          />
         </div>
       </SectionReveal>
 

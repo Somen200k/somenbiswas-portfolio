@@ -38,7 +38,7 @@ export default function AboutPage() {
             <div className="gradient-border relative overflow-hidden rounded-3xl">
               <Image
                 src={about.photoUrl}
-                alt="Somen Biswas"
+                alt="Somen Biswas, solo AI builder and founder"
                 width={480}
                 height={560}
                 className="h-auto w-full object-cover"

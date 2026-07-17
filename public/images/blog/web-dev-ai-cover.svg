@@ -4,8 +4,8 @@
       <stop offset="0%" stop-color="#0a0a0a"/>
       <stop offset="100%" stop-color="#0f1216"/>
     </linearGradient>
-    <radialGradient id="glow4" cx="50%" cy="100%" r="80%">
-      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25"/>
+    <radialGradient id="glow4" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22"/>
       <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="text4" x1="0" y1="0" x2="1" y2="0">
@@ -14,11 +14,11 @@
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg4)"/>
-  <rect width="1200" height="630" fill="url(#glow4)"/>
-  <g font-family="monospace" font-size="20" fill="#f59e0b" fill-opacity="0.5">
-    <text x="950" y="120">&lt;/&gt;</text>
-    <text x="1030" y="180">{ }</text>
+  <circle cx="600" cy="315" r="360" fill="url(#glow4)"/>
+  <g fill="none" stroke="#f59e0b" stroke-opacity="0.12" stroke-width="1">
+    <circle cx="600" cy="315" r="270"/>
+    <circle cx="600" cy="315" r="200"/>
   </g>
-  <text x="90" y="230" font-family="monospace" font-size="22" letter-spacing="6" fill="#a3a3a3">WEB DEVELOPMENT WITH AI</text>
-  <text x="88" y="300" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="url(#text4)">Next.js + Supabase, Every Time</text>
+  <text x="600" y="280" text-anchor="middle" font-family="monospace" font-size="22" letter-spacing="6" fill="#a3a3a3">WEB DEVELOPMENT WITH AI</text>
+  <text x="600" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="url(#text4)">Next.js + Supabase, Every Time</text>
 </svg>

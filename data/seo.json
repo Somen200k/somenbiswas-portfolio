@@ -10,11 +10,11 @@
   "gscVerification": "",
   "pages": {
     "home": {
-      "title": "Somen Biswas — Solo AI Builder | AI-Powered Web Platforms",
-      "description": "I build production-ready AI-powered web platforms as a solo founder — NexGuild, xtoolkit.live, and StarScoopDaily. No formal coding background, three live products."
+      "title": "Solo AI Builder — AI-Powered Web Platforms",
+      "description": "Somen Biswas builds production-ready AI-powered web platforms solo — NexGuild, xtoolkit.live, and StarScoopDaily. No CS degree, three live products."
     },
     "about": {
-      "title": "About Somen Biswas — Solo AI Builder",
+      "title": "About — Solo AI Builder & Founder",
       "description": "From ads quality rating and social media evaluation to shipping three live AI-powered platforms solo — the story, skills, and timeline behind Somen Biswas."
     },
     "portfolio": {
@@ -27,10 +27,10 @@
     },
     "hireMe": {
       "title": "Hire Me — AI-Powered Web Platform Building",
-      "description": "Hire Somen Biswas for AI-powered platform builds, automated content sites, free tools platforms, and AI feature integration — plus NexGuild's contributor network for human-powered work."
+      "description": "Hire Somen Biswas for AI platform builds, automated content sites, free tools platforms, and AI feature integration — plus NexGuild's contributor network."
     },
     "contact": {
-      "title": "Contact Somen Biswas",
+      "title": "Contact",
       "description": "Get in touch with Somen Biswas via email, WhatsApp, or LinkedIn."
     }
   }
