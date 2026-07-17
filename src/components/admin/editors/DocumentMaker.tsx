@@ -331,21 +331,18 @@ export function DocumentMaker(config: DocumentMakerConfig) {
         </button>
       </div>
 
-      <div className="lg:sticky lg:top-8">
-        <div
-          ref={previewRef}
-          className="w-full overflow-hidden rounded-2xl bg-white text-[#111] shadow-lg"
-        >
+      <div className="lg:sticky lg:top-8 overflow-hidden rounded-2xl shadow-lg">
+        <div ref={previewRef} className="w-full bg-white text-[#111]">
           <div className="h-2 bg-gradient-to-r from-[#fcd34d] to-[#f59e0b]" />
           <div className="p-8">
             <div className="flex items-start justify-between border-b border-gray-200 pb-6">
-              <div className="flex items-center gap-3">
-                <LogoMark className="h-9 w-9" />
+              <div className="flex items-start gap-3">
+                <LogoMark className="mt-0.5 h-9 w-9 shrink-0" />
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0a0a0a]">
+                  <h2 className="text-2xl font-bold leading-none text-[#0a0a0a]">
                     {config.title.toUpperCase()}
                   </h2>
-                  <p className="text-sm text-gray-500">{doc.docNumber}</p>
+                  <p className="mt-1.5 text-sm leading-none text-gray-500">{doc.docNumber}</p>
                 </div>
               </div>
               <div className="text-right text-sm text-gray-600">
