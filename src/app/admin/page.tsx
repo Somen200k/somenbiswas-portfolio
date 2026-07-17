@@ -12,6 +12,7 @@ import {
   Search,
   Lock,
   LogOut,
+  Receipt,
 } from "lucide-react";
 import { isAdminAuthed, setAdminAuthed } from "@/lib/admin-client";
 import { inputClass } from "@/components/admin/AdminField";
@@ -24,6 +25,7 @@ import { BlogManager } from "@/components/admin/editors/BlogManager";
 import { StatsEditor } from "@/components/admin/editors/StatsEditor";
 import { ContactEditor } from "@/components/admin/editors/ContactEditor";
 import { SeoEditor } from "@/components/admin/editors/SeoEditor";
+import { InvoiceMaker } from "@/components/admin/editors/InvoiceMaker";
 
 const TABS = [
   { id: "hero", label: "Hero", icon: Home, Component: HeroEditor },
@@ -31,6 +33,7 @@ const TABS = [
   { id: "projects", label: "Projects", icon: Briefcase, Component: ProjectsEditor },
   { id: "services", label: "Services", icon: Wrench, Component: ServicesEditor },
   { id: "blog", label: "Blog", icon: Newspaper, Component: BlogManager },
+  { id: "invoices", label: "Invoices", icon: Receipt, Component: InvoiceMaker },
   { id: "stats", label: "Stats", icon: BarChart3, Component: StatsEditor },
   { id: "contact", label: "Contact", icon: Mail, Component: ContactEditor },
   { id: "seo", label: "SEO", icon: Search, Component: SeoEditor },

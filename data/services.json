@@ -28,6 +28,20 @@
       "description": "Adding LLM-powered features to an existing product — generation, detection, chat, or automation, wired in cleanly.",
       "cta": "Get Started",
       "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "Search",
+      "title": "SEO",
+      "description": "Technical SEO, sitemaps, structured data, and content strategy — the same setup driving organic traffic on xtoolkit and this site.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
+    },
+    {
+      "icon": "PenTool",
+      "title": "Content Writing",
+      "description": "SEO-optimized blog and web copy that reads like a person wrote it — because one did, drawing on real product and technical experience.",
+      "cta": "Get Started",
+      "ctaLink": "mailto:admin@nexguild.in"
     }
   ],
   "nexguild": [

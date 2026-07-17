@@ -11,6 +11,8 @@ import {
   FlaskConical,
   BadgeCheck,
   ImagePlus,
+  Search,
+  PenTool,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,6 +29,8 @@ export const ICON_MAP: Record<string, LucideIcon> = {
   FlaskConical,
   BadgeCheck,
   ImagePlus,
+  Search,
+  PenTool,
 };
 
 export function getIcon(name: string): LucideIcon {
