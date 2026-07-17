@@ -5,7 +5,7 @@
     "tagline": "Global digital workforce platform",
     "visible": true,
     "featured": true,
-    "url": "https://nexguild.in",
+    "url": "https://www.nexguild.in",
     "description": "A full-stack, two-sided micro-work platform connecting contributors who complete tasks and surveys with organisations that need human-powered data work — AI data collection, annotation, moderation, and QA. Contributors earn NexCoins and redeem them for real gift vouchers.",
     "role": "Founder & Product Builder",
     "techStack": [
@@ -33,10 +33,22 @@
     ],
     "whatWasBuilt": "Designed and shipped the entire platform solo: database schema and RLS policies, the NexCoin ledger and commission engine, 8 task-verification pipelines, two offerwall postback integrations with hash validation, a 6-role admin system, and the full contributor dashboard — architected end-to-end and directed through Claude Code.",
     "stats": [
-      { "label": "Routes", "value": "74+" },
-      { "label": "Admin roles", "value": "6" },
-      { "label": "Verification types", "value": "8" },
-      { "label": "Blog posts", "value": "17" }
+      {
+        "label": "Routes",
+        "value": "74+"
+      },
+      {
+        "label": "Admin roles",
+        "value": "6"
+      },
+      {
+        "label": "Verification types",
+        "value": "8"
+      },
+      {
+        "label": "Blog posts",
+        "value": "17"
+      }
     ]
   },
   {
@@ -45,7 +57,7 @@
     "tagline": "Free online tools platform — 44 tools, zero paywall",
     "visible": true,
     "featured": true,
-    "url": "https://xtoolkit.live",
+    "url": "https://www.xtoolkit.live",
     "description": "A free online tool factory with 44 tools across developer utilities, SEO, X/Twitter, email/privacy, AI writing, and text formatting. No signup, no paywall, no data stored — tools run in the browser or process-and-discard server-side.",
     "role": "Founder & Website Creator",
     "techStack": [
@@ -72,10 +84,22 @@
     ],
     "whatWasBuilt": "Built the full pnpm monorepo solo: a Vite/React frontend with 44 tool pages, an Express v5 API with a hardened security middleware stack, a published Chrome extension, an OpenAPI-driven codegen pipeline, and an SEO layer (prerendering, split sitemaps, structured data) on top of a client-rendered SPA.",
     "stats": [
-      { "label": "Tools", "value": "44" },
-      { "label": "Blog posts", "value": "24" },
-      { "label": "Countries reached", "value": "40+" },
-      { "label": "Chrome rating", "value": "5★" }
+      {
+        "label": "Tools",
+        "value": "44"
+      },
+      {
+        "label": "Blog posts",
+        "value": "24"
+      },
+      {
+        "label": "Countries reached",
+        "value": "40+"
+      },
+      {
+        "label": "Chrome rating",
+        "value": "5★"
+      }
     ]
   },
   {
@@ -84,7 +108,7 @@
     "tagline": "AI-powered celebrity news, fully automated",
     "visible": true,
     "featured": false,
-    "url": "https://starscoopdaily.site",
+    "url": "https://www.starscoopdaily.site",
     "description": "A celebrity and entertainment news site with an automated AI article-generation pipeline, publishing 1,200+ word articles via Groq's Llama 3.3 70B and a GitHub Contents API publishing system that works around Vercel's read-only production filesystem.",
     "role": "Founder & Website Creator",
     "techStack": [
@@ -108,9 +132,18 @@
     ],
     "whatWasBuilt": "Built the automated content pipeline end-to-end: RSS ingestion and scandal-scoring, AI generation via Groq, an image-sourcing layer, and a GitHub-Contents-API publishing flow that treats the git repo itself as the CMS database — since Vercel's production filesystem can't be written to at runtime.",
     "stats": [
-      { "label": "Admin tabs", "value": "6" },
-      { "label": "Categories", "value": "14" },
-      { "label": "RSS sources", "value": "13" }
+      {
+        "label": "Admin tabs",
+        "value": "6"
+      },
+      {
+        "label": "Categories",
+        "value": "14"
+      },
+      {
+        "label": "RSS sources",
+        "value": "13"
+      }
     ]
   }
 ]
