@@ -31,7 +31,7 @@
       "Google Drive integration via Apps Script for file-based task submissions",
       "hCaptcha bot protection and Resend transactional email"
     ],
-    "whatWasBuilt": "Designed and shipped the entire platform solo: database schema and RLS policies, the NexCoin ledger and commission engine, 8 task-verification pipelines, two offerwall postback integrations with hash validation, a 6-role admin system, and the full contributor dashboard — architected end-to-end and directed through Claude Code.",
+    "whatWasBuilt": "Designed and shipped the entire platform solo: database schema and RLS policies, the NexCoin ledger and commission engine, 8 task-verification pipelines, two offerwall postback integrations with hash validation, a 6-role admin system, and the full contributor dashboard — architected and shipped end-to-end.",
     "stats": [
       {
         "label": "Routes",

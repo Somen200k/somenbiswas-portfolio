@@ -3,7 +3,7 @@
   "siteUrl": "https://somenbiswas.me",
   "defaultTitle": "Somen Biswas — Solo AI Builder | AI-Powered Web Platforms",
   "titleTemplate": "%s | Somen Biswas",
-  "defaultDescription": "Somen Biswas is a solo AI builder from West Bengal, India, shipping production-ready AI-powered web platforms — NexGuild, xtoolkit.live, and StarScoopDaily — using Claude Code.",
+  "defaultDescription": "Somen Biswas is a solo AI builder from West Bengal, India, shipping production-ready AI-powered web platforms — NexGuild, xtoolkit.live, and StarScoopDaily.",
   "ogImage": "/images/og-default.png",
   "twitterHandle": "@somen_2k",
   "ga4Id": "",
@@ -19,7 +19,7 @@
     },
     "portfolio": {
       "title": "Portfolio — NexGuild, xtoolkit.live, StarScoopDaily",
-      "description": "Case studies of three live, production-grade platforms built solo with Claude Code: NexGuild, xtoolkit.live, and StarScoopDaily."
+      "description": "Case studies of three live, production-grade platforms built solo: NexGuild, xtoolkit.live, and StarScoopDaily."
     },
     "blog": {
       "title": "Blog — AI Building, Online Earning & Remote Work",

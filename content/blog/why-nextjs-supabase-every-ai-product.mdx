@@ -14,7 +14,7 @@ Every product I ship starts with roughly the same decision: Next.js 15 on Vercel
 
 NexGuild has six admin roles — owner, admin, reviewer, finance, support, moderator — plus regular contributors. Building that access control as application-layer middleware means writing (and re-checking) permission logic in every single API route. Supabase's Row-Level Security pushes that enforcement into the database itself: a policy on the `submissions` table decides who can read or write a row, full stop, regardless of which route touches it.
 
-That matters enormously when you're directing an AI coding tool. Every new feature Claude Code builds inherits the same security guarantees automatically, because the guarantee lives in Postgres, not in a file that has to be remembered and re-applied.
+That matters enormously when you're building solo and fast. Every new feature inherits the same security guarantees automatically, because the guarantee lives in Postgres, not in a file that has to be remembered and re-applied.
 
 ## Why the App Router specifically
 
