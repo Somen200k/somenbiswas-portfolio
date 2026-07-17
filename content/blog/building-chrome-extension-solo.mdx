@@ -1,0 +1,31 @@
+---
+title: "Building a Chrome Extension Solo: What I Learned Shipping to the Chrome Web Store"
+date: "2026-05-04"
+category: "Web Development With AI"
+excerpt: "Publishing xtoolkit's Chrome extension taught me things no website deployment ever did — a completely different review process, a completely different user."
+tags: ["Chrome Extension", "Web Development", "xtoolkit"]
+coverImage: "/images/blog/web-dev-ai-cover.svg"
+published: true
+---
+
+Deploying a website and publishing a Chrome extension look similar from the outside — ship code, users get it — but the actual process is different enough that it caught me off guard building xtoolkit's extension.
+
+## The review process is nothing like a normal deploy
+
+A website update goes live the moment you deploy it. A Chrome extension update goes through Google's review process every time, which means there's a real lag between finishing a change and users actually having it. That changes how you plan releases — you can't treat an extension update like a quick website hotfix, because "quick" now includes review time you don't control.
+
+## Manifest V3 changes what you can build, not just how
+
+Chrome's extension platform (Manifest V3) restricts what background scripts can do in ways that directly shape architecture decisions — persistent background pages work differently than they used to, which affects anything that needs to run continuously, like an auto-refreshing inbox feature. Building for V3 from the start avoids a painful rebuild later; it's not just a manifest file version number, it's a different set of real constraints on what the extension can do and when.
+
+## Permissions are a trust conversation with your users
+
+Every permission an extension requests shows up as a scary-looking prompt before install. Requesting only what's genuinely necessary — and being able to explain clearly why each permission is needed — directly affects install and retention rates. Over-requesting permissions "just in case" is one of the fastest ways to lose a user's trust before they've even used the extension once.
+
+## The review guidelines matter more than they seem to
+
+Chrome Web Store review guidelines are specific about data handling, especially around anything email or personal-data adjacent. Reading them thoroughly before building — not after submission gets rejected — saves real time. Getting rejected on first submission because of a guideline you didn't know existed is a common, avoidable mistake.
+
+## What actually made the difference for real usage
+
+None of the polish matters if the core feature doesn't work reliably in the background. An extension that promises to keep something running (an inbox, a notification checker, an auto-refresh) has to actually keep running when the browser is idle, when the computer sleeps, and after Chrome itself updates — edge cases a website almost never has to think about at all. Getting the reliability right, quietly, mattered more to real users and reviews than any interface polish on top of it.

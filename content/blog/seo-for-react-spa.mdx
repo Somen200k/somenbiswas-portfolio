@@ -1,0 +1,31 @@
+---
+title: "SEO for a React SPA: How I Made a Client-Rendered App Crawlable"
+date: "2026-04-26"
+category: "Web Development With AI"
+excerpt: "Single-page apps have a real SEO problem: search engines see an empty page before JavaScript runs. Here's how I solved it without a framework rewrite."
+tags: ["SEO", "React", "Web Development", "xtoolkit"]
+coverImage: "/images/blog/web-dev-ai-cover.svg"
+published: true
+---
+
+A React single-page app has a structural SEO problem that frameworks like Next.js solve by default: the initial HTML a search engine crawler sees is often just an empty container, with all the actual content rendered by JavaScript after the page loads. If a crawler doesn't execute that JavaScript the way a real browser does, it sees nothing worth indexing.
+
+## Why this matters more than it sounds like it should
+
+Search engines have gotten better at executing JavaScript, but "better" isn't "as reliable as real HTML." Rendering budget, timeouts, and crawl priority all mean an SPA is competing at a disadvantage against sites that serve real content in the initial response. For a site living or dying on organic search traffic, that disadvantage is worth solving directly rather than hoping the crawler figures it out.
+
+## The fix: prerendering, not a framework migration
+
+Rather than rewriting an entire React application into a server-rendered framework — a huge undertaking for an app already built and working — prerendering runs the actual app in a headless browser at build time, captures the fully-rendered HTML for every route, and serves that static snapshot to crawlers while real users still get the interactive React app. Crawlers see complete content immediately; users get the same SPA experience they'd get otherwise.
+
+## The pieces that actually make it work
+
+A prerendering step needs to run for every route that matters for SEO — not just the homepage — which means it has to be driven by an actual list of routes, generated automatically as new pages are added, not maintained by hand. It also needs correct metadata per page: title, description, and structured data have to be generated per-route, not copied identically across every page, or the SEO benefit is much smaller than it should be.
+
+## Split sitemaps matter more than people expect
+
+A single sitemap file works fine for a small site. Once a site has dozens of tool pages and dozens of blog posts, splitting the sitemap into logical groups — pages, tools, blog posts, images — makes it easier for search engines to process efficiently and easier to debug when something isn't getting indexed, because you can check one category at a time instead of one enormous file.
+
+## Was it worth the effort
+
+For a free-tools platform where organic search is close to the entire distribution strategy, yes — unambiguously. An SPA with no SEO layer is invisible to the audience it needs most. Prerendering isn't a small optimization in that context; it's the difference between the app being findable at all and not.

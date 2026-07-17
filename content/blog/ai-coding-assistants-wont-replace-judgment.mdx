@@ -1,0 +1,29 @@
+---
+title: "AI Coding Assistants Won't Replace Your Judgment — Here's What They Actually Do"
+date: "2026-06-12"
+category: "AI Building"
+excerpt: "The pitch is 'AI writes your app for you.' The reality, after shipping three production products this way, is a lot more specific than that."
+tags: ["AI Building", "Software Development", "Productivity"]
+coverImage: "/images/blog/ai-building-cover.svg"
+published: true
+---
+
+The marketing pitch for AI-assisted development is "describe what you want, get a working app." The reality, after using this approach to ship three live products, is more specific — and more useful to understand — than that pitch suggests.
+
+## What AI coding tools are actually good at
+
+They're extremely good at execution once a decision has been made. "Add a form field with this validation" or "refactor this function to handle a new case" — clear, bounded instructions get executed fast and correctly, far faster than typing every line by hand. They're also good at pattern-matching against conventions already established in a codebase, which keeps a solo-built project internally consistent in a way that would otherwise require real discipline to maintain.
+
+## What they're not good at
+
+They don't know what your product should do. They don't know whether a feature is worth building. They don't know that your users will try to abuse a "simple" submission form, or that a particular edge case matters more than it looks like it should. Those are judgment calls that come from understanding the actual problem — not from the code itself.
+
+This is the part the "AI writes your app" pitch skips over. The tool doesn't remove the need for judgment; it changes what your time goes toward. Instead of spending hours on typing and syntax, you spend that time on the decisions that actually determine whether the product works: what to build, what constraints matter, and what "correct" even means for this specific case.
+
+## The failure mode to watch for
+
+The riskiest habit is accepting generated output without understanding *why* it works. That's fine for a throwaway script. It's not fine for anything handling real user data, real payments, or real security boundaries. Every integration point — anywhere money, auth, or user trust is on the line — is worth reading and understanding line by line, regardless of how it got written.
+
+## What actually changes with this workflow
+
+The honest version of what changes: the ratio of thinking-time to typing-time shifts dramatically toward thinking. That's a real advantage for someone who understands the problem domain deeply but doesn't have a traditional engineering background — the bottleneck moves from "can I type this fast enough" to "do I understand this well enough to direct it," which is a bottleneck domain expertise can actually solve.

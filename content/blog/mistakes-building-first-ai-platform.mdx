@@ -1,0 +1,35 @@
+---
+title: "5 Mistakes I Made Building My First AI-Powered Platform"
+date: "2026-06-20"
+category: "AI Building"
+excerpt: "Some of these cost me weeks. All of them were avoidable. Here's what went wrong building NexGuild, and what I'd tell myself before starting."
+tags: ["AI Building", "Lessons Learned", "Solo Founder"]
+coverImage: "/images/blog/ai-building-cover.svg"
+published: true
+---
+
+Every "how I built this" post makes it sound smoother than it was. It wasn't. Here are five mistakes that actually cost time, in the order I made them.
+
+## 1. Building the admin panel last
+
+I treated the admin panel as an afterthought — something to bolt on once the "real" product worked. That was backwards. The admin panel is how you actually operate the business day to day: reviewing submissions, managing contributors, debugging postbacks. Every week I delayed it was a week of doing that work manually, by hand, in a database client. Build the tool you'll use to run the thing early, not last.
+
+## 2. Trusting a third-party integration before testing its failure modes
+
+The first version of an offerwall integration assumed the postback would always arrive, always be well-formed, and always arrive once. None of those assumptions held in production. Third-party services fail in boring, predictable ways — duplicate calls, missing fields, delayed delivery — and if you don't design for that from day one, you end up firefighting it under pressure instead of handling it calmly in the original build.
+
+## 3. Underestimating how much fraud-prevention work a "simple" feature needs
+
+A task-completion feature sounds simple until real users start trying to game it. What looks like one feature — "let people submit proof they did something" — is actually several: submission, verification, dispute handling, and abuse detection. Scoping it as just "submission" the first time meant a second, more painful pass later to add the rest.
+
+## 4. Not writing down pricing logic before building it
+
+Deciding how money moves between parties is a business decision, not a coding task — but I made the mistake of half-deciding it in my head and letting the implementation drift from what I'd actually intended. Writing the exact rules down in plain language *before* building the logic would have saved a full afternoon of reconciling what the code did against what I meant it to do.
+
+## 5. Skipping SEO until the product "felt done"
+
+I treated SEO as a final polish step instead of a structural decision. Retrofitting proper metadata, sitemaps, and structured data onto pages that weren't built with them in mind is much more work than building them in from the first page. Every product I build now gets its SEO layer on day one, not week six.
+
+## The pattern behind all five
+
+Every one of these mistakes came from treating a "later" problem as smaller than it actually was. The fix isn't more planning meetings — it's solo, so there aren't any — it's writing down the actual requirement before building, even in a single paragraph, instead of letting the shape of the feature emerge from whatever's fastest to build first.
