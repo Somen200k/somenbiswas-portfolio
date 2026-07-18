@@ -23,7 +23,7 @@ export function Hero({ data }: { data: HeroData }) {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[92vh] items-center overflow-hidden"
+      className="relative flex min-h-[92dvh] items-center overflow-hidden"
     >
       <div className="absolute inset-0">
         <ParticleField count={80} />

@@ -73,7 +73,7 @@ function LoginScreen({ onSuccess }: { onSuccess: () => void }) {
   }
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-4">
+    <div className="flex min-h-[80dvh] items-center justify-center px-4">
       <form onSubmit={handleSubmit} className="glass-strong w-full max-w-sm rounded-2xl p-8">
         <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 text-gold">
           <Lock className="h-6 w-6" />
