@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { PopReveal, SectionReveal } from "@/components/ui/SectionReveal";
 import { GradientText } from "@/components/ui/GradientText";
 import { Button } from "@/components/ui/Button";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { PostCard } from "@/components/sections/PostCard";
 import type { BlogPost } from "@/lib/types";
 
@@ -13,9 +14,7 @@ export function LatestPosts({ posts }: { posts: BlogPost[] }) {
       <SectionReveal>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
-              Writing
-            </p>
+            <Eyebrow>Writing</Eyebrow>
             <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
               From the <GradientText>blog</GradientText>
             </h2>

@@ -45,7 +45,7 @@ export function Hero({ data }: { data: HeroData }) {
           {data.eyebrow}
         </motion.p>
 
-        <h1 className="font-display max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl">
+        <h1 className="font-display max-w-4xl text-5xl font-extrabold leading-[1.2] tracking-tight sm:text-6xl md:text-7xl">
           <StaggerText text={parts[0]?.trim() ?? ""} />{" "}
           <StaggerText
             text={data.highlightWord}

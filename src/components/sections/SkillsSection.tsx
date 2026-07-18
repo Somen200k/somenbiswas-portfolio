@@ -1,10 +1,10 @@
 "use client";
 
 import { Blocks, Cloud, Cpu, Database, Server, Wrench } from "lucide-react";
-import { SectionReveal, StaggerGroup, sidePopVariant } from "@/components/ui/SectionReveal";
+import { SectionReveal, PopReveal } from "@/components/ui/SectionReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GradientText } from "@/components/ui/GradientText";
-import { motion } from "framer-motion";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
 const SKILL_GROUPS = [
   {
@@ -43,17 +43,15 @@ export function SkillsSection() {
   return (
     <section className="container-px mx-auto max-w-6xl py-28">
       <SectionReveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
-          Toolbox
-        </p>
+        <Eyebrow>Toolbox</Eyebrow>
         <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
           Skills &amp; <GradientText>tools</GradientText>
         </h2>
       </SectionReveal>
 
-      <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {SKILL_GROUPS.map((group, i) => (
-          <motion.div key={group.title} variants={sidePopVariant(i)}>
+          <PopReveal key={group.title} index={i} delay={(i % 3) * 0.06}>
             <GlassCard className="h-full">
               <group.icon className="h-6 w-6 text-gold" />
               <h3 className="mt-4 text-lg font-semibold">{group.title}</h3>
@@ -68,9 +66,9 @@ export function SkillsSection() {
                 ))}
               </div>
             </GlassCard>
-          </motion.div>
+          </PopReveal>
         ))}
-      </StaggerGroup>
+      </div>
     </section>
   );
 }

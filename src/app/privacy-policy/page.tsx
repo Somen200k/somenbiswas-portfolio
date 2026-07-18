@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 import { GradientText } from "@/components/ui/GradientText";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { getContact, getSeo } from "@/lib/data";
 
 export function generateMetadata(): Metadata {
@@ -19,8 +20,8 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="container-px mx-auto max-w-3xl py-20">
       <SectionReveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">Legal</p>
-        <h1 className="mt-3 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
+        <Eyebrow>Legal</Eyebrow>
+        <h1 className="mt-3 font-display text-4xl font-extrabold leading-[1.2] tracking-tight sm:text-5xl">
           Privacy <GradientText>Policy</GradientText>
         </h1>
         <p className="mt-4 text-sm text-dim">Last updated: July 17, 2026</p>

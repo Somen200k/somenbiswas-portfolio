@@ -16,6 +16,7 @@ interface LineItem {
 interface DocState {
   businessName: string;
   businessEmail: string;
+  businessWebsite: string;
   businessAddress: string;
   clientName: string;
   clientEmail: string;
@@ -58,6 +59,7 @@ function defaultDoc(config: DocumentMakerConfig): DocState {
   return {
     businessName: "Somen Biswas",
     businessEmail: "somen.office@gmail.com",
+    businessWebsite: "somenbiswas.me",
     businessAddress: "Kolkata, India",
     clientName: "",
     clientEmail: "",
@@ -205,6 +207,13 @@ export function DocumentMaker(config: DocumentMakerConfig) {
                 onChange={(e) => update("businessEmail", e.target.value)}
               />
             </AdminField>
+            <AdminField label="Website" hint="Shown on the document — leave blank to omit">
+              <input
+                className={inputClass}
+                value={doc.businessWebsite}
+                onChange={(e) => update("businessWebsite", e.target.value)}
+              />
+            </AdminField>
             <AdminField label="Address">
               <input
                 className={inputClass}
@@ -348,6 +357,7 @@ export function DocumentMaker(config: DocumentMakerConfig) {
               <div className="text-right text-sm text-gray-600">
                 <p className="font-semibold text-[#0a0a0a]">{doc.businessName}</p>
                 <p>{doc.businessEmail}</p>
+                {doc.businessWebsite && <p>{doc.businessWebsite}</p>}
                 <p>{doc.businessAddress}</p>
               </div>
             </div>

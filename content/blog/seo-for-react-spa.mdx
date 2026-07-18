@@ -10,11 +10,15 @@ published: true
 
 A client-rendered single-page app has a structural SEO problem that server-rendered frameworks solve by default: the initial HTML a search engine crawler sees is often just an empty container, with all the actual content rendered by JavaScript after the page loads. If a crawler doesn't execute that JavaScript the way a real browser does, it sees nothing worth indexing.
 
+## Why this problem is so easy to miss until it's expensive
+
+The tricky part of this specific problem is that it's completely invisible from the perspective of a normal user, and mostly invisible from the perspective of the person building the app too. Every real browser executes JavaScript automatically, so the app looks and works exactly as intended for every human who visits it — there's no broken button, no visible error, nothing that shows up in normal QA testing. The gap only exists in how a non-human crawler experiences the exact same page, which means it's entirely possible to build, test, and ship a fully working application that is simultaneously almost invisible to search engines, without a single visible symptom anywhere in the normal development and testing process.
+
 ## Why this matters more than it sounds like it should
 
 Search engines have gotten better at executing JavaScript, but "better" isn't "as reliable as real HTML." Rendering budget, timeouts, and crawl priority all mean a client-rendered app is competing at a disadvantage against sites that serve real content in the initial response. For a site living or dying on organic search traffic, that disadvantage is worth solving directly rather than hoping the crawler figures it out.
 
-## The fix: pre-generating real HTML, not a framework migration
+## The fix, described in more detail: pre-generating real HTML, not a framework migration
 
 Rather than rewriting an entire client-rendered app into a server-rendered one — a huge undertaking for an app already built and working — there's a middle path: generate the fully-rendered HTML for every route ahead of time and serve that static snapshot to crawlers, while real users still get the same fast, interactive app. Crawlers see complete content immediately; users get the identical experience they'd get otherwise.
 
@@ -22,10 +26,30 @@ Rather than rewriting an entire client-rendered app into a server-rendered one �
 
 That generation step needs to run for every route that matters for SEO — not just the homepage — which means it has to be driven by an actual list of routes, generated automatically as new pages are added, not maintained by hand. It also needs correct metadata per page: title, description, and structured data have to be generated per-route, not copied identically across every page, or the SEO benefit is much smaller than it should be.
 
-## Split sitemaps matter more than people expect
+## Split sitemaps matter more than people expect too
 
-A single sitemap file works fine for a small site. Once a site has dozens of pages across multiple content types, splitting the sitemap into logical groups makes it easier for search engines to process efficiently and easier to debug when something isn't getting indexed, because you can check one category at a time instead of one enormous file.
+A single sitemap file works perfectly fine for a small site with only a handful of routes. Once a site has dozens of pages across multiple content types, splitting the sitemap into logical groups makes it easier for search engines to process efficiently and easier to debug when something isn't getting indexed, because you can check one category at a time instead of one enormous file.
 
 ## Was it worth the effort
 
 For a platform where organic search is close to the entire distribution strategy, yes — unambiguously. A client-rendered app with no SEO layer is invisible to the audience it needs most. Solving this properly isn't a small optimization in that context; it's the difference between the app being findable at all and not.
+
+## How to actually confirm a crawler sees what you think it sees
+
+Assuming a fix worked because the page looks right in a browser is one of the most common mistakes in this whole process — a browser always runs the JavaScript, so it tells you nothing about what a crawler without full rendering sees. The only reliable way to verify is fetching the raw HTML response directly, the same way a crawler would, and checking whether the actual content — not a loading skeleton, not an empty container — is present in that raw response before any JavaScript executes. That single check, done consistently after every deployment, catches regressions that would otherwise go unnoticed for weeks, since everything still looks fine to a human visually testing in a browser.
+
+## Structured data is a second, separate layer worth getting right
+
+Getting real content into the initial HTML solves the "can this be indexed at all" problem. Structured data — machine-readable markup describing what a page actually is (an article, a product, a person) — solves a different problem: how richly and accurately a search engine can represent that page once it is indexed. A blog post with proper article structured data can surface with an author, a publish date, and a reading time directly in search results; one without it gets a plainer listing even if the content itself is identical. This is easy to skip because it has no visible effect on the page as rendered for users — it's metadata, invisible until a search engine actually uses it — which is exactly why it's one of the most commonly neglected pieces of a proper SEO setup.
+
+## Canonical URLs matter more than they get credit for
+
+A subtle but real problem in client-rendered apps: the same content becoming reachable through more than one URL — with and without a trailing slash, with different query parameters, through an old redirected path that still technically resolves. Search engines treat those as separate pages by default unless told explicitly, via a canonical tag, which one is the authoritative version. Without that signal, ranking signals and backlink value can end up split across multiple URLs for what is, to a human, obviously the same page — diluting the exact SEO value the rest of the effort was trying to build. Setting canonical URLs correctly, on every route, is a small, unglamorous piece of the puzzle that quietly protects the value of everything else.
+
+## What changed in practice after fixing all of this
+
+The most noticeable change wasn't a single dramatic ranking jump — it was pages that had previously never been indexed at all starting to show up in search results within weeks, simply because a crawler could finally see content that had always been there for a human visitor. That's the real, unglamorous nature of this kind of fix: it doesn't make existing rankings better, it makes previously invisible pages visible for the first time. For a site depending on organic search for distribution, that's not an incremental improvement — it's the difference between a page existing, functionally, for search purposes, and not.
+
+## The mistake to avoid if you're tackling this yourself
+
+Don't treat this as a one-time migration project with a defined end date. New routes get added to a growing site constantly, and every one of them needs to flow through the same rendering and metadata pipeline automatically, or the SEO gap silently reopens for everything built after the "fix" shipped. The sustainable version of this isn't a project — it's a structural decision baked into how new pages get built going forward, checked as part of the normal release process rather than audited occasionally after the fact. Treat it as infrastructure, not a task with a finish line, and it stays solved for every page that comes after, not just the ones that existed on the day the fix shipped.

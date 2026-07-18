@@ -20,6 +20,8 @@ When you spend a year rating whether an advertisement is relevant to search inte
 
 I didn't clock any of this consciously while doing the work. It only became obvious in hindsight, once I was the one designing the rubric instead of following one.
 
+The Clan Chief role at KGeN added a different dimension to this — managing a community rather than evaluating content in isolation. That role meant handling real disputes between real people, deciding when to intervene and when a disagreement would resolve itself, and noticing which small unresolved frictions tended to compound into someone leaving the community entirely if left unaddressed. Community management doesn't show up on a "skills for founders" list very often, but running a task-based platform with thousands of contributors turned out to lean on that exact instinct constantly — knowing which small support ticket is actually a symptom of a bigger design problem, and which one really is just a one-off.
+
 ## The actual transition
 
 There was no bootcamp, no CS degree, no "learn to code in 90 days" moment. The transition happened because I started building real systems instead of toy projects — starting with NexGuild's task and submission flow, because I already understood exactly what that flow needed to do and where it could be gamed. Domain knowledge from the freelance work became the specification I built against.
@@ -29,3 +31,25 @@ There was no bootcamp, no CS degree, no "learn to code in 90 days" moment. The t
 If you're doing freelance evaluation, moderation, or data-operations work right now and wondering if it "counts" toward anything bigger — it does, more than a coding bootcamp would. You already understand how the systems you might one day build actually need to behave under real, messy, adversarial conditions. That's the harder half of the problem. The building part is now more accessible than it's ever been.
 
 The operational experience doesn't disappear once you start building, either — NexGuild's client services (data annotation, content moderation, QA, user testing) exist precisely because that's the work I know how platforms actually need done.
+
+## Why "None of that reads like a tech résumé" is the point, not the problem
+
+For a long time I saw my own résumé as a liability going into anything product-related — a stretch of roles with no engineering title anywhere on it. What I've come to think instead: a résumé full of evaluator, moderator, and support roles is a résumé built entirely out of pattern recognition at scale, applied to real, messy, adversarial human behavior. That's a genuinely rare thing to have accumulated before building a product, and it's not something a computer science curriculum teaches directly. Engineering programs teach you how to build systems. They rarely teach you how people actually try to break, exploit, or misuse a system once it's live — and that second kind of knowledge is exactly what freelance evaluation and moderation work hands you, one edge case at a time, for years.
+
+## What a typical day of that work actually looked like
+
+Rating ads for TELUS meant sitting with a detailed rubric and hundreds of ad-and-query pairs, deciding relevance and policy compliance one at a time, all day. Evaluating social content for Appen meant the same structural task with a different rubric — deciding whether a piece of content violated a platform's specific policies, staying consistent across genuinely ambiguous cases where two reasonable people might land on different answers. None of it was glamorous. All of it was, in hindsight, training in exactly the skill a platform builder needs most: the ability to write a rule, anticipate how it gets misapplied or gamed, and refine it until it holds up under real use rather than just looking correct on paper.
+
+## The specific moment the connection became obvious
+
+Designing NexGuild's task-verification system — deciding what counts as valid proof a contributor completed a task, and how to catch someone gaming that — was the first time I consciously recognized I was doing the exact same mental motion as rating an ad against a rubric. Write the rule. Think through the edge case where someone technically satisfies the rule while clearly violating its intent. Tighten the rule. Repeat. I wasn't consciously drawing on the evaluator experience while designing it — the instinct just showed up, already formed, because I'd run that exact loop thousands of times before, just against someone else's rubric instead of my own.
+
+## Why this path is more available now than it used to be
+
+The barrier that used to separate "operational worker" from "product builder" was largely the cost and difficulty of turning an idea into working software — which meant you needed either capital to hire engineers or years of your own engineering training first. AI-assisted development collapses a large part of that barrier. It doesn't remove the need for the judgment described above — if anything it makes that judgment the scarcer, more valuable half of the equation — but it does mean someone with deep operational knowledge and no engineering background can now direct a build without first spending years acquiring a skill set that was never actually the hard part of the problem.
+
+## What I'd say to someone reading this from inside that same kind of role right now
+
+The rubric you're applying today, the edge cases you're catching, the patterns you're noticing in how people try to game a system — write them down. Not because you'll need them for a résumé bullet point, but because that specific knowledge is the actual foundation a real product gets built on, and it's easy to let it stay implicit, something you just "know," rather than something you've deliberately catalogued. The people who make this transition successfully aren't the ones who first learn to code. They're the ones who already understand a real problem deeply enough that directing a build toward solving it feels less like learning something new and more like finally getting to use something they already knew.
+
+Looking back at the full sequence — Appen, TELUS, Beyond Digital, Maxicus, KGeN, and now NexGuild, xtoolkit, and StarScoopDaily — none of it looks like a straight line from any single point on the résumé. It only reads as one now, in hindsight, because every one of those roles was quietly teaching the same underlying discipline from a different angle each time.

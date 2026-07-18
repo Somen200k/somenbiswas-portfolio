@@ -10,6 +10,10 @@ published: true
 
 Most "earn money online" platforms are vague about the actual math. I built NexGuild, so here's how the economy actually works for contributors — the exchange rate, where earnings come from, and the redemption path.
 
+## Why I'm publishing the exact numbers instead of keeping them vague
+
+Most platforms in this space keep their payout math deliberately fuzzy — "earn rewards," "unlock cash," no actual rate anywhere on the page. That vagueness is often doing real work for a platform that doesn't want the math scrutinized closely. NexGuild's numbers are published here in exact detail specifically because I want the opposite reputation: a platform where any contributor can independently verify, with basic arithmetic, that what they're earning matches what's promised. If the math only holds up when it's kept vague, that's the platform telling on itself.
+
 ## The exchange rate
 
 NexCoins are NexGuild's internal currency:
@@ -24,7 +28,7 @@ Every coin you earn comes from a real source: completing a task, finishing a sur
 
 When you complete a paid task or a survey, the payout is split automatically: the majority goes straight to you as the contributor, a smaller share goes to your NexLeader if you were referred by one, and the remainder covers platform costs — moderation, payment processing, and voucher fulfillment. Every task type runs through the same crediting logic, so payouts are consistent no matter what kind of work you completed.
 
-## Ways to prove you did the work
+## Ways to prove you did the work, in detail
 
 NexGuild supports several independent task-verification methods, and admins can mix them freely on a single task — from typed responses and file uploads to automatic checks (like verified Telegram membership) to manual screenshot review for social actions. That variety is deliberate: it's the difference between a platform that can actually catch fraud and one that just hopes people are honest.
 
@@ -33,3 +37,29 @@ NexGuild supports several independent task-verification methods, and admins can 
 Coins redeem for vouchers — Amazon, Flipkart, Paytm, PhonePe, Swiggy, Zomato — delivered by email within 48 hours. There's also the **NexLeader** system: if you build a guild of contributors under your referral link, you earn an ongoing commission on everything they earn, for as long as they're active. That's the closest thing to passive income the platform offers, and it's fully transparent in your ledger.
 
 If you want to see the actual dashboard — leaderboard, wallet, earnings breakdown — signup is free and takes about two minutes.
+
+## Why coins instead of paying out in rupees or dollars directly
+
+Running an internal points currency rather than paying real currency per completed action isn't a gimmick — it solves a real operational problem. Task and survey payouts arrive from dozens of different sources (advertiser payments, offerwall provider settlements, organisation billing) on different schedules and in different amounts, some fractions of a cent. Crediting every one of those directly as a bank transaction would mean an unmanageable number of tiny, expensive transfers. NexCoins let the platform batch and net all of that internally, at a fixed, transparent exchange rate, and only convert to a real payout (a voucher) when a contributor actually chooses to redeem — which also means contributors can accumulate small amounts from many different task types without needing a separate payout for each one.
+
+## How the daily cap actually protects contributors, not just the platform
+
+The 15,000 NexCoin daily cap reads, at first glance, like a limit that only benefits the platform. In practice it does real work for contributors too: it prevents a small number of accounts from absorbing the entire available task volume in a rush, which keeps the task pool genuinely available across the whole contributor base rather than concentrated in whoever happens to be online first and fastest. It also acts as a natural fraud dampener — a compromised or automated account trying to farm the platform hits the same ceiling a genuine, careful contributor would, which limits the damage any single bad actor can do before detection catches up.
+
+## What happens when a task gets disputed
+
+Verification isn't the end of the story — contributors can dispute a rejected submission, and organisations can flag a submission they believe is fraudulent after the fact. Both paths route to manual review rather than resolving automatically, on purpose. Automatic resolution would be faster, but it would also be exploitable in predictable ways once enough people understood exactly how the automation worked. A human review step is slower per case but far more resistant to being reverse-engineered and gamed at scale — a tradeoff that matters more the larger the contributor base gets.
+
+## How the NexLeader commission actually gets calculated
+
+NexLeader commission isn't a flat referral bonus paid once at sign-up — it's an ongoing percentage of what a referred contributor actually earns, for as long as they stay active on the platform. That structure is deliberate: a one-time sign-up bonus rewards recruiting people who might never actually do any real work, which inflates the user count without adding real task-completion capacity. An ongoing percentage of real earnings only pays a NexLeader when their referral is genuinely productive, which aligns the incentive correctly — NexLeaders are rewarded for bringing in contributors who actually stick around and do real work, not just for driving raw sign-up numbers.
+
+## What the ledger actually shows you
+
+Every NexCoin credit and debit in a contributor's account ties back to a specific, named source — a specific completed task, a specific survey, a specific referral's activity — visible in the wallet history, not summarized away into an opaque running total. That level of detail is intentional and mirrors the same principle from the verification system: a platform that can show exactly where every coin came from is a platform that's much harder to run dishonestly, because every number is individually traceable and auditable by the contributor themselves, not just by the platform internally.
+
+## The bigger picture this economy is built around
+
+NexCoins are a means to an end, not the point of the platform. The actual product is a marketplace connecting organisations that need real work done — data collection, annotation, moderation, QA — with contributors willing to do it, verified honestly on both sides. The currency, the caps, the verification methods, and the dispute process all exist to make that marketplace trustworthy enough that both sides keep using it. A platform that gets the economics right but the trust wrong doesn't survive contact with real, adversarial usage for very long — which is exactly why the verification and dispute systems get as much engineering attention as the payout math itself.
+
+If any part of this explanation doesn't match what you see in your own dashboard, that's worth reporting rather than assuming — a mismatch between the published math and the actual ledger is exactly the kind of bug that should get fixed immediately, not quietly tolerated, and it's exactly the kind of thing a transparent ledger makes easy for a contributor to catch and report in the first place.

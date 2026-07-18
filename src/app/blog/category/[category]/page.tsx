@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 import { GradientText } from "@/components/ui/GradientText";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { PostCard } from "@/components/sections/PostCard";
 import {
   BLOG_CATEGORIES,
@@ -46,10 +47,8 @@ export default async function BlogCategoryPage({
   return (
     <div className="container-px mx-auto max-w-6xl py-20">
       <SectionReveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
-          Blog
-        </p>
-        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+        <Eyebrow>Blog</Eyebrow>
+        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold leading-[1.2] tracking-tight sm:text-5xl md:text-6xl">
           <GradientText>{category}</GradientText>
         </h1>
 

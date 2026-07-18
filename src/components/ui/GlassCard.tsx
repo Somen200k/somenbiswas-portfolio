@@ -5,11 +5,13 @@ export function GlassCard({
   children,
   className,
   strong = false,
+  terminal = false,
   id,
 }: {
   children: ReactNode;
   className?: string;
   strong?: boolean;
+  terminal?: boolean;
   id?: string;
 }) {
   return (
@@ -22,6 +24,13 @@ export function GlassCard({
         className
       )}
     >
+      {terminal && (
+        <div className="mb-5 flex items-center gap-1.5" aria-hidden="true">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]/70" />
+        </div>
+      )}
       {children}
     </div>
   );

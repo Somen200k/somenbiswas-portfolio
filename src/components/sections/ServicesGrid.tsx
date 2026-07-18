@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { StaggerGroup, sidePopVariant } from "@/components/ui/SectionReveal";
+import { PopReveal } from "@/components/ui/SectionReveal";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import type { ServiceItem } from "@/lib/types";
 
@@ -13,12 +12,12 @@ export function ServicesGrid({
   cols?: string;
 }) {
   return (
-    <StaggerGroup className={`mt-8 grid gap-5 sm:grid-cols-2 ${cols}`}>
+    <div className={`mt-8 grid gap-5 sm:grid-cols-2 ${cols}`}>
       {services.map((service, i) => (
-        <motion.div key={service.title} variants={sidePopVariant(i)}>
+        <PopReveal key={service.title} index={i} delay={(i % 4) * 0.05}>
           <ServiceCard service={service} />
-        </motion.div>
+        </PopReveal>
       ))}
-    </StaggerGroup>
+    </div>
   );
 }

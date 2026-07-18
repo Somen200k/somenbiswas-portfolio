@@ -4,6 +4,7 @@ import { SectionReveal } from "@/components/ui/SectionReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { GradientText } from "@/components/ui/GradientText";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { getProjects, getSeo } from "@/lib/data";
 
 export function generateMetadata(): Metadata {
@@ -26,10 +27,8 @@ export default function PortfolioPage() {
   return (
     <div className="container-px mx-auto max-w-6xl py-20">
       <SectionReveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
-          Portfolio
-        </p>
-        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+        <Eyebrow>Portfolio</Eyebrow>
+        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold leading-[1.2] tracking-tight sm:text-5xl md:text-6xl">
           Case studies of <GradientText>live products</GradientText>
         </h1>
         <p className="mt-5 max-w-xl text-muted">
@@ -94,7 +93,7 @@ export default function PortfolioPage() {
                   </ul>
                 </GlassCard>
 
-                <GlassCard strong className="flex flex-col justify-center">
+                <GlassCard strong terminal className="flex flex-col justify-center">
                   <div className="grid grid-cols-2 gap-6">
                     {project.stats.map((stat) => (
                       <div key={stat.label}>

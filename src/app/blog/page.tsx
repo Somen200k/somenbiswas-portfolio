@@ -4,6 +4,7 @@ import { PopReveal, SectionReveal } from "@/components/ui/SectionReveal";
 import { GradientText } from "@/components/ui/GradientText";
 import { PostCard } from "@/components/sections/PostCard";
 import { AdSlot } from "@/components/sections/AdSlot";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { getAllPosts, BLOG_CATEGORIES, categoryToSlug } from "@/lib/blog";
 import { getSeo } from "@/lib/data";
 
@@ -23,10 +24,8 @@ export default function BlogPage() {
   return (
     <div className="container-px mx-auto max-w-6xl py-20">
       <SectionReveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
-          Blog
-        </p>
-        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+        <Eyebrow>Blog</Eyebrow>
+        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold leading-[1.2] tracking-tight sm:text-5xl md:text-6xl">
           Writing on <GradientText>building in public</GradientText>
         </h1>
 

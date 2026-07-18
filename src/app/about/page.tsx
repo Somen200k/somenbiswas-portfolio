@@ -6,6 +6,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { GradientText } from "@/components/ui/GradientText";
 import { Timeline } from "@/components/sections/Timeline";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { getAbout, getSeo } from "@/lib/data";
 
 export function generateMetadata(): Metadata {
@@ -24,10 +25,8 @@ export default function AboutPage() {
   return (
     <div className="container-px mx-auto max-w-6xl py-20">
       <SectionReveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
-          About
-        </p>
-        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+        <Eyebrow>About</Eyebrow>
+        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold leading-[1.2] tracking-tight sm:text-5xl md:text-6xl">
           From data operations to <GradientText>solo AI builder</GradientText>
         </h1>
       </SectionReveal>

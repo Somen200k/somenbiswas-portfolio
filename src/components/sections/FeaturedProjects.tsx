@@ -4,6 +4,7 @@ import { TiltCard } from "@/components/ui/TiltCard";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { GradientText } from "@/components/ui/GradientText";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import type { Project } from "@/lib/types";
 
 export function FeaturedProjects({ projects }: { projects: Project[] }) {
@@ -12,9 +13,7 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
   return (
     <section className="container-px mx-auto max-w-6xl py-28">
       <SectionReveal>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
-          Selected Work
-        </p>
+        <Eyebrow>Selected Work</Eyebrow>
         <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
           Live products, <GradientText>shipped solo</GradientText>
         </h2>
@@ -24,7 +23,7 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
         {featured.map((project, i) => (
           <PopReveal key={project.slug} index={i}>
             <TiltCard className="group h-full" maxTilt={5}>
-              <GlassCard strong className="flex h-full flex-col">
+              <GlassCard strong terminal className="flex h-full flex-col">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="text-2xl font-semibold">{project.name}</h3>

@@ -1,5 +1,5 @@
 ---
-title: "5 Mistakes I Made Building My First AI-Powered Platform"
+title: "8 Mistakes I Made Building My First AI-Powered Platform"
 date: "2026-06-20"
 category: "AI Building"
 excerpt: "Some of these cost me weeks. All of them were avoidable. Here's what went wrong building NexGuild, and what I'd tell myself before starting."
@@ -8,7 +8,11 @@ coverImage: "/images/blog/ai-building-cover.svg"
 published: true
 ---
 
-Every "how I built this" post makes it sound smoother than it was. It wasn't. Here are five mistakes that actually cost time, in the order I made them.
+Every "how I built this" post makes it sound smoother than it was. It wasn't. Here are eight mistakes that actually cost time, in the order I made them.
+
+## Why I'm listing all eight instead of curating a cleaner five
+
+It would read better to trim this down to the five most dramatic mistakes and leave the rest out. I'm including all eight because the smaller, less dramatic ones are honestly more useful to someone reading this before they start their own build — the big, obvious mistakes are the ones people already expect to make. The quieter ones, the pricing-model gap and the single-round-of-testing assumption, are the ones that don't announce themselves until they've already cost real time.
 
 ## 1. Building the admin panel last
 
@@ -33,3 +37,23 @@ I treated SEO as a final polish step instead of a structural decision. Retrofitt
 ## The pattern behind all five
 
 Every one of these mistakes came from treating a "later" problem as smaller than it actually was. The fix isn't more planning meetings — it's solo, so there aren't any — it's writing down the actual requirement before building, even in a single paragraph, instead of letting the shape of the feature emerge from whatever's fastest to build first.
+
+## Mistake six: not separating "urgent" from "important" early enough
+
+For the first stretch of building, every bug felt equally urgent, because there was no framework for triaging them against each other — a broken button and a broken payout got roughly the same panic response. That's an expensive habit, because it means genuinely important-but-not-urgent work (the fraud-prevention pass, the SEO structure, the admin tooling) kept losing to whatever felt loud in the moment. What eventually fixed it was a simple, explicit rule: does this affect money or trust right now, today? If yes, it jumps the queue. If no, it gets scheduled, not reacted to. Building that filter took embarrassingly long to formalize, given how obviously it should have existed from day one.
+
+## Mistake seven: assuming one round of testing was enough
+
+The first version of the task-verification flow got tested by me, a handful of times, in the way I expected a normal user to use it. It shipped, and within days, contributors found ways to interact with it I hadn't remotely considered — not maliciously, just differently than my own mental model assumed. I'd treated my own testing as sufficient because it felt thorough at the time. It wasn't, because I am not a representative user; I built the feature, so I only ever tested the paths I'd already thought of. The fix was deliberately seeking out real usage data and real confusion points after every launch, not just before it, and treating the first week of real usage as an extension of testing rather than the finish line.
+
+## Mistake eight: underpricing my own time in the early pricing decisions
+
+When setting NexCoin exchange rates and commission structures for the first time, I anchored too heavily on "what feels generous to contributors" without fully modeling what that meant for platform sustainability at scale. Generous felt good in the short term and created a real problem a few months in, when the numbers had to be revisited and adjusted — a much harder conversation to have with an existing user base than getting the initial numbers right would have been. The lesson wasn't "be less generous," it was "model the economics properly before committing to numbers publicly," because changing a number after people are relying on it costs far more trust than taking an extra day to model it correctly the first time.
+
+## What ties all eight together
+
+Looking back at the full list, none of these were technical failures in the sense of "the code was wrong." Every one was a planning or judgment gap that the tooling executed faithfully, exactly as specified — which is precisely why they're worth writing down. AI-assisted development doesn't catch a bad specification; it builds the bad specification accurately and quickly, which can feel like progress right up until the gap becomes visible in production. The actual lesson from building NexGuild wasn't about the tools at all. It was about learning, expensively and repeatedly, to slow down at the exact moments the tooling made it easiest to speed up — the moments where a decision hadn't actually been made yet, just assumed.
+
+## What I'd do differently starting a fourth product today
+
+Write the plain-language spec first, even a rough one, for anything touching money, trust, or a permission boundary — not code, just a paragraph describing exactly what should happen and what shouldn't. Build the operational tooling (the admin panel, the monitoring, the support flow) in parallel with the user-facing feature, not after it. Assume every third-party integration will fail in some way eventually, and design the failure path before the happy path ships. None of that is exotic advice. It's the same advice any experienced engineer would give. The difference is I had to learn it by paying the cost of ignoring it first, one product at a time. If this list saves someone even one of these eight mistakes, it was worth writing down honestly instead of polishing the story into something smoother than it actually was.

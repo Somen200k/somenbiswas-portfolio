@@ -15,6 +15,7 @@ import {
   Receipt,
   FileSignature,
   Users,
+  ListChecks,
 } from "lucide-react";
 import { isAdminAuthed, setAdminAuthed } from "@/lib/admin-client";
 import { inputClass } from "@/components/admin/AdminField";
@@ -30,6 +31,7 @@ import { SeoEditor } from "@/components/admin/editors/SeoEditor";
 import { InvoiceMaker } from "@/components/admin/editors/InvoiceMaker";
 import { QuoteMaker } from "@/components/admin/editors/QuoteMaker";
 import { ClientTracker } from "@/components/admin/editors/ClientTracker";
+import { ProjectScoper } from "@/components/admin/editors/ProjectScoper";
 
 const TABS = [
   { id: "hero", label: "Hero", icon: Home, Component: HeroEditor },
@@ -40,6 +42,7 @@ const TABS = [
   { id: "invoices", label: "Invoices", icon: Receipt, Component: InvoiceMaker },
   { id: "quotes", label: "Quotes", icon: FileSignature, Component: QuoteMaker },
   { id: "clients", label: "Clients", icon: Users, Component: ClientTracker },
+  { id: "scoper", label: "Project Scoper", icon: ListChecks, Component: ProjectScoper },
   { id: "stats", label: "Stats", icon: BarChart3, Component: StatsEditor },
   { id: "contact", label: "Contact", icon: Mail, Component: ContactEditor },
   { id: "seo", label: "SEO", icon: Search, Component: SeoEditor },

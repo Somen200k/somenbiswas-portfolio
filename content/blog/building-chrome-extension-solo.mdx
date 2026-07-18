@@ -14,6 +14,10 @@ Deploying a website and publishing a Chrome extension look similar from the outs
 
 A website update goes live the moment you deploy it. A Chrome extension update goes through Google's review process every time, which means there's a real lag between finishing a change and users actually having it. That changes how you plan releases — you can't treat an extension update like a quick website hotfix, because "quick" now includes review time you don't control.
 
+## Why I built the extension at all, instead of just a website
+
+xtoolkit is a free-tools site — utilities people reach for in the middle of doing something else, not something they visit with dedicated intent the way they'd visit a product they've bookmarked. A browser extension puts that utility one click away from wherever a user already is, instead of requiring them to remember a website exists and navigate back to it. That distribution advantage is real, but it comes with the entire second set of constraints described below — it's not a free upgrade to a website, it's a genuinely different product with its own rules, wrapped around the same underlying utility.
+
 ## Manifest V3 changes what you can build, not just how
 
 Chrome's extension platform (Manifest V3) restricts what background scripts can do in ways that directly shape architecture decisions — persistent background pages work differently than they used to, which affects anything that needs to run continuously, like an auto-refreshing inbox feature. Building for V3 from the start avoids a painful rebuild later; it's not just a manifest file version number, it's a different set of real constraints on what the extension can do and when.
@@ -29,3 +33,25 @@ Chrome Web Store review guidelines are specific about data handling, especially 
 ## What actually made the difference for real usage
 
 None of the polish matters if the core feature doesn't work reliably in the background. An extension that promises to keep something running (an inbox, a notification checker, an auto-refresh) has to actually keep running when the browser is idle, when the computer sleeps, and after Chrome itself updates — edge cases a website almost never has to think about at all. Getting the reliability right, quietly, mattered more to real users and reviews than any interface polish on top of it.
+
+## Storage works differently than you'd assume
+
+A website has effectively one storage model most developers reach for by default. An extension has several, each with different rules — data scoped to the extension itself, data that syncs across a user's signed-in Chrome instances, and data scoped to a specific tab or page context. Picking the wrong one isn't just a performance issue, it's a correctness bug: settings that should follow a user across their devices silently don't, or data that should stay local unexpectedly shows up somewhere it shouldn't. Getting this right early meant sitting down and mapping out, for every piece of state the extension needed to remember, exactly which scope it actually belonged in — not just picking whichever storage API was fastest to wire up first.
+
+## The update cycle changes how you think about bugs
+
+On a website, a bug fix ships the moment you deploy. On an extension, a bug fix goes into the same review queue as a brand-new feature, so a critical fix and a minor enhancement move at the same speed. That completely changes triage. A bug that would get a same-day website hotfix instead sits behind a review process measured in days, which means the actual engineering bar for "ready to submit" has to be higher going in — there's no quick follow-up patch to lean on if something's subtly wrong. I started treating every extension submission the way I'd treat a mobile app release rather than a web deploy: more testing before submission, because the cost of being wrong after submission is measured in review-queue days, not minutes.
+
+## User support looks completely different too
+
+Website users who hit a problem usually just refresh, or email support with a screenshot from their browser. Extension users are running a piece of software with an update cycle they don't control and a version they might not even know is out of date — a bug report might describe a version of the extension that was fixed two review-cycles ago but hasn't reached that specific user yet because Chrome staggers rollouts. Debugging support tickets meant asking, more than I expected to, "what version are you actually running" before assuming the bug was still live. That's a support pattern a website almost never needs, because a website has exactly one version running at any moment: the one currently deployed.
+
+## What the store listing itself teaches you about positioning
+
+Beyond the code, the Chrome Web Store listing is its own small discipline — the screenshot, the short description, the category you choose all directly affect discovery, and none of that is obvious from building the extension itself. xtoolkit's listing went through several revisions before the description actually matched what people searching the store were looking for, rather than what I assumed they'd search for. That's a genuinely different skill from building the thing: writing for someone scanning a results list for three seconds, deciding whether to click based on a title and an icon alone.
+
+## Would I build another one this way
+
+Yes, without hesitation — but knowing now what the review process, the storage model, and the update cadence actually demand changed how I'd scope the first version. I'd build less into the initial submission, keep the permission footprint as small as physically possible, and treat the first review cycle as a learning pass rather than assuming it would sail through. None of that is discouraging; it's just a different set of rules than a website runs on, and the sooner you learn them are the actual rules — not suggestions — the smoother the whole process goes.
+
+If there's one habit I'd tell anyone building their first extension to adopt immediately, it's this: read the Chrome Web Store's developer program policies in full, once, before writing a single line of the extension itself. Not the quick-start guide — the actual policy document. It's not exciting reading, but every rejection I've seen (mine and other developers describing theirs) traces back to a rule that was sitting in that document the whole time, unread until it caused a problem. An hour spent reading it up front is consistently cheaper than a week spent waiting on a second review cycle after guessing wrong.

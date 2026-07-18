@@ -27,6 +27,7 @@ export function ParticleField({ count = 70 }: { count?: number }) {
     let height = 0;
     let particles: Particle[] = [];
     let raf = 0;
+    let running = false;
     const mouse = { x: -9999, y: -9999 };
 
     function resize() {
@@ -98,7 +99,7 @@ export function ParticleField({ count = 70 }: { count?: number }) {
         }
       }
 
-      raf = requestAnimationFrame(draw);
+      if (running) raf = requestAnimationFrame(draw);
     }
 
     function onMouseMove(e: MouseEvent) {
@@ -117,16 +118,32 @@ export function ParticleField({ count = 70 }: { count?: number }) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mouseleave", onMouseLeave);
 
-    if (!prefersReducedMotion) {
-      raf = requestAnimationFrame(draw);
-    } else {
-      draw();
-    }
+    // Pause the draw loop while the hero canvas is scrolled out of view —
+    // it otherwise runs forever in the background on every page.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !running) {
+          running = true;
+          if (prefersReducedMotion) {
+            draw();
+          } else {
+            raf = requestAnimationFrame(draw);
+          }
+        } else if (!entry.isIntersecting && running) {
+          running = false;
+          cancelAnimationFrame(raf);
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
 
     return () => {
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("mousemove", onMouseMove);
       canvas.removeEventListener("mouseleave", onMouseLeave);
+      observer.disconnect();
+      running = false;
       cancelAnimationFrame(raf);
     };
   }, [count]);
