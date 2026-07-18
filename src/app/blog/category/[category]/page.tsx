@@ -49,7 +49,7 @@ export default async function BlogCategoryPage({
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
           Blog
         </p>
-        <h1 className="mt-3 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
           <GradientText>{category}</GradientText>
         </h1>
 

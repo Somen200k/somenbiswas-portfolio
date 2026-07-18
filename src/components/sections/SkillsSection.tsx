@@ -1,7 +1,7 @@
 "use client";
 
 import { Blocks, Cloud, Cpu, Database, Server, Wrench } from "lucide-react";
-import { SectionReveal, StaggerGroup, staggerItem } from "@/components/ui/SectionReveal";
+import { SectionReveal, StaggerGroup, sidePopVariant } from "@/components/ui/SectionReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GradientText } from "@/components/ui/GradientText";
 import { motion } from "framer-motion";
@@ -10,32 +10,32 @@ const SKILL_GROUPS = [
   {
     icon: Cpu,
     title: "AI Tools",
-    skills: ["Claude", "Claude Code", "ChatGPT", "Gemini", "Groq API"],
+    skills: ["AI-Assisted Development", "LLM Integration", "Prompt Engineering"],
   },
   {
     icon: Blocks,
     title: "Frontend",
-    skills: ["Next.js 15", "React", "TypeScript", "Tailwind CSS"],
+    skills: ["Modern React Frameworks", "TypeScript", "Responsive Design"],
   },
   {
     icon: Server,
     title: "Backend",
-    skills: ["Node.js", "Express", "Google Apps Script"],
+    skills: ["API Development", "Server-Side Logic", "Automation Scripting"],
   },
   {
     icon: Database,
     title: "Database",
-    skills: ["Supabase", "PostgreSQL", "Row-Level Security"],
+    skills: ["Cloud Databases", "Access Control & Security", "Data Modeling"],
   },
   {
     icon: Cloud,
     title: "Hosting",
-    skills: ["Vercel", "Render.com", "GitHub"],
+    skills: ["Cloud Deployment", "CI/CD", "Version Control"],
   },
   {
     icon: Wrench,
     title: "Integrations",
-    skills: ["Resend", "hCaptcha", "GA4", "Search Console", "Web3Forms"],
+    skills: ["Email & Notifications", "Bot Protection", "Analytics & SEO Tooling"],
   },
 ];
 
@@ -46,14 +46,14 @@ export function SkillsSection() {
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
           Toolbox
         </p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+        <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
           Skills &amp; <GradientText>tools</GradientText>
         </h2>
       </SectionReveal>
 
       <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {SKILL_GROUPS.map((group) => (
-          <motion.div key={group.title} variants={staggerItem}>
+        {SKILL_GROUPS.map((group, i) => (
+          <motion.div key={group.title} variants={sidePopVariant(i)}>
             <GlassCard className="h-full">
               <group.icon className="h-6 w-6 text-gold" />
               <h3 className="mt-4 text-lg font-semibold">{group.title}</h3>

@@ -29,7 +29,7 @@ export default function PortfolioPage() {
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
           Portfolio
         </p>
-        <h1 className="mt-3 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
           Case studies of <GradientText>live products</GradientText>
         </h1>
         <p className="mt-5 max-w-xl text-muted">
@@ -47,7 +47,7 @@ export default function PortfolioPage() {
                   <p className="font-mono text-xs uppercase tracking-[0.2em] text-gold">
                     {String(i + 1).padStart(2, "0")} · {project.role}
                   </p>
-                  <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+                  <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
                     {project.name}
                   </h2>
                   <p className="mt-1 text-muted">{project.tagline}</p>

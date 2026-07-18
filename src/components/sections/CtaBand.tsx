@@ -9,7 +9,7 @@ export function CtaBand() {
       <SectionReveal>
         <div className="gradient-border relative overflow-hidden rounded-3xl glass-strong px-8 py-16 text-center md:px-16 md:py-24">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,rgba(245,158,11,0.14),transparent_70%)]" />
-          <h2 className="relative text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+          <h2 className="relative font-display text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
             Have a product idea?{" "}
             <GradientText>Let&apos;s build it.</GradientText>
           </h2>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Footer } from "@/components/ui/Footer";
@@ -14,6 +14,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
 });
 
 const seo = getSeo();
@@ -77,7 +83,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} h-full antialiased`}
     >
       <head>
         <script
@@ -86,6 +92,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
+        <div className="ambient-bg" aria-hidden="true" />
         <div className="noise-overlay" />
         <SiteChrome footer={<Footer />}>{children}</SiteChrome>
         {seo.ga4Id && (

@@ -2,18 +2,20 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --color-bg: #0a0a0a;
-  --color-bg-elevated: #111111;
-  --color-bg-card: rgba(255, 255, 255, 0.03);
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(245, 158, 11, 0.4);
-  --color-text: #f5f5f4;
-  --color-text-muted: #a3a3a3;
-  --color-text-dim: #7d7d7d;
+  --color-bg: #0d0a1a;
+  --color-bg-elevated: #150f28;
+  --color-bg-card: rgba(255, 255, 255, 0.045);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-hover: rgba(245, 158, 11, 0.45);
+  --color-text: #f6f4fb;
+  --color-text-muted: #ada8c2;
+  --color-text-dim: #857fa0;
   --color-gold: #f59e0b;
   --color-gold-light: #fcd34d;
   --color-gold-dim: #92620a;
   --color-teal: #02b491;
+  --color-violet: #8b5cf6;
+  --color-violet-deep: #4c1d95;
 }
 
 @theme inline {
@@ -29,8 +31,11 @@
   --color-gold-light: var(--color-gold-light);
   --color-gold-dim: var(--color-gold-dim);
   --color-teal: var(--color-teal);
+  --color-violet: var(--color-violet);
+  --color-violet-deep: var(--color-violet-deep);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-poppins);
   --animate-marquee: marquee 32s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
 }
@@ -48,13 +53,7 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   overflow-x: hidden;
-}
-
-@media (pointer: fine) {
-  html.cursor-ready,
-  html.cursor-ready * {
-    cursor: none !important;
-  }
+  position: relative;
 }
 
 ::selection {
@@ -69,7 +68,7 @@ body {
   background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: #322a4d;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -83,18 +82,84 @@ body {
   color: transparent;
 }
 
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Ambient liquid-glass background: soft violet + gold light pooling behind everything */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.ambient-bg::before,
+.ambient-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+}
+
+.ambient-bg::before {
+  top: -20%;
+  left: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.32), transparent 70%);
+}
+
+.ambient-bg::after {
+  top: -5%;
+  right: -15%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.22), transparent 70%);
+}
+
+.ambient-blob-bottom {
+  position: absolute;
+  bottom: -25%;
+  left: 20%;
+  width: 55vw;
+  height: 55vw;
+  border-radius: 50%;
+  filter: blur(100px);
+  background: radial-gradient(circle, rgba(76, 29, 149, 0.4), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Glass surfaces */
 .glass {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
 }
 
 .glass-strong {
-  background: rgba(17, 17, 17, 0.7);
+  background: rgba(21, 15, 40, 0.72);
   border: 1px solid var(--color-border);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Fully-rounded liquid pill surface, e.g. navbar / nav links */
+.glass-pill {
+  background: rgba(21, 15, 40, 0.55);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
+    0 8px 32px -12px rgba(0, 0, 0, 0.5);
 }
 
 .gradient-border {
@@ -109,11 +174,11 @@ body {
   border-radius: inherit;
   padding: 1px;
   background: linear-gradient(
-    130deg,
-    rgba(245, 158, 11, 0.6),
-    rgba(255, 255, 255, 0.06) 30%,
-    rgba(255, 255, 255, 0.02) 60%,
-    rgba(245, 158, 11, 0.35)
+    150deg,
+    rgba(255, 255, 255, 0.35),
+    rgba(245, 158, 11, 0.5) 25%,
+    rgba(139, 92, 246, 0.25) 55%,
+    rgba(255, 255, 255, 0.04) 80%
   );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,

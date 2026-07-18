@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { SectionReveal } from "@/components/ui/SectionReveal";
+import { PopReveal, SectionReveal } from "@/components/ui/SectionReveal";
 import { GradientText } from "@/components/ui/GradientText";
 import { Button } from "@/components/ui/Button";
 import { PostCard } from "@/components/sections/PostCard";
@@ -16,7 +16,7 @@ export function LatestPosts({ posts }: { posts: BlogPost[] }) {
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
               Writing
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+            <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
               From the <GradientText>blog</GradientText>
             </h2>
           </div>
@@ -28,9 +28,9 @@ export function LatestPosts({ posts }: { posts: BlogPost[] }) {
 
       <div className="mt-14 grid gap-6 md:grid-cols-3">
         {posts.map((post, i) => (
-          <SectionReveal key={post.slug} delay={i * 0.1}>
+          <PopReveal key={post.slug} index={i}>
             <PostCard post={post} />
-          </SectionReveal>
+          </PopReveal>
         ))}
       </div>
     </section>

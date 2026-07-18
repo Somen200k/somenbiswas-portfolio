@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SectionReveal } from "@/components/ui/SectionReveal";
+import { PopReveal, SectionReveal } from "@/components/ui/SectionReveal";
 import { GradientText } from "@/components/ui/GradientText";
 import { PostCard } from "@/components/sections/PostCard";
 import { AdSlot } from "@/components/sections/AdSlot";
@@ -26,7 +26,7 @@ export default function BlogPage() {
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
           Blog
         </p>
-        <h1 className="mt-3 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
           Writing on <GradientText>building in public</GradientText>
         </h1>
 
@@ -54,9 +54,9 @@ export default function BlogPage() {
       ) : (
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post, i) => (
-            <SectionReveal key={post.slug} delay={(i % 3) * 0.08}>
+            <PopReveal key={post.slug} index={i}>
               <PostCard post={post} />
-            </SectionReveal>
+            </PopReveal>
           ))}
         </div>
       )}

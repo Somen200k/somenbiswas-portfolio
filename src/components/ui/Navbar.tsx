@@ -50,17 +50,12 @@ export function Navbar() {
       )}
     >
       <div className="container-px mx-auto max-w-6xl">
-        <div
-          className={cn(
-            "flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-300",
-            scrolled ? "glass-strong" : "bg-transparent"
-          )}
-        >
+        <div className="glass-pill flex items-center justify-between px-4 py-2.5">
           <Link href="/" data-cursor-hover>
             <Logo />
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="glass-pill hidden items-center gap-1 bg-black/20 p-1 md:flex">
             {NAV_LINKS.map((link) => {
               const active =
                 link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
@@ -70,8 +65,10 @@ export function Navbar() {
                   href={link.href}
                   data-cursor-hover
                   className={cn(
-                    "relative rounded-full px-4 py-2 text-sm transition-colors duration-200",
-                    active ? "text-gold" : "text-muted hover:text-foreground"
+                    "relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200",
+                    active
+                      ? "bg-gold text-[#160f00] shadow-[0_4px_16px_-4px_rgba(245,158,11,0.6)]"
+                      : "text-muted hover:text-foreground"
                   )}
                 >
                   {link.label}
@@ -84,7 +81,7 @@ export function Navbar() {
             <Link
               href="/hire-me"
               data-cursor-hover
-              className="rounded-full bg-gold px-5 py-2 text-sm font-semibold text-[#0a0a0a] transition-transform duration-200 hover:scale-105"
+              className="rounded-full bg-gold px-5 py-2 text-sm font-semibold text-[#160f00] shadow-[0_6px_20px_-6px_rgba(245,158,11,0.65)] transition-transform duration-200 hover:scale-105"
             >
               Hire Me
             </Link>
@@ -111,7 +108,7 @@ export function Navbar() {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="container-px mx-auto max-w-6xl overflow-hidden md:hidden"
           >
-            <div className="glass-strong mt-2 flex flex-col gap-1 rounded-2xl p-3">
+            <div className="glass-strong mt-2 flex flex-col gap-1 rounded-3xl p-3">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}

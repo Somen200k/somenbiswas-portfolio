@@ -24,8 +24,8 @@ export function LoadingScreen() {
       {visible && (
         <motion.div
           className="fixed inset-0 z-[200] flex items-center justify-center bg-[#0a0a0a]"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
+          initial={{ y: 0 }}
+          exit={{ y: "-100%", transition: { duration: 0.55, ease: [0.65, 0, 0.35, 1] } }}
         >
           <div className="flex flex-col items-center gap-4">
             <motion.span

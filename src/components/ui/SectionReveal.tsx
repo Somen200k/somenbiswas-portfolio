@@ -8,7 +8,7 @@ export function SectionReveal({
   delay = 0,
   y = 32,
   className,
-  once = true,
+  once = false,
 }: {
   children: ReactNode;
   delay?: number;
@@ -42,7 +42,7 @@ export function StaggerGroup({
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: false, amount: 0.2 }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: stagger } },
@@ -62,3 +62,43 @@ export const staggerItem = {
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
+
+/** Alternating left/right "pop in" variant for use as a StaggerGroup child's `variants` prop. */
+export function sidePopVariant(index: number) {
+  const fromLeft = index % 2 === 0;
+  return {
+    hidden: { opacity: 0, x: fromLeft ? -70 : 70, scale: 0.85 },
+    show: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: { type: "spring" as const, stiffness: 140, damping: 16, mass: 0.7 },
+    },
+  };
+}
+
+/** Standalone alternating left/right "pop in" reveal, triggered on scroll into view. */
+export function PopReveal({
+  children,
+  index = 0,
+  delay = 0,
+  className,
+}: {
+  children: ReactNode;
+  index?: number;
+  delay?: number;
+  className?: string;
+}) {
+  const fromLeft = index % 2 === 0;
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: fromLeft ? -70 : 70, scale: 0.85 }}
+      whileInView={{ opacity: 1, x: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.3 }}
+      transition={{ type: "spring", stiffness: 140, damping: 16, mass: 0.7, delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}

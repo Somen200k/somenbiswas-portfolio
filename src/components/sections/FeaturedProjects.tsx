@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { SectionReveal } from "@/components/ui/SectionReveal";
+import { PopReveal, SectionReveal } from "@/components/ui/SectionReveal";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
@@ -15,14 +15,14 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
           Selected Work
         </p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+        <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
           Live products, <GradientText>shipped solo</GradientText>
         </h2>
       </SectionReveal>
 
       <div className="mt-14 grid gap-8 lg:grid-cols-2">
         {featured.map((project, i) => (
-          <SectionReveal key={project.slug} delay={i * 0.12}>
+          <PopReveal key={project.slug} index={i}>
             <TiltCard className="group h-full" maxTilt={5}>
               <GlassCard strong className="flex h-full flex-col">
                 <div className="flex items-start justify-between gap-4">
@@ -81,7 +81,7 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
                 </div>
               </GlassCard>
             </TiltCard>
-          </SectionReveal>
+          </PopReveal>
         ))}
       </div>
     </section>

@@ -23,7 +23,9 @@ export function PostCard({ post }: { post: BlogPost }) {
             </span>
           </div>
           <div className="flex flex-1 flex-col p-6">
-            <h3 className="text-lg font-semibold leading-snug">{post.title}</h3>
+            <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-semibold leading-snug">
+              {post.title}
+            </h3>
             <p className="mt-2 line-clamp-2 text-sm text-muted">{post.excerpt}</p>
             <div className="mt-4 flex items-center gap-3 text-xs text-dim">
               <span>

@@ -27,7 +27,7 @@ export function Hero({ data }: { data: HeroData }) {
     >
       <div className="absolute inset-0">
         <ParticleField count={80} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(245,158,11,0.12),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_30%_0%,rgba(139,92,246,0.22),transparent_70%),radial-gradient(ellipse_50%_45%_at_75%_10%,rgba(245,158,11,0.16),transparent_70%)]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
       </div>
 
@@ -39,13 +39,13 @@ export function Hero({ data }: { data: HeroData }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-muted"
+          className="glass-pill mb-6 inline-flex items-center gap-2 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-muted"
         >
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
           {data.eyebrow}
         </motion.p>
 
-        <h1 className="max-w-4xl text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl">
+        <h1 className="font-display max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl">
           <StaggerText text={parts[0]?.trim() ?? ""} />{" "}
           <StaggerText
             text={data.highlightWord}

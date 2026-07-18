@@ -9,29 +9,26 @@
     "description": "A full-stack, two-sided micro-work platform connecting contributors who complete tasks and surveys with organisations that need human-powered data work — AI data collection, annotation, moderation, and QA. Contributors earn NexCoins and redeem them for real gift vouchers.",
     "role": "Founder & Product Builder",
     "techStack": [
-      "Next.js 15",
-      "TypeScript",
-      "Tailwind CSS",
-      "Supabase",
-      "PostgreSQL",
-      "Row-Level Security",
-      "Vercel",
-      "Resend",
-      "Google Apps Script"
+      "Modern Web Framework",
+      "Cloud Database",
+      "Secure Access Control",
+      "Cloud Hosting",
+      "Transactional Email",
+      "Workflow Automation"
     ],
     "highlights": [
-      "6-tier role-based access control: owner, admin, reviewer, finance, support, moderator",
-      "NexCoin economy — 1,000 NexCoins = $1 USD — with automatic commission splits on every earning event",
-      "Live offerwall integrations (CPX Research, TheoremReach) with real HMAC hash postback validation",
-      "8 independent task-verification types, from proof codes to Telegram bot checks to screenshot review",
-      "Gamification system: XP, levels, daily streaks, contributor leaderboard",
-      "NexLeader referral system paying lifetime commission on guild members' earnings",
-      "Full admin panel across 74+ routes, zero build errors",
+      "Granular, multi-tier role-based access control across the whole platform",
+      "A complete internal currency system with automated, real-time payout logic",
+      "Live third-party survey and offerwall integrations with verified, fraud-resistant callbacks",
+      "Multiple independent ways to verify completed work, mixed and matched per task",
+      "Gamification layer: XP, levels, streaks, and a contributor leaderboard",
+      "A referral program paying ongoing commission on referred contributors' earnings",
+      "A full internal admin system covering 74+ routes, zero build errors",
       "17 SEO blog posts, Google Analytics 4 and Search Console verified",
-      "Google Drive integration via Apps Script for file-based task submissions",
-      "hCaptcha bot protection and Resend transactional email"
+      "Cloud storage integration for file-based task submissions",
+      "Bot protection and transactional email on every user-facing flow"
     ],
-    "whatWasBuilt": "Designed and shipped the entire platform solo: database schema and RLS policies, the NexCoin ledger and commission engine, 8 task-verification pipelines, two offerwall postback integrations with hash validation, a 6-role admin system, and the full contributor dashboard — architected and shipped end-to-end.",
+    "whatWasBuilt": "Designed and shipped the entire platform solo: the data model and access-control policies, an internal currency and payout engine, several fraud-resistant task-verification pipelines, two live third-party integrations, a full role-based admin system, and the complete contributor dashboard — architected and shipped end-to-end.",
     "stats": [
       {
         "label": "Routes",
@@ -61,28 +58,23 @@
     "description": "A free online tool factory with 44 tools across developer utilities, SEO, X/Twitter, email/privacy, AI writing, and text formatting. No signup, no paywall, no data stored — tools run in the browser or process-and-discard server-side.",
     "role": "Founder & Website Creator",
     "techStack": [
-      "React",
-      "TypeScript",
-      "Vite",
-      "Tailwind CSS v4",
-      "Node.js",
-      "Express v5",
-      "Groq API",
-      "pnpm monorepo",
-      "Vercel",
-      "Render.com"
+      "Modern Frontend Framework",
+      "Backend API",
+      "AI / LLM Integration",
+      "Browser Extension Platform",
+      "Cloud Hosting"
     ],
     "highlights": [
       "44 tools across 6 categories — 21 of them developer utilities alone",
-      "Gmail Account Checker built on raw SMTP verification over TCP port 25",
-      "AI Bio Generator and AI Text Detector powered by Groq's Llama 3.3 70B with automatic multi-key rotation",
-      "Chrome Extension published on the Chrome Web Store, 5-star rating, MV3 with a 15-second auto-refresh service worker",
-      "Prerendering system that makes the React SPA crawlable for SEO",
-      "Production-grade API security stack: Helmet, rate limiting, XSS cleaning, HPP, SQL-injection blocking",
+      "A live email-account verification tool built without relying on any third-party API",
+      "AI Bio Generator and AI Text Detector powered by real LLM inference with automatic failover",
+      "Chrome Extension published on the Chrome Web Store, 5-star rating, with a background auto-refresh service",
+      "A rendering layer that makes the tool directory fully crawlable for search engines",
+      "A hardened API security stack — rate limiting, input sanitization, and injection protection on every route",
       "24 SEO blog articles across 4 topic clusters, traffic from 40+ countries",
-      "OpenAPI spec as the API source of truth, codegen via Orval into React Query hooks and Zod validators"
+      "A typed, spec-driven API layer keeping the frontend and backend in lockstep as tools were added"
     ],
-    "whatWasBuilt": "Built the full pnpm monorepo solo: a Vite/React frontend with 44 tool pages, an Express v5 API with a hardened security middleware stack, a published Chrome extension, an OpenAPI-driven codegen pipeline, and an SEO layer (prerendering, split sitemaps, structured data) on top of a client-rendered SPA.",
+    "whatWasBuilt": "Built the full platform solo: a fast, tool-rich frontend covering 44 utilities, a hardened backend API, a published Chrome extension, a typed API contract keeping both in sync, and a complete SEO layer on top of what would otherwise be an unindexable client-rendered app.",
     "stats": [
       {
         "label": "Tools",
@@ -109,28 +101,24 @@
     "visible": true,
     "featured": false,
     "url": "https://www.starscoopdaily.site",
-    "description": "A celebrity and entertainment news site with an automated AI article-generation pipeline, publishing 1,200+ word articles via Groq's Llama 3.3 70B and a GitHub Contents API publishing system that works around Vercel's read-only production filesystem.",
+    "description": "A celebrity and entertainment news site with a fully automated AI article-generation pipeline, publishing 1,200+ word articles daily with zero manual writing.",
     "role": "Founder & Website Creator",
     "techStack": [
-      "Next.js 14",
-      "App Router",
-      "Tailwind CSS",
-      "Groq API",
-      "Llama 3.3 70B",
-      "GitHub Contents API",
-      "Vercel",
-      "Adsterra"
+      "Modern Web Framework",
+      "AI Content Generation",
+      "Cloud Hosting",
+      "Display Advertising"
     ],
     "highlights": [
-      "Automated AI article-generation pipeline producing 1,200+ word articles from live RSS headline feeds",
-      "GitHub Contents API publishing system — solved Vercel's read-only filesystem at runtime",
+      "Automated AI article-generation pipeline producing 1,200+ word articles from live headline feeds",
+      "A custom publishing system engineered around real production hosting constraints",
       "Full 6-tab admin panel: news fetcher, article generator, ads manager, site controls, stats, published articles",
       "14 content categories with per-category color theming",
-      "Dynamic OG image generation on the edge for every article",
+      "Dynamic OG image generation for every article",
       "Monetized via Adsterra display advertising",
       "Google Analytics 4 active from launch"
     ],
-    "whatWasBuilt": "Built the automated content pipeline end-to-end: RSS ingestion and scandal-scoring, AI generation via Groq, an image-sourcing layer, and a GitHub-Contents-API publishing flow that treats the git repo itself as the CMS database — since Vercel's production filesystem can't be written to at runtime.",
+    "whatWasBuilt": "Built the automated content pipeline end-to-end: headline ingestion and scoring, AI-driven article generation, an image-sourcing layer, and a custom publishing flow engineered to work reliably within the constraints of modern serverless hosting.",
     "stats": [
       {
         "label": "Admin tabs",

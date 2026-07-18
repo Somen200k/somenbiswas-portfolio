@@ -27,7 +27,7 @@ export default function AboutPage() {
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">
           About
         </p>
-        <h1 className="mt-3 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+        <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
           From data operations to <GradientText>solo AI builder</GradientText>
         </h1>
       </SectionReveal>

@@ -20,7 +20,7 @@ export default function PrivacyPolicyPage() {
     <div className="container-px mx-auto max-w-3xl py-20">
       <SectionReveal>
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-gold">Legal</p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+        <h1 className="mt-3 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
           Privacy <GradientText>Policy</GradientText>
         </h1>
         <p className="mt-4 text-sm text-dim">Last updated: July 17, 2026</p>
