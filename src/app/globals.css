@@ -57,6 +57,16 @@ body {
   position: relative;
 }
 
+/* color-scheme: dark alone doesn't reliably darken the open <select> popup in
+   every browser — force option colors directly so dropdown lists stay legible. */
+select {
+  color-scheme: dark;
+}
+select option {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text);
+}
+
 ::selection {
   background: var(--color-gold);
   color: #0a0a0a;

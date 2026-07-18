@@ -1,115 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Download, Plus, Trash2, Pencil, X, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Download, Plus, Trash2, Pencil, X, Sparkles, FileSpreadsheet, Upload, Loader2 } from "lucide-react";
 import { AdminField, inputClass } from "@/components/admin/AdminField";
 import { GlassCard } from "@/components/ui/GlassCard";
-
-type YesNo = "Yes" | "No";
-
-interface Brief {
-  id: string;
-  clientName: string;
-  projectType: string;
-  pages: string[];
-  colorMood: string;
-  primaryColor: string;
-  uiStyle: string;
-  animationLevel: string;
-  animationTypes: string[];
-  databaseNeeded: YesNo;
-  dataTypes: string[];
-  authNeeded: YesNo;
-  authTypes: string[];
-  paymentsNeeded: YesNo;
-  paymentMethods: string[];
-  cmsNeeded: YesNo;
-  fileUploads: YesNo;
-  realtime: YesNo;
-  seoPriority: string;
-  multiLanguage: YesNo;
-  platform: string;
-  timeline: string;
-  notes: string;
-}
+import {
+  type Brief,
+  type YesNo,
+  PROJECT_TYPES,
+  PAGE_OPTIONS,
+  COLOR_MOODS,
+  UI_STYLES,
+  ANIMATION_LEVELS,
+  ANIMATION_TYPES,
+  DATA_TYPES,
+  AUTH_TYPES,
+  PAYMENT_METHODS,
+  SEO_PRIORITIES,
+  PLATFORMS,
+  TIMELINES,
+  emptyBrief,
+  downloadQuestionnaireXlsx,
+  parseQuestionnaireXlsx,
+} from "@/lib/scoper-form";
 
 const STORAGE_KEY = "sb_project_briefs";
-
-const PROJECT_TYPES = [
-  "Portfolio / Personal Site",
-  "Business / Landing Page",
-  "E-commerce Store",
-  "Blog / Content Platform",
-  "SaaS / Web App",
-  "Community / Social Platform",
-  "Booking / Reservation System",
-  "Other",
-];
-
-const PAGE_OPTIONS = [
-  "Home", "About", "Services", "Portfolio / Projects", "Blog", "Pricing",
-  "FAQ", "Contact", "Login / Signup", "Dashboard", "Admin Panel", "Checkout / Cart",
-];
-
-const COLOR_MOODS = [
-  "Dark & Bold", "Light & Minimal", "Colorful & Playful", "Corporate & Professional",
-  "Pastel & Soft", "Luxury & Gold-accented", "Custom (see notes)",
-];
-
-const UI_STYLES = [
-  "Glassmorphism", "Flat / Minimal", "Neumorphism", "Material Design",
-  "Brutalist", "Corporate Clean", "Playful / Rounded",
-];
-
-const ANIMATION_LEVELS = ["None", "Subtle", "Moderate", "Heavy / Immersive"];
-
-const ANIMATION_TYPES = [
-  "Scroll reveal", "Hover effects", "Page transitions", "Parallax",
-  "Loading screen", "Micro-interactions", "3D elements",
-];
-
-const DATA_TYPES = [
-  "User accounts", "Product / inventory data", "Blog / content", "Bookings / orders",
-  "Messages / chat", "Form submissions only",
-];
-
-const AUTH_TYPES = ["Email & password", "Social login (Google etc.)", "Magic link", "Admin-only login"];
-
-const PAYMENT_METHODS = ["Stripe", "Razorpay", "PayPal", "Manual / offline"];
-
-const SEO_PRIORITIES = ["Low", "Medium", "High — organic search is the main channel"];
-
-const PLATFORMS = ["Responsive website only", "Website + installable PWA", "Native mobile app needed"];
-
-const TIMELINES = ["ASAP / rush", "1-2 weeks", "2-4 weeks", "Flexible / ongoing"];
-
-function emptyBrief(): Brief {
-  return {
-    id: crypto.randomUUID(),
-    clientName: "",
-    projectType: PROJECT_TYPES[0],
-    pages: [],
-    colorMood: COLOR_MOODS[0],
-    primaryColor: "",
-    uiStyle: UI_STYLES[0],
-    animationLevel: ANIMATION_LEVELS[1],
-    animationTypes: [],
-    databaseNeeded: "No",
-    dataTypes: [],
-    authNeeded: "No",
-    authTypes: [],
-    paymentsNeeded: "No",
-    paymentMethods: [],
-    cmsNeeded: "No",
-    fileUploads: "No",
-    realtime: "No",
-    seoPriority: SEO_PRIORITIES[1],
-    multiLanguage: "No",
-    platform: PLATFORMS[0],
-    timeline: TIMELINES[1],
-    notes: "",
-  };
-}
 
 function toggleInArray(arr: string[], value: string): string[] {
   return arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value];
@@ -251,6 +166,10 @@ export function ProjectScoper() {
   const [briefs, setBriefs] = useState<Brief[] | null>(null);
   const [editing, setEditing] = useState<Brief | null>(null);
   const [saved, setSaved] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const [importError, setImportError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -277,6 +196,31 @@ export function ProjectScoper() {
     if (!confirm("Delete this brief?")) return;
     setBriefs((prev) => prev!.filter((b) => b.id !== id));
     if (editing?.id === id) setEditing(null);
+  }
+
+  async function handleDownloadQuestionnaire() {
+    setGenerating(true);
+    try {
+      await downloadQuestionnaireXlsx();
+    } finally {
+      setGenerating(false);
+    }
+  }
+
+  async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-selecting the same file later
+    if (!file) return;
+    setImporting(true);
+    setImportError("");
+    try {
+      const answers = await parseQuestionnaireXlsx(file);
+      setEditing({ ...emptyBrief(), ...answers });
+    } catch (err) {
+      setImportError(err instanceof Error ? err.message : "Couldn't read that file.");
+    } finally {
+      setImporting(false);
+    }
   }
 
   if (editing) {
@@ -308,6 +252,23 @@ export function ProjectScoper() {
                 onChange={(e) => setEditing({ ...editing, clientName: e.target.value })}
               />
             </AdminField>
+
+            <button
+              type="button"
+              onClick={async () => {
+                setGenerating(true);
+                try {
+                  await downloadQuestionnaireXlsx(editing.clientName);
+                } finally {
+                  setGenerating(false);
+                }
+              }}
+              disabled={generating}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-xs text-muted hover:text-foreground disabled:opacity-60"
+            >
+              {generating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <FileSpreadsheet className="h-3.5 w-3.5" />}
+              Download Blank Questionnaire {editing.clientName ? `for ${editing.clientName}` : ""}
+            </button>
 
             <AdminField label="Project Type">
               <select
@@ -593,16 +554,50 @@ export function ProjectScoper() {
   return (
     <div className="space-y-4">
       <div>
-        <button
-          type="button"
-          onClick={() => setEditing(emptyBrief())}
-          className="inline-flex items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-xs font-semibold text-[#0a0a0a]"
-        >
-          <Plus className="h-3.5 w-3.5" /> New Brief
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setEditing(emptyBrief())}
+            className="inline-flex items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-xs font-semibold text-[#0a0a0a]"
+          >
+            <Plus className="h-3.5 w-3.5" /> New Brief
+          </button>
+          <button
+            type="button"
+            onClick={handleDownloadQuestionnaire}
+            disabled={generating}
+            className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-xs text-muted hover:text-foreground disabled:opacity-60"
+          >
+            {generating ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <FileSpreadsheet className="h-3.5 w-3.5" />
+            )}
+            Download Client Questionnaire
+          </button>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={importing}
+            className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-xs text-muted hover:text-foreground disabled:opacity-60"
+          >
+            {importing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+            Import Client Response
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".xlsx"
+            onChange={handleImportFile}
+            className="hidden"
+          />
+        </div>
         <p className="mt-2 text-xs text-dim">
-          Walk a client through the checklist, then download a build-ready prompt you can hand straight to Claude.
+          Walk a client through the checklist yourself, or hand them the Excel questionnaire to fill out and send
+          back — importing it opens a pre-filled brief you can review before saving. Either way, download a
+          build-ready prompt when you&apos;re done.
         </p>
+        {importError && <p className="mt-2 text-xs text-red-400">{importError}</p>}
       </div>
 
       {briefs.length === 0 ? (
