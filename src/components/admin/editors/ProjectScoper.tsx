@@ -16,6 +16,7 @@ import {
   DATA_TYPES,
   AUTH_TYPES,
   PAYMENT_METHODS,
+  SOCIAL_PLATFORMS,
   SEO_PRIORITIES,
   PLATFORMS,
   TIMELINES,
@@ -52,6 +53,11 @@ function buildRecommendation(b: Brief): string[] {
   }
   if (b.realtime === "Yes") {
     tools.push("Supabase Realtime for live updates, chat, or notifications");
+  }
+  if (b.socialAccountsNeeded === "Yes") {
+    tools.push(
+      `Social icon links wired into the header/footer${b.socialPlatforms.length ? ` (${b.socialPlatforms.join(", ")})` : ""}`
+    );
   }
   if (b.animationLevel !== "None") {
     tools.push(`Framer Motion — ${b.animationLevel.toLowerCase()} level of scroll/hover animation`);
@@ -100,10 +106,18 @@ function buildPrompt(b: Brief, tools: string[]): string {
   lines.push(`- Blog / CMS: ${b.cmsNeeded}`);
   lines.push(`- File uploads: ${b.fileUploads}`);
   lines.push(`- Realtime features: ${b.realtime}`);
+  lines.push(
+    `- Social accounts: ${b.socialAccountsNeeded}${b.socialPlatforms.length ? ` (${b.socialPlatforms.join(", ")})` : ""}`
+  );
   lines.push(`- SEO priority: ${b.seoPriority}`);
   lines.push(`- Multi-language: ${b.multiLanguage}`);
   lines.push(`- Platform: ${b.platform}`);
   lines.push(`- Timeline: ${b.timeline}`);
+  if (b.socialLinks.trim()) {
+    lines.push("");
+    lines.push("## Social Account Links");
+    lines.push(b.socialLinks.trim());
+  }
   lines.push("");
   lines.push("## Recommended Tools & Stack");
   lines.push(tools.map((t) => `- ${t}`).join("\n"));
@@ -444,6 +458,39 @@ export function ProjectScoper() {
                 </select>
               </AdminField>
             </div>
+
+            <AdminField label="Social Accounts Needed" hint="Add links/icons for their social profiles?">
+              <select
+                className={inputClass}
+                value={editing.socialAccountsNeeded}
+                onChange={(e) => setEditing({ ...editing, socialAccountsNeeded: e.target.value as YesNo })}
+              >
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </AdminField>
+
+            {editing.socialAccountsNeeded === "Yes" && (
+              <>
+                <AdminField label="Which Platforms?">
+                  <ChipGroup
+                    options={SOCIAL_PLATFORMS}
+                    selected={editing.socialPlatforms}
+                    onToggle={(v) =>
+                      setEditing({ ...editing, socialPlatforms: toggleInArray(editing.socialPlatforms, v) })
+                    }
+                  />
+                </AdminField>
+                <AdminField label="Account Links" hint="One per line, e.g. Instagram: https://instagram.com/...">
+                  <textarea
+                    rows={4}
+                    className={inputClass}
+                    value={editing.socialLinks}
+                    onChange={(e) => setEditing({ ...editing, socialLinks: e.target.value })}
+                  />
+                </AdminField>
+              </>
+            )}
 
             <div className="grid gap-4 sm:grid-cols-2">
               <AdminField label="SEO Priority">

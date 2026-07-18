@@ -1,3 +1,5 @@
+import type ExcelJS from "exceljs";
+
 export type YesNo = "Yes" | "No";
 
 export interface Brief {
@@ -19,6 +21,9 @@ export interface Brief {
   cmsNeeded: YesNo;
   fileUploads: YesNo;
   realtime: YesNo;
+  socialAccountsNeeded: YesNo;
+  socialPlatforms: string[];
+  socialLinks: string;
   seoPriority: string;
   multiLanguage: YesNo;
   platform: string;
@@ -68,6 +73,11 @@ export const AUTH_TYPES = ["Email & password", "Social login (Google etc.)", "Ma
 
 export const PAYMENT_METHODS = ["Stripe", "Razorpay", "PayPal", "Manual / offline"];
 
+export const SOCIAL_PLATFORMS = [
+  "Instagram", "Facebook", "X / Twitter", "LinkedIn", "YouTube",
+  "TikTok", "Pinterest", "WhatsApp", "Telegram", "Other",
+];
+
 export const SEO_PRIORITIES = ["Low", "Medium", "High — organic search is the main channel"];
 
 export const PLATFORMS = ["Responsive website only", "Website + installable PWA", "Native mobile app needed"];
@@ -94,6 +104,9 @@ export function emptyBrief(): Brief {
     cmsNeeded: "No",
     fileUploads: "No",
     realtime: "No",
+    socialAccountsNeeded: "No",
+    socialPlatforms: [],
+    socialLinks: "",
     seoPriority: SEO_PRIORITIES[1],
     multiLanguage: "No",
     platform: PLATFORMS[0],
@@ -102,54 +115,86 @@ export function emptyBrief(): Brief {
   };
 }
 
+type QRowType = "text" | "yesno" | "select";
+
 interface QRow {
   key: string;
   question: string;
-  hint: string;
+  type: QRowType;
+  options?: string[];
+}
+
+function hintFor(row: QRow): string {
+  if (row.type === "yesno") return "Yes or No";
+  if (row.type === "select") return (row.options || []).join(" | ");
+  return "Free text";
 }
 
 function buildRows(): QRow[] {
   const rows: QRow[] = [];
-  rows.push({ key: "clientName", question: "Your name / business name", hint: "Free text" });
-  rows.push({ key: "projectType", question: "What type of project is this?", hint: PROJECT_TYPES.join(" | ") });
+  rows.push({ key: "clientName", question: "Your name / business name", type: "text" });
+  rows.push({ key: "projectType", question: "What type of project is this?", type: "select", options: PROJECT_TYPES });
   for (const p of PAGE_OPTIONS) {
-    rows.push({ key: `pages::${p}`, question: `Do you need a "${p}" page?`, hint: "Yes or No" });
+    rows.push({ key: `pages::${p}`, question: `Do you need a "${p}" page?`, type: "yesno" });
   }
-  rows.push({ key: "colorMood", question: "Color mood", hint: COLOR_MOODS.join(" | ") });
+  rows.push({ key: "colorMood", question: "Color mood", type: "select", options: COLOR_MOODS });
   rows.push({
     key: "primaryColor",
     question: "Primary brand color (optional)",
-    hint: "Hex code or a color name, e.g. #f59e0b or 'deep violet'",
+    type: "text",
   });
-  rows.push({ key: "uiStyle", question: "UI style", hint: UI_STYLES.join(" | ") });
-  rows.push({ key: "animationLevel", question: "How much animation do you want?", hint: ANIMATION_LEVELS.join(" | ") });
+  rows.push({ key: "uiStyle", question: "UI style", type: "select", options: UI_STYLES });
+  rows.push({
+    key: "animationLevel",
+    question: "How much animation do you want?",
+    type: "select",
+    options: ANIMATION_LEVELS,
+  });
   for (const a of ANIMATION_TYPES) {
-    rows.push({ key: `animationTypes::${a}`, question: `Include "${a}"?`, hint: "Yes or No" });
+    rows.push({ key: `animationTypes::${a}`, question: `Include "${a}"?`, type: "yesno" });
   }
-  rows.push({ key: "databaseNeeded", question: "Do you need user accounts or stored data?", hint: "Yes or No" });
+  rows.push({ key: "databaseNeeded", question: "Do you need user accounts or stored data?", type: "yesno" });
   for (const d of DATA_TYPES) {
-    rows.push({ key: `dataTypes::${d}`, question: `Does that include "${d}"?`, hint: "Yes or No" });
+    rows.push({ key: `dataTypes::${d}`, question: `Does that include "${d}"?`, type: "yesno" });
   }
-  rows.push({ key: "authNeeded", question: "Do users need to log in?", hint: "Yes or No" });
+  rows.push({ key: "authNeeded", question: "Do users need to log in?", type: "yesno" });
   for (const a of AUTH_TYPES) {
-    rows.push({ key: `authTypes::${a}`, question: `Login method — "${a}"?`, hint: "Yes or No" });
+    rows.push({ key: `authTypes::${a}`, question: `Login method — "${a}"?`, type: "yesno" });
   }
-  rows.push({ key: "paymentsNeeded", question: "Do you need to accept payments?", hint: "Yes or No" });
+  rows.push({ key: "paymentsNeeded", question: "Do you need to accept payments?", type: "yesno" });
   for (const p of PAYMENT_METHODS) {
-    rows.push({ key: `paymentMethods::${p}`, question: `Payment method — "${p}"?`, hint: "Yes or No" });
+    rows.push({ key: `paymentMethods::${p}`, question: `Payment method — "${p}"?`, type: "yesno" });
   }
-  rows.push({ key: "cmsNeeded", question: "Do you need a blog or content section?", hint: "Yes or No" });
-  rows.push({ key: "fileUploads", question: "Will users upload files or images?", hint: "Yes or No" });
+  rows.push({ key: "cmsNeeded", question: "Do you need a blog or content section?", type: "yesno" });
+  rows.push({ key: "fileUploads", question: "Will users upload files or images?", type: "yesno" });
   rows.push({
     key: "realtime",
     question: "Do you need live / real-time features (chat, live updates)?",
-    hint: "Yes or No",
+    type: "yesno",
   });
-  rows.push({ key: "seoPriority", question: "How important is search engine visibility?", hint: SEO_PRIORITIES.join(" | ") });
-  rows.push({ key: "multiLanguage", question: "Do you need more than one language?", hint: "Yes or No" });
-  rows.push({ key: "platform", question: "Platform", hint: PLATFORMS.join(" | ") });
-  rows.push({ key: "timeline", question: "Timeline", hint: TIMELINES.join(" | ") });
-  rows.push({ key: "notes", question: "Anything else we should know?", hint: "Free text" });
+  rows.push({
+    key: "socialAccountsNeeded",
+    question: "Do you want social media links/icons added to the site?",
+    type: "yesno",
+  });
+  for (const p of SOCIAL_PLATFORMS) {
+    rows.push({ key: `socialPlatforms::${p}`, question: `Include a link to your ${p} account?`, type: "yesno" });
+  }
+  rows.push({
+    key: "socialLinks",
+    question: "Paste each account's link here (one per line, next to its platform name)",
+    type: "text",
+  });
+  rows.push({
+    key: "seoPriority",
+    question: "How important is search engine visibility?",
+    type: "select",
+    options: SEO_PRIORITIES,
+  });
+  rows.push({ key: "multiLanguage", question: "Do you need more than one language?", type: "yesno" });
+  rows.push({ key: "platform", question: "Platform", type: "select", options: PLATFORMS });
+  rows.push({ key: "timeline", question: "Timeline", type: "select", options: TIMELINES });
+  rows.push({ key: "notes", question: "Anything else we should know?", type: "text" });
   return rows;
 }
 
@@ -160,11 +205,36 @@ const DARK_TEXT = "FFF6F4FB";
 const ANSWER_FILL = "FFFFFBEB";
 const ANSWER_TEXT = "FF111111";
 
+function listWsSetColumn(ws: ExcelJS.Worksheet, col: string, header: string, options: string[]) {
+  ws.getCell(`${col}1`).value = header;
+  options.forEach((opt, i) => {
+    ws.getCell(`${col}${i + 2}`).value = opt;
+  });
+}
+
 export async function downloadQuestionnaireXlsx(clientName?: string): Promise<void> {
   const ExcelJS = (await import("exceljs")).default;
   const wb = new ExcelJS.Workbook();
   wb.creator = "Somen Biswas";
   wb.created = new Date();
+
+  const rows = buildRows();
+
+  // Hidden helper sheet holding each select field's option list, so the
+  // "Your Answer" cells can use a real Excel dropdown (data validation)
+  // instead of relying on the client to type an option exactly.
+  const listsWs = wb.addWorksheet("Lists");
+  listsWs.state = "hidden";
+  const LIST_COLUMNS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+  const listColumnFor = new Map<string, string>();
+  let listColIndex = 0;
+  rows
+    .filter((r) => r.type === "select")
+    .forEach((r) => {
+      const col = LIST_COLUMNS[listColIndex++];
+      listColumnFor.set(r.key, col);
+      listWsSetColumn(listsWs, col, r.key, r.options || []);
+    });
 
   const ws = wb.addWorksheet("Project Questionnaire", {
     views: [{ state: "frozen", ySplit: HEADER_ROWS }],
@@ -200,13 +270,39 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
   });
   headerRow.height = 20;
 
-  const rows = buildRows();
   rows.forEach((r) => {
-    const row = ws.addRow({ key: r.key, question: r.question, hint: r.hint, answer: "" });
+    const row = ws.addRow({ key: r.key, question: r.question, hint: hintFor(r), answer: "" });
     row.getCell(2).alignment = { wrapText: true, vertical: "top" };
     row.getCell(3).alignment = { wrapText: true, vertical: "top" };
-    row.getCell(4).fill = { type: "pattern", pattern: "solid", fgColor: { argb: ANSWER_FILL } };
-    row.getCell(4).font = { color: { argb: ANSWER_TEXT } };
+    const answerCell = row.getCell(4);
+    answerCell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: ANSWER_FILL } };
+    answerCell.font = { color: { argb: ANSWER_TEXT } };
+
+    if (r.type === "yesno") {
+      answerCell.dataValidation = {
+        type: "list",
+        allowBlank: true,
+        formulae: ['"Yes,No"'],
+        showErrorMessage: true,
+        errorStyle: "warning",
+        errorTitle: "Invalid entry",
+        error: "Please choose Yes or No from the dropdown.",
+      };
+    } else if (r.type === "select" && r.options?.length) {
+      const col = listColumnFor.get(r.key);
+      if (col) {
+        answerCell.dataValidation = {
+          type: "list",
+          allowBlank: true,
+          formulae: [`Lists!$${col}$2:$${col}$${1 + r.options.length}`],
+          showErrorMessage: true,
+          errorStyle: "warning",
+          errorTitle: "Invalid entry",
+          error: "Please choose one of the listed options from the dropdown.",
+        };
+      }
+    }
+
     row.eachCell({ includeEmpty: true }, (cell) => {
       cell.border = {
         top: { style: "thin", color: { argb: "FFE5E5E5" } },
@@ -242,7 +338,7 @@ export async function parseQuestionnaireXlsx(file: File): Promise<Partial<Brief>
   const wb = new ExcelJS.Workbook();
   const buf = await file.arrayBuffer();
   await wb.xlsx.load(buf);
-  const ws = wb.worksheets[0];
+  const ws = wb.getWorksheet("Project Questionnaire") || wb.worksheets[0];
   if (!ws) throw new Error("No worksheet found in this file.");
 
   const answers = new Map<string, string>();
@@ -285,6 +381,9 @@ export async function parseQuestionnaireXlsx(file: File): Promise<Partial<Brief>
     cmsNeeded: yn("cmsNeeded"),
     fileUploads: yn("fileUploads"),
     realtime: yn("realtime"),
+    socialAccountsNeeded: yn("socialAccountsNeeded"),
+    socialPlatforms: multiselect("socialPlatforms", SOCIAL_PLATFORMS),
+    socialLinks: answers.get("socialLinks") || "",
     seoPriority: pickOption("seoPriority", SEO_PRIORITIES, SEO_PRIORITIES[1]),
     multiLanguage: yn("multiLanguage"),
     platform: pickOption("platform", PLATFORMS, PLATFORMS[0]),
