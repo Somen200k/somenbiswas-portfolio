@@ -8,7 +8,7 @@ export function generateMetadata(): Metadata {
   const seo = getSeo();
   return {
     title: "Terms of Service",
-    description: "Terms governing use of somenbiswas.me.",
+    description: "Terms governing use of somenbiswas.com.",
     alternates: { canonical: `${seo.siteUrl}/terms` },
     robots: { index: true, follow: true },
   };
@@ -29,7 +29,7 @@ export default function TermsPage() {
 
       <SectionReveal delay={0.05} className="prose prose-invert prose-gold mt-12 max-w-none">
         <p>
-          By using somenbiswas.me (&ldquo;this site&rdquo;), you agree to the terms below. If you
+          By using somenbiswas.com (&ldquo;this site&rdquo;), you agree to the terms below. If you
           don&apos;t agree, please don&apos;t use the site.
         </p>
 

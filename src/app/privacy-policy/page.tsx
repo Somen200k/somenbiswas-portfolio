@@ -8,7 +8,7 @@ export function generateMetadata(): Metadata {
   const seo = getSeo();
   return {
     title: "Privacy Policy",
-    description: "How somenbiswas.me collects, uses, and protects your information.",
+    description: "How somenbiswas.com collects, uses, and protects your information.",
     alternates: { canonical: `${seo.siteUrl}/privacy-policy` },
     robots: { index: true, follow: true },
   };
@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
 
       <SectionReveal delay={0.05} className="prose prose-invert prose-gold mt-12 max-w-none">
         <p>
-          This Privacy Policy explains how somenbiswas.me (&ldquo;this site,&rdquo; &ldquo;we,&rdquo;
+          This Privacy Policy explains how somenbiswas.com (&ldquo;this site,&rdquo; &ldquo;we,&rdquo;
           &ldquo;us&rdquo;) collects, uses, and protects information when you visit. This site is
           operated by Somen Biswas as a personal portfolio and blog.
         </p>
@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
         <p>
           This site links to NexGuild, xtoolkit.live, StarScoopDaily, and various social media
           profiles. Each of those is operated separately and governed by its own privacy policy —
-          this policy only covers somenbiswas.me itself.
+          this policy only covers somenbiswas.com itself.
         </p>
 
         <h2>Cookies</h2>

@@ -253,7 +253,7 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
   wb.modified = new Date();
   wb.title = `Project Questionnaire${clientName ? ` — ${clientName}` : ""}`;
   wb.subject = "Project Questionnaire";
-  wb.company = "somenbiswas.me";
+  wb.company = "somenbiswas.com";
   wb.description = "Fill in the 'Your Answer' column and send this back.";
 
   const rows = buildRows();
@@ -387,7 +387,7 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
   const footerRow = ws.addRow({ key: "", question: "", hint: "", answer: "" });
   ws.mergeCells(`A${footerRow.number}:D${footerRow.number}`);
   const footerCell = footerRow.getCell(1);
-  footerCell.value = `Prepared by Somen Biswas · somenbiswas.me · ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`;
+  footerCell.value = `Prepared by Somen Biswas · somenbiswas.com · ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`;
   footerCell.font = { italic: true, size: 9, color: { argb: "FF999999" } };
   footerRow.height = 18;
 

@@ -85,7 +85,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         />
       </div>
 
-      <input type="hidden" name="subject" value="New message from somenbiswas.me" />
+      <input type="hidden" name="subject" value="New message from somenbiswas.com" />
       <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
 
       <motion.button

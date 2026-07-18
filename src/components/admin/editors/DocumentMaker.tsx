@@ -59,7 +59,7 @@ function defaultDoc(config: DocumentMakerConfig): DocState {
   return {
     businessName: "Somen Biswas",
     businessEmail: "somen.office@gmail.com",
-    businessWebsite: "somenbiswas.me",
+    businessWebsite: "somenbiswas.com",
     businessAddress: "Kolkata, India",
     clientName: "",
     clientEmail: "",
