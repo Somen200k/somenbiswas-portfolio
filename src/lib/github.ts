@@ -24,7 +24,8 @@ export async function publishViaGithub(
   creds: GithubCreds,
   path: string,
   content: string,
-  message: string
+  message: string,
+  encoding: "utf-8" | "base64" = "utf-8"
 ): Promise<PublishResult> {
   const apiUrl = `https://api.github.com/repos/${creds.owner}/${creds.repo}/contents/${path}`;
   const headers = {
@@ -40,7 +41,10 @@ export async function publishViaGithub(
     sha = data.sha;
   }
 
-  const encodedContent = Buffer.from(content, "utf-8").toString("base64");
+  // Binary uploads (e.g. a PDF) arrive already base64-encoded from the
+  // client — re-encoding them as UTF-8 first would corrupt the bytes.
+  const encodedContent =
+    encoding === "base64" ? content : Buffer.from(content, "utf-8").toString("base64");
 
   const res = await fetch(apiUrl, {
     method: "PUT",

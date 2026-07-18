@@ -5,11 +5,12 @@ import { publishViaGithub, resolveGithubCreds } from "@/lib/github";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { path: filePath, content, message, github } = body as {
+  const { path: filePath, content, message, github, encoding } = body as {
     path: string;
     content: string;
     message?: string;
     github?: { owner?: string; repo?: string; token?: string };
+    encoding?: "utf-8" | "base64";
   };
 
   if (!filePath || typeof content !== "string") {
@@ -20,11 +21,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: "Invalid path." }, { status: 400 });
   }
 
+  const contentEncoding = encoding === "base64" ? "base64" : "utf-8";
   const commitMessage = message || `Update ${filePath} via admin panel`;
   const creds = resolveGithubCreds(github);
 
   if (creds) {
-    const result = await publishViaGithub(creds, filePath, content, commitMessage);
+    const result = await publishViaGithub(creds, filePath, content, commitMessage, contentEncoding);
     if (!result.success) {
       return NextResponse.json({ success: false, error: result.error }, { status: 502 });
     }
@@ -34,7 +36,11 @@ export async function POST(req: NextRequest) {
   try {
     const fullPath = path.join(process.cwd(), filePath);
     fs.mkdirSync(path.dirname(fullPath), { recursive: true });
-    fs.writeFileSync(fullPath, content, "utf-8");
+    if (contentEncoding === "base64") {
+      fs.writeFileSync(fullPath, Buffer.from(content, "base64"));
+    } else {
+      fs.writeFileSync(fullPath, content, "utf-8");
+    }
     return NextResponse.json({ success: true, method: "filesystem" });
   } catch {
     return NextResponse.json(

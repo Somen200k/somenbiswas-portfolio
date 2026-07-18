@@ -40,15 +40,30 @@ interface PublishResponse {
 export async function publishFile(
   filePath: string,
   content: string,
-  message?: string
+  message?: string,
+  encoding?: "utf-8" | "base64"
 ): Promise<PublishResponse> {
   const github = getGithubSettings();
   const res = await fetch("/api/admin/publish", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ path: filePath, content, message, github }),
+    body: JSON.stringify({ path: filePath, content, message, github, encoding }),
   });
   return res.json();
+}
+
+/** Reads a File as a base64 string (no data: URL prefix) for binary uploads. */
+export function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      // strip the "data:<mime>;base64," prefix
+      resolve(result.slice(result.indexOf(",") + 1));
+    };
+    reader.onerror = () => reject(new Error("Couldn't read the file."));
+    reader.readAsDataURL(file);
+  });
 }
 
 export async function deleteBlogPost(slug: string): Promise<PublishResponse> {
