@@ -117,43 +117,46 @@ function toggleInArray(arr: string[], value: string): string[] {
 
 function buildRecommendation(b: Brief): string[] {
   const tools: string[] = [];
-  tools.push("Modern React framework (Next.js) with server-side rendering for SEO and speed");
+  tools.push("Next.js (App Router) with TypeScript for the site foundation");
   tools.push("Tailwind CSS for the design system");
 
   if (b.databaseNeeded === "Yes") {
-    tools.push("Managed cloud database with row-level security enforced at the data layer");
+    tools.push("Supabase (Postgres) with Row-Level Security policies for data access");
   }
   if (b.authNeeded === "Yes") {
-    tools.push(`Authentication (${b.authTypes.length ? b.authTypes.join(", ") : "email & password"})`);
+    tools.push(`Supabase Auth (${b.authTypes.length ? b.authTypes.join(", ") : "email & password"})`);
   }
   if (b.paymentsNeeded === "Yes") {
-    tools.push(`Payment processing (${b.paymentMethods.length ? b.paymentMethods.join(", ") : "a payment gateway"})`);
+    tools.push(`Payment integration: ${b.paymentMethods.length ? b.paymentMethods.join(", ") : "Stripe or Razorpay"}`);
   }
   if (b.cmsNeeded === "Yes") {
-    tools.push("MDX-based blog / content system with listing and category pages");
+    tools.push("MDX-based blog system (gray-matter + next-mdx-remote) with listing and category pages");
   }
   if (b.fileUploads === "Yes") {
-    tools.push("Cloud object storage for uploaded files and images");
+    tools.push("Supabase Storage for uploaded files and images");
   }
   if (b.realtime === "Yes") {
-    tools.push("Realtime data sync for live updates, chat, or notifications");
+    tools.push("Supabase Realtime for live updates, chat, or notifications");
   }
   if (b.animationLevel !== "None") {
-    tools.push(`Animation library (Framer Motion) — ${b.animationLevel.toLowerCase()} level`);
+    tools.push(`Framer Motion — ${b.animationLevel.toLowerCase()} level of scroll/hover animation`);
   }
   if (b.multiLanguage === "Yes") {
-    tools.push("i18n routing and translation management");
+    tools.push("next-intl for i18n routing and translation management");
   }
   if (b.platform === "Website + installable PWA") {
-    tools.push("PWA manifest and service worker for installability");
+    tools.push("next-pwa (manifest + service worker) for installability");
   }
   if (b.platform === "Native mobile app needed") {
-    tools.push("Cross-platform mobile framework (React Native / Expo) alongside the web build");
+    tools.push("React Native / Expo for the mobile app, sharing logic with the web build where possible");
   }
   if (b.seoPriority.startsWith("High")) {
-    tools.push("Full SEO layer: sitemap, structured data, per-page metadata");
+    tools.push("next-sitemap + JSON-LD structured data + per-page metadata via generateMetadata");
   }
-  tools.push("Hosting platform with CI/CD for automatic deploys");
+  if (b.paymentsNeeded === "Yes" || b.databaseNeeded === "Yes") {
+    tools.push("Resend for transactional email (receipts, confirmations, notifications)");
+  }
+  tools.push("Vercel for hosting, preview deployments, and CI/CD");
   return tools;
 }
 
