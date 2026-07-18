@@ -98,6 +98,9 @@ function buildPrompt(b: Brief, tools: string[]): string {
   if (b.animationTypes.length) {
     lines.push(`- Animation types: ${b.animationTypes.join(", ")}`);
   }
+  if (b.referenceWebsites.trim()) {
+    lines.push(`- Reference websites they like: ${b.referenceWebsites.trim()}`);
+  }
   lines.push("");
   lines.push("## Features");
   lines.push(`- Database: ${b.databaseNeeded}${b.dataTypes.length ? ` (${b.dataTypes.join(", ")})` : ""}`);
@@ -336,6 +339,16 @@ export function ProjectScoper() {
                   <option key={s} value={s}>{s}</option>
                 ))}
               </select>
+            </AdminField>
+
+            <AdminField label="Reference Websites" hint="Sites they like the look of, and why">
+              <textarea
+                rows={3}
+                className={inputClass}
+                placeholder="e.g. stripe.com — clean and minimal; apple.com — loves the big product photography"
+                value={editing.referenceWebsites}
+                onChange={(e) => setEditing({ ...editing, referenceWebsites: e.target.value })}
+              />
             </AdminField>
 
             <AdminField label="Animation Level">

@@ -10,6 +10,7 @@ export interface Brief {
   colorMood: string;
   primaryColor: string;
   uiStyle: string;
+  referenceWebsites: string;
   animationLevel: string;
   animationTypes: string[];
   databaseNeeded: YesNo;
@@ -93,6 +94,7 @@ export function emptyBrief(): Brief {
     colorMood: COLOR_MOODS[0],
     primaryColor: "",
     uiStyle: UI_STYLES[0],
+    referenceWebsites: "",
     animationLevel: ANIMATION_LEVELS[1],
     animationTypes: [],
     databaseNeeded: "No",
@@ -115,7 +117,7 @@ export function emptyBrief(): Brief {
   };
 }
 
-type QRowType = "text" | "yesno" | "select";
+type QRowType = "text" | "yesno" | "select" | "section";
 
 interface QRow {
   key: string;
@@ -130,13 +132,23 @@ function hintFor(row: QRow): string {
   return "Free text";
 }
 
+function section(label: string): QRow {
+  return { key: "", question: label, type: "section" };
+}
+
 function buildRows(): QRow[] {
   const rows: QRow[] = [];
+
+  rows.push(section("Project Basics"));
   rows.push({ key: "clientName", question: "Your name / business name", type: "text" });
   rows.push({ key: "projectType", question: "What type of project is this?", type: "select", options: PROJECT_TYPES });
+
+  rows.push(section("Pages Needed"));
   for (const p of PAGE_OPTIONS) {
     rows.push({ key: `pages::${p}`, question: `Do you need a "${p}" page?`, type: "yesno" });
   }
+
+  rows.push(section("Design Direction"));
   rows.push({ key: "colorMood", question: "Color mood", type: "select", options: COLOR_MOODS });
   rows.push({
     key: "primaryColor",
@@ -144,6 +156,11 @@ function buildRows(): QRow[] {
     type: "text",
   });
   rows.push({ key: "uiStyle", question: "UI style", type: "select", options: UI_STYLES });
+  rows.push({
+    key: "referenceWebsites",
+    question: "Any websites whose look you like? Paste links and what you like about each one",
+    type: "text",
+  });
   rows.push({
     key: "animationLevel",
     question: "How much animation do you want?",
@@ -153,6 +170,8 @@ function buildRows(): QRow[] {
   for (const a of ANIMATION_TYPES) {
     rows.push({ key: `animationTypes::${a}`, question: `Include "${a}"?`, type: "yesno" });
   }
+
+  rows.push(section("Accounts & Data"));
   rows.push({ key: "databaseNeeded", question: "Do you need user accounts or stored data?", type: "yesno" });
   for (const d of DATA_TYPES) {
     rows.push({ key: `dataTypes::${d}`, question: `Does that include "${d}"?`, type: "yesno" });
@@ -161,10 +180,14 @@ function buildRows(): QRow[] {
   for (const a of AUTH_TYPES) {
     rows.push({ key: `authTypes::${a}`, question: `Login method — "${a}"?`, type: "yesno" });
   }
+
+  rows.push(section("Payments"));
   rows.push({ key: "paymentsNeeded", question: "Do you need to accept payments?", type: "yesno" });
   for (const p of PAYMENT_METHODS) {
     rows.push({ key: `paymentMethods::${p}`, question: `Payment method — "${p}"?`, type: "yesno" });
   }
+
+  rows.push(section("Content & Features"));
   rows.push({ key: "cmsNeeded", question: "Do you need a blog or content section?", type: "yesno" });
   rows.push({ key: "fileUploads", question: "Will users upload files or images?", type: "yesno" });
   rows.push({
@@ -172,6 +195,8 @@ function buildRows(): QRow[] {
     question: "Do you need live / real-time features (chat, live updates)?",
     type: "yesno",
   });
+
+  rows.push(section("Social Media"));
   rows.push({
     key: "socialAccountsNeeded",
     question: "Do you want social media links/icons added to the site?",
@@ -185,6 +210,8 @@ function buildRows(): QRow[] {
     question: "Paste each account's link here (one per line, next to its platform name)",
     type: "text",
   });
+
+  rows.push(section("SEO & Platform"));
   rows.push({
     key: "seoPriority",
     question: "How important is search engine visibility?",
@@ -194,7 +221,10 @@ function buildRows(): QRow[] {
   rows.push({ key: "multiLanguage", question: "Do you need more than one language?", type: "yesno" });
   rows.push({ key: "platform", question: "Platform", type: "select", options: PLATFORMS });
   rows.push({ key: "timeline", question: "Timeline", type: "select", options: TIMELINES });
+
+  rows.push(section("Anything Else"));
   rows.push({ key: "notes", question: "Anything else we should know?", type: "text" });
+
   return rows;
 }
 
@@ -204,6 +234,8 @@ const DARK_BG = "FF150F28";
 const DARK_TEXT = "FFF6F4FB";
 const ANSWER_FILL = "FFFFFBEB";
 const ANSWER_TEXT = "FF111111";
+const SECTION_BG = "FFF3E4C4";
+const ZEBRA_FILL = "FFF7F7F7";
 
 function listWsSetColumn(ws: ExcelJS.Worksheet, col: string, header: string, options: string[]) {
   ws.getCell(`${col}1`).value = header;
@@ -216,7 +248,13 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
   const ExcelJS = (await import("exceljs")).default;
   const wb = new ExcelJS.Workbook();
   wb.creator = "Somen Biswas";
+  wb.lastModifiedBy = "Somen Biswas";
   wb.created = new Date();
+  wb.modified = new Date();
+  wb.title = `Project Questionnaire${clientName ? ` — ${clientName}` : ""}`;
+  wb.subject = "Project Questionnaire";
+  wb.company = "somenbiswas.me";
+  wb.description = "Fill in the 'Your Answer' column and send this back.";
 
   const rows = buildRows();
 
@@ -270,10 +308,37 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
   });
   headerRow.height = 20;
 
+  let dataRowIndex = 0; // counts only real question rows, for zebra striping
+  let firstAnswerRowNumber: number | null = null;
+
   rows.forEach((r) => {
+    if (r.type === "section") {
+      const row = ws.addRow({ key: "", question: "", hint: "", answer: "" });
+      ws.mergeCells(`B${row.number}:D${row.number}`);
+      const cell = row.getCell(2);
+      cell.value = r.question.toUpperCase();
+      cell.font = { bold: true, size: 11, color: { argb: DARK_BG } };
+      cell.alignment = { vertical: "middle" };
+      row.height = 22;
+      row.eachCell({ includeEmpty: true }, (c) => {
+        c.fill = { type: "pattern", pattern: "solid", fgColor: { argb: SECTION_BG } };
+      });
+      return;
+    }
+
     const row = ws.addRow({ key: r.key, question: r.question, hint: hintFor(r), answer: "" });
+    if (!firstAnswerRowNumber) firstAnswerRowNumber = row.number;
+
+    const zebra = dataRowIndex % 2 === 1;
+    dataRowIndex++;
+
     row.getCell(2).alignment = { wrapText: true, vertical: "top" };
     row.getCell(3).alignment = { wrapText: true, vertical: "top" };
+    if (zebra) {
+      row.getCell(2).fill = { type: "pattern", pattern: "solid", fgColor: { argb: ZEBRA_FILL } };
+      row.getCell(3).fill = { type: "pattern", pattern: "solid", fgColor: { argb: ZEBRA_FILL } };
+    }
+
     const answerCell = row.getCell(4);
     answerCell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: ANSWER_FILL } };
     answerCell.font = { color: { argb: ANSWER_TEXT } };
@@ -315,9 +380,16 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
 
   ws.getColumn(1).hidden = true;
 
-  if (clientName) {
-    ws.getCell(`D${HEADER_ROWS + 1}`).note = `Prepared for ${clientName}`;
+  if (clientName && firstAnswerRowNumber) {
+    ws.getCell(`D${firstAnswerRowNumber}`).note = `Prepared for ${clientName}`;
   }
+
+  const footerRow = ws.addRow({ key: "", question: "", hint: "", answer: "" });
+  ws.mergeCells(`A${footerRow.number}:D${footerRow.number}`);
+  const footerCell = footerRow.getCell(1);
+  footerCell.value = `Prepared by Somen Biswas · somenbiswas.me · ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`;
+  footerCell.font = { italic: true, size: 9, color: { argb: "FF999999" } };
+  footerRow.height = 18;
 
   const buffer = await wb.xlsx.writeBuffer();
   const blob = new Blob([buffer], {
@@ -370,6 +442,7 @@ export async function parseQuestionnaireXlsx(file: File): Promise<Partial<Brief>
     colorMood: pickOption("colorMood", COLOR_MOODS, COLOR_MOODS[0]),
     primaryColor: answers.get("primaryColor") || "",
     uiStyle: pickOption("uiStyle", UI_STYLES, UI_STYLES[0]),
+    referenceWebsites: answers.get("referenceWebsites") || "",
     animationLevel: pickOption("animationLevel", ANIMATION_LEVELS, ANIMATION_LEVELS[1]),
     animationTypes: multiselect("animationTypes", ANIMATION_TYPES),
     databaseNeeded: yn("databaseNeeded"),
