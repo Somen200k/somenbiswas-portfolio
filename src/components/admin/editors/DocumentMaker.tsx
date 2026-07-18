@@ -58,7 +58,7 @@ function nextNumber(config: DocumentMakerConfig): string {
 function defaultDoc(config: DocumentMakerConfig): DocState {
   return {
     businessName: "Somen Biswas",
-    businessEmail: "somen.office@gmail.com",
+    businessEmail: "contact@somenbiswas.com",
     businessWebsite: "somenbiswas.com",
     businessAddress: "Kolkata, India",
     clientName: "",
