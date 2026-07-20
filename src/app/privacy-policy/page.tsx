@@ -39,9 +39,9 @@ export default function PrivacyPolicyPage() {
         <ul>
           <li>
             <strong>Contact form submissions.</strong> When you submit the contact form on the
-            Contact or Hire Me pages, your name, email address, and message are sent to us via
-            Web3Forms, a third-party form processing service, and forwarded to our email inbox.
-            We use this information solely to respond to your inquiry.
+            Contact or Hire Me pages, your name, email address, and message are sent directly to
+            our email inbox. No third-party form processing service is used. We use this
+            information solely to respond to your inquiry.
           </li>
           <li>
             <strong>Analytics.</strong> We may use Google Analytics 4 to understand how visitors

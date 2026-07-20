@@ -15,18 +15,17 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
-
-    if (!accessKey) {
-      setStatus("error");
-      return;
-    }
-    formData.append("access_key", accessKey);
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          message: formData.get("message"),
+          botcheck: formData.get("botcheck"),
+        }),
       });
       const data = await res.json();
       if (data.success) {
@@ -85,7 +84,6 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         />
       </div>
 
-      <input type="hidden" name="subject" value="New message from somenbiswas.com" />
       <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
 
       <motion.button
