@@ -1,6 +1,6 @@
 export const BLOG_CATEGORIES = [
   "AI Building",
-  "Online Earning India",
+  "Online Earning",
   "Remote Work & Freelancing",
   "Web Development With AI",
 ] as const;

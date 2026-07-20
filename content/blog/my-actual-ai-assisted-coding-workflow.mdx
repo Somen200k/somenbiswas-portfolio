@@ -1,0 +1,59 @@
+---
+title: "My Actual AI-Assisted Coding Workflow, Step by Step"
+date: "2026-07-20"
+category: "AI Building"
+excerpt: "Not a tool review, not a hype post — the literal sequence I follow every time I sit down to build a feature, including the parts that don't look impressive at all."
+tags: ["AI Building", "Workflow", "Solo Founder"]
+coverImage: "/images/blog/ai-building-cover.svg"
+published: true
+---
+
+Most posts about building software with AI assistance fall into one of two traps. Either they read like an ad — "just describe what you want and it appears" — or they read like a warning — "it'll wreck your codebase if you're not careful." Both are true in the wrong hands, and neither describes what a real, repeatable workflow actually looks like day to day. So instead of another opinion piece, here's the literal sequence I follow, product features included, minus anything that would give away specifics I keep private.
+
+## Step one: the spec lives in my head before it lives anywhere else
+
+Before I open anything, I write out — mentally or in a scratch note — exactly what "done" means for the thing I'm about to build. Not a vague goal like "add a dashboard," but the actual behavior: what inputs are allowed, what happens on the edge cases, who's allowed to see what. This step has nothing to do with AI tooling at all. It's the same discipline any competent engineer uses before touching a keyboard. Skipping it is the single biggest reason AI-assisted builds go sideways — not because the tooling is bad, but because vague instructions produce vague, unreviewable output.
+
+## Step two: describe the problem, not the solution
+
+Here's a distinction that took me a while to internalize: describing a problem precisely is different from describing a solution precisely. If I already know I want a specific data structure or a specific validation order, I say so. If I don't have a strong opinion yet, I describe the constraint instead — "this needs to reject duplicate submissions within a 24-hour window" — and let the tooling propose an approach. The mistake I made early on was over-specifying implementation details I didn't actually care about, which wasted time correcting things that didn't matter and left less attention for the details that did.
+
+## Step three: read every line before it goes anywhere near production
+
+This is the step most people skip, and it's the one that matters most. I don't mean skimming — I mean actually reading the logic the same way I'd read a colleague's pull request, asking "what happens if this input is empty," "what happens if this runs twice," "what happens if someone malicious is on the other end of this." AI-assisted development doesn't remove the need for this kind of review. If anything it raises the stakes, because output that reads as confident and clean can still be quietly wrong in a way that only shows up once real users hit it.
+
+## Step four: test the cases I already know matter
+
+Every domain has its own known failure modes, and mine is no exception. A duplicate form submission. A malformed input from a browser extension mangling a request. A user trying to get a reward twice by refreshing at the right moment. None of these are hypothetical — they're patterns I've seen enough times running real platforms that I test for them by default now, before a feature ever reaches a real user. This is where domain experience does more work than any tooling ever could. The tooling executes fast; it doesn't know which failure modes actually happen in the wild for your specific product.
+
+## Step five: calibrate review depth to what's actually at stake
+
+I don't review a cosmetic copy change with the same intensity as a change touching how money moves or how permissions are checked. That sounds obvious written down, but early on I didn't do this consistently — I either under-reviewed something that mattered because it came from the same fast workflow as everything else that day, or over-reviewed something trivial and wasted time. Now, before starting anything, I ask: what's the actual blast radius if this is wrong? Cosmetic, annoying, or genuinely damaging to someone's trust or money? That answer decides how carefully I go through what comes back.
+
+## What this workflow is not
+
+It's not "vibe coding" — a term that's become shorthand for accepting output without understanding it. It's also not the opposite extreme, where every single line gets treated with suspicion regardless of consequence, which just recreates all the slowness AI-assisted development is supposed to remove. It sits in between: move fast on the mechanical parts, slow down hard on the parts where being wrong actually costs something.
+
+## The part that surprised me most
+
+I expected the biggest shift to be speed — and it is faster, meaningfully so. But the bigger shift was what the bottleneck became once typing speed stopped being the constraint. The bottleneck is now entirely judgment: knowing what to build, knowing how it breaks, knowing when something "looks right" but isn't. None of that comes from the tooling. It comes from having done real work in a domain before — for me, that was years of freelance data-operations and evaluation work, not software engineering. That background turned out to matter more to the outcome than any specific tool choice ever did.
+
+## Where this breaks down
+
+This workflow doesn't work if you don't have a clear enough picture of the problem to catch it when something's subtly wrong — you'll accept confident-sounding output that's actually broken because you have no independent way to check it. It also doesn't work if you treat review as optional to save time; that's exactly the shortcut that turns a fast workflow into a liability. The workflow only holds up when the human in the loop is doing real, active work at every step, not just approving whatever shows up first.
+
+## A time this workflow actually failed me
+
+I'd be lying if I said this process is airtight. There was a stretch where I was moving between two products in the same week, and I carried the mental model from one straight into the other without pausing to check whether the same assumptions actually held. They didn't — a validation rule that made sense in one context was quietly wrong in the other, and it slipped through because I was reviewing on autopilot rather than actually re-grounding myself in what that specific product needed. Nothing catastrophic happened, but it was caught later than it should have been, purely because I skipped my own step one — writing out what "done" actually means in this specific context — and assumed I already knew. That's the failure mode worth naming honestly: the workflow only protects you as long as you actually follow it every time, not just when it's convenient.
+
+## Why this compounds differently across multiple products
+
+Running more than one product at once changes this workflow in a way I didn't expect going in. Each product develops its own set of known failure modes over time — the specific ways users try to game a system, the specific inputs that break things, the specific integration points that are historically fragile. The temptation is to assume those lessons transfer automatically between products, and sometimes they do. But just as often, a pattern that's completely safe in one context is a real risk in another, because the underlying stakes are different — a cosmetic bug in a content tool and a validation bug in something handling real payouts are not the same category of mistake, even if the code looks superficially similar. The discipline that actually matters here is treating each product's context as genuinely distinct, every time, rather than let pattern-matching from one bleed into judgment about another.
+
+## The habit that's replaced almost everything else
+
+If I had to strip this whole workflow down to one habit that matters more than the rest, it's the blast-radius question from step five, asked honestly and asked first — before writing anything, before reviewing anything, before deciding how much time a given piece of work deserves. Everything else in this process is really just a way of acting correctly on the answer to that one question. Get that question right, and the rest of the workflow mostly takes care of itself. Get it wrong — underestimate what's actually at stake — and no amount of careful code review downstream fully makes up for it.
+
+## What I'd tell someone starting from zero
+
+Don't start by learning tooling. Start by getting extremely clear on one real problem you understand deeply, from whatever background you already have, and build against that specific problem instead of a generic tutorial. The tooling is only ever as good as the judgment directing it — and that judgment is the one thing you have to bring yourself, before you touch anything else.

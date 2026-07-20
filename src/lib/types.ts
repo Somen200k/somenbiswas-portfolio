@@ -123,7 +123,7 @@ export interface SeoData {
 export interface BlogFrontmatter {
   title: string;
   date: string;
-  category: "AI Building" | "Online Earning India" | "Remote Work & Freelancing" | "Web Development With AI";
+  category: "AI Building" | "Online Earning" | "Remote Work & Freelancing" | "Web Development With AI";
   excerpt: string;
   tags: string[];
   coverImage: string;

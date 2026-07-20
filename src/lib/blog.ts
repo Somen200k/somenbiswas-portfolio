@@ -25,8 +25,9 @@ export function getAllPosts(): BlogPost[] {
     } satisfies BlogPost;
   });
 
+  const now = Date.now();
   return posts
-    .filter((p) => p.published !== false)
+    .filter((p) => p.published !== false && new Date(p.date).getTime() <= now)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
