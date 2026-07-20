@@ -237,7 +237,7 @@ const ANSWER_TEXT = "FF111111";
 const SECTION_BG = "FFF3E4C4";
 const ZEBRA_FILL = "FFF7F7F7";
 
-function listWsSetColumn(ws: ExcelJS.Worksheet, col: string, header: string, options: string[]) {
+function setLookupColumn(ws: ExcelJS.Worksheet, col: string, header: string, options: string[]) {
   ws.getCell(`${col}1`).value = header;
   options.forEach((opt, i) => {
     ws.getCell(`${col}${i + 2}`).value = opt;
@@ -258,32 +258,35 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
 
   const rows = buildRows();
 
-  // Hidden helper sheet holding each select field's option list, so the
-  // "Your Answer" cells can use a real Excel dropdown (data validation)
-  // instead of relying on the client to type an option exactly.
-  const listsWs = wb.addWorksheet("Lists");
-  listsWs.state = "hidden";
-  const LIST_COLUMNS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-  const listColumnFor = new Map<string, string>();
-  let listColIndex = 0;
-  rows
-    .filter((r) => r.type === "select")
-    .forEach((r) => {
-      const col = LIST_COLUMNS[listColIndex++];
-      listColumnFor.set(r.key, col);
-      listWsSetColumn(listsWs, col, r.key, r.options || []);
-    });
-
   const ws = wb.addWorksheet("Project Questionnaire", {
     views: [{ state: "frozen", ySplit: HEADER_ROWS }],
   });
+
+  // Dropdown option lists live in hidden columns on this same sheet rather
+  // than a separate hidden worksheet — Google Sheets' xlsx import respects
+  // hidden columns but silently un-hides hidden sheets, which would otherwise
+  // expose these raw option lists as a visible "Lists" tab.
+  const LOOKUP_COLUMNS = ["F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
+  const selectRows = rows.filter((r) => r.type === "select");
+  const listColumnFor = new Map<string, string>();
+  selectRows.forEach((r, i) => listColumnFor.set(r.key, LOOKUP_COLUMNS[i]));
 
   ws.columns = [
     { key: "key", width: 4 },
     { key: "question", width: 46 },
     { key: "hint", width: 48 },
     { key: "answer", width: 32 },
+    { key: "spacer", width: 2 },
+    ...LOOKUP_COLUMNS.slice(0, selectRows.length).map((_, i) => ({ key: `lookup${i}`, width: 18 })),
   ];
+  LOOKUP_COLUMNS.slice(0, selectRows.length).forEach((col) => {
+    ws.getColumn(col).hidden = true;
+  });
+
+  selectRows.forEach((r) => {
+    const col = listColumnFor.get(r.key)!;
+    setLookupColumn(ws, col, r.key, r.options || []);
+  });
 
   ws.mergeCells("A1:D1");
   const title = ws.getCell("A1");
@@ -359,7 +362,7 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
         answerCell.dataValidation = {
           type: "list",
           allowBlank: true,
-          formulae: [`Lists!$${col}$2:$${col}$${1 + r.options.length}`],
+          formulae: [`$${col}$2:$${col}$${1 + r.options.length}`],
           showErrorMessage: true,
           errorStyle: "warning",
           errorTitle: "Invalid entry",
