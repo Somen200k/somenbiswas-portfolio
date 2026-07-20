@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Sparkles, CheckCircle2, XCircle } from "lucide-react";
+import { Sparkles, CheckCircle2, XCircle, FilePlus2 } from "lucide-react";
 import { buildMdxSource, publishFile } from "@/lib/admin-client";
 import { AdminField, inputClass } from "@/components/admin/AdminField";
 import { SaveBar, type SaveStatus } from "@/components/admin/SaveBar";
@@ -228,14 +228,26 @@ export function ArticleGenerator() {
           </AdminField>
         </div>
 
-        <button
-          type="button"
-          onClick={handleGenerate}
-          disabled={generating || !topic.trim()}
-          className="mt-5 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-[#0a0a0a] disabled:opacity-60"
-        >
-          <Sparkles className="h-4 w-4" /> {generating ? "Generating..." : "Generate Draft"}
-        </button>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={handleGenerate}
+            disabled={generating || !topic.trim()}
+            className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-[#0a0a0a] disabled:opacity-60"
+          >
+            <Sparkles className="h-4 w-4" /> {generating ? "Generating..." : "Generate Draft"}
+          </button>
+          <span className="text-xs text-dim">or</span>
+          <button
+            type="button"
+            onClick={() =>
+              setDraft({ title: "", category, excerpt: "", tags: [], content: "" })
+            }
+            className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-muted hover:text-foreground"
+          >
+            <FilePlus2 className="h-4 w-4" /> Paste Your Own (from ChatGPT / Claude)
+          </button>
+        </div>
         {genError && <p className="mt-3 text-sm text-red-400">{genError}</p>}
       </GlassCard>
 
@@ -279,9 +291,13 @@ export function ArticleGenerator() {
             </div>
 
             <div className="mt-4">
-              <AdminField label="Content (Markdown)">
+              <AdminField
+                label="Content (Markdown)"
+                hint="Paste the body here if you wrote this with ChatGPT/Claude — use ## for section headings"
+              >
                 <textarea
                   rows={20}
+                  placeholder="Paste your markdown content here..."
                   className={`${inputClass} font-mono`}
                   value={draft.content}
                   onChange={(e) => setDraft({ ...draft, content: e.target.value })}
