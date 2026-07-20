@@ -282,11 +282,9 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
   LOOKUP_COLUMNS.slice(0, selectRows.length).forEach((col) => {
     ws.getColumn(col).hidden = true;
   });
-
-  selectRows.forEach((r) => {
-    const col = listColumnFor.get(r.key)!;
-    setLookupColumn(ws, col, r.key, r.options || []);
-  });
+  // Actual lookup values are written at the end of this function, after all
+  // addRow() calls — writing them here would make addRow()'s auto-increment
+  // treat these rows as already used, shifting all question rows down.
 
   ws.mergeCells("A1:D1");
   const title = ws.getCell("A1");
@@ -393,6 +391,13 @@ export async function downloadQuestionnaireXlsx(clientName?: string): Promise<vo
   footerCell.value = `Prepared by Somen Biswas · somenbiswas.com · ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`;
   footerCell.font = { italic: true, size: 9, color: { argb: "FF999999" } };
   footerRow.height = 18;
+
+  // Populate the hidden lookup columns now that every addRow()-based row
+  // (title, instructions, header, questions, footer) has already been placed.
+  selectRows.forEach((r) => {
+    const col = listColumnFor.get(r.key)!;
+    setLookupColumn(ws, col, r.key, r.options || []);
+  });
 
   const buffer = await wb.xlsx.writeBuffer();
   const blob = new Blob([buffer], {
