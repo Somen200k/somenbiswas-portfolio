@@ -16,6 +16,7 @@ import {
   FileSignature,
   Users,
   ListChecks,
+  Sparkles,
 } from "lucide-react";
 import { isAdminAuthed, setAdminAuthed } from "@/lib/admin-client";
 import { inputClass } from "@/components/admin/AdminField";
@@ -32,6 +33,7 @@ import { InvoiceMaker } from "@/components/admin/editors/InvoiceMaker";
 import { QuoteMaker } from "@/components/admin/editors/QuoteMaker";
 import { ClientTracker } from "@/components/admin/editors/ClientTracker";
 import { ProjectScoper } from "@/components/admin/editors/ProjectScoper";
+import { ArticleGenerator } from "@/components/admin/editors/ArticleGenerator";
 
 const TABS = [
   { id: "hero", label: "Hero", icon: Home, Component: HeroEditor },
@@ -39,6 +41,7 @@ const TABS = [
   { id: "projects", label: "Projects", icon: Briefcase, Component: ProjectsEditor },
   { id: "services", label: "Services", icon: Wrench, Component: ServicesEditor },
   { id: "blog", label: "Blog", icon: Newspaper, Component: BlogManager },
+  { id: "generator", label: "Article Generator", icon: Sparkles, Component: ArticleGenerator },
   { id: "invoices", label: "Invoices", icon: Receipt, Component: InvoiceMaker },
   { id: "quotes", label: "Quotes", icon: FileSignature, Component: QuoteMaker },
   { id: "clients", label: "Clients", icon: Users, Component: ClientTracker },
