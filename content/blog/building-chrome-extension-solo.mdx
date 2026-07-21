@@ -24,6 +24,11 @@ Chrome's extension platform (Manifest V3) restricts what background scripts can 
 
 ## Permissions are a trust conversation with your users
 
+
+![turned-on monitor](https://images.unsplash.com/photo-1560472355-109703aa3edc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8QnVpbGRpbmclMjBhJTIwQ2hyb21lJTIwRXh0ZW5zaW9uJTIwU29sbyUzQSUyMFdoYXQlMjBJJTIwTGVhcm5lZCUyMFNoaXBwaW5nJTIwdG8lMjB0aGUlMjBDaHJvbWUlMjBXZWIlMjBTdG9yZSUyMHdlYiUyMGRlc2l8ZW58MHwwfHx8MTc4NDYyMTcwMHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Stephen Phillips - Hostreviews.co.uk](https://unsplash.com/@hostreviews?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
+
 Every permission an extension requests shows up as a scary-looking prompt before install. Requesting only what's genuinely necessary — and being able to explain clearly why each permission is needed — directly affects install and retention rates. Over-requesting permissions "just in case" is one of the fastest ways to lose a user's trust before they've even used the extension once.
 
 ## The review guidelines matter more than they seem to
@@ -39,6 +44,11 @@ None of the polish matters if the core feature doesn't work reliably in the back
 A website has effectively one storage model most developers reach for by default. An extension has several, each with different rules — data scoped to the extension itself, data that syncs across a user's signed-in Chrome instances, and data scoped to a specific tab or page context. Picking the wrong one isn't just a performance issue, it's a correctness bug: settings that should follow a user across their devices silently don't, or data that should stay local unexpectedly shows up somewhere it shouldn't. Getting this right early meant sitting down and mapping out, for every piece of state the extension needed to remember, exactly which scope it actually belonged in — not just picking whichever storage API was fastest to wire up first.
 
 ## The update cycle changes how you think about bugs
+
+
+![Two monitors setup next to each other on a computer desk.](https://images.unsplash.com/photo-1487338875411-8880f74114a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8d2Vic2l0ZSUyMGRldmVsb3BtZW50JTIwd29ya3NwYWNlfGVufDB8MHx8fDE3ODQ2MjE2OTl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Tran Mau Tri Tam ✪](https://unsplash.com/@tranmautritam?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
 
 On a website, a bug fix ships the moment you deploy. On an extension, a bug fix goes into the same review queue as a brand-new feature, so a critical fix and a minor enhancement move at the same speed. That completely changes triage. A bug that would get a same-day website hotfix instead sits behind a review process measured in days, which means the actual engineering bar for "ready to submit" has to be higher going in — there's no quick follow-up patch to lean on if something's subtly wrong. I started treating every extension submission the way I'd treat a mobile app release rather than a web deploy: more testing before submission, because the cost of being wrong after submission is measured in review-queue days, not minutes.
 

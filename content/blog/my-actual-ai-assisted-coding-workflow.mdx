@@ -28,6 +28,11 @@ Every domain has its own known failure modes. A duplicate form submission. A mal
 
 ## Step five: calibrate review depth to what's actually at stake
 
+
+![Computer screen displaying code with a context menu.](https://images.unsplash.com/photo-1763568258235-f40425a94af9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8QSUyMFJlYWwlMjBBSS1Bc3Npc3RlZCUyMENvZGluZyUyMFdvcmtmbG93JTJDJTIwU3RlcCUyMGJ5JTIwU3RlcCUyMHNvZnR3YXJlJTIwZGV2ZWxvcGVyJTIwY29kaW5nJTIwc2NyZWVufGVufDB8MHx8fDE3ODQ2MjE3MTR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Daniil Komov](https://unsplash.com/@dkomow?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
+
 A cosmetic copy change doesn't need the same review intensity as a change touching how money moves or how permissions are checked. That sounds obvious written down, but it's easy to get wrong in practice — under-reviewing something that matters because it came from the same fast workflow as everything else that day, or over-reviewing something trivial and wasting time on it. The fix is a standing question, asked before starting anything: what's the actual blast radius if this is wrong? Cosmetic, annoying, or genuinely damaging to someone's trust or money? That answer decides how carefully the output gets checked.
 
 ## What this workflow is not
@@ -43,6 +48,11 @@ The obvious shift with AI-assisted development is speed, and it is faster, meani
 This workflow doesn't hold up without a clear enough picture of the problem to catch it when something's subtly wrong — confident-sounding output that's actually broken gets accepted when there's no independent way to check it. It also doesn't hold up if review gets treated as optional to save time; that's exactly the shortcut that turns a fast workflow into a liability. The workflow only works when there's real, active review happening at every step, not just approval of whatever shows up first.
 
 ## Where this process actually fails in practice
+
+
+![monitor showing Java programming](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8Y29tcHV0ZXIlMjBwcm9ncmFtbWluZyUyMHRlY2hub2xvZ3l8ZW58MHwwfHx8MTc4NDYyMTY5OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Ilya Pavlov](https://unsplash.com/@ilyapavlov?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
 
 No version of this process is airtight. A common failure mode: moving between two different projects in the same stretch of time, and carrying the mental model from one straight into the other without pausing to check whether the same assumptions still hold. They often don't — a validation rule that's completely safe in one context can be quietly wrong in another, and it slips through when review happens on autopilot instead of re-grounding in what that specific context actually needs. Nothing catastrophic has to happen for this to matter; the more common cost is that a mismatch gets caught later than it should have, purely because step one — writing out what "done" means in this specific context — got skipped on the assumption it was already known.
 

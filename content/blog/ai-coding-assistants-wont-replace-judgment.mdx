@@ -26,6 +26,11 @@ The riskiest habit is accepting generated output without understanding *why* it 
 
 ## What actually changes with this workflow
 
+
+![Digital interface with "ask anything" prompt.](https://images.unsplash.com/photo-1762330470070-249e7c23c8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8QUklMjBDb2RpbmclMjBBc3Npc3RhbnRzJTIwV29uJTI3dCUyMFJlcGxhY2UlMjBZb3VyJTIwSnVkZ21lbnQlMjAlRTIlODAlOTQlMjBIZXJlJTI3cyUyMFdoYXQlMjBUaGV5JTIwQWN0dWFsbHklMjBEbyUyMHNvZnR3YXJlJTIwZHxlbnwwfDB8fHwxNzg0NjIxNjk4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Zulfugar Karimov](https://unsplash.com/@zulfugarkarimov?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
+
 The honest version of what changes: the ratio of thinking-time to typing-time shifts dramatically toward thinking. That's a real advantage for someone who understands the problem domain deeply but doesn't have a traditional engineering background — the bottleneck moves from "can I type this fast enough" to "do I understand this well enough to direct it," which is a bottleneck domain expertise can actually solve.
 
 ## A concrete example of where judgment mattered
@@ -39,6 +44,11 @@ That's the pattern that repeats constantly. The quality of what comes back is a 
 The pitch makes it sound like the hard part is typing the description. It isn't. The hard part is knowing what to describe. "Build a login form" is a sentence anyone can type. "Build a login form that handles a user who signs up with Google first and tries to log in with a password later, without creating a duplicate account or silently overwriting the Google-linked one" is a sentence that requires having actually thought about identity and account merging — a real, common edge case that a generic request would never surface. The gap between those two sentences is the entire skill. AI tooling collapses the distance between "knowing what you want" and "having it built." It does nothing to collapse the distance between "not knowing what could go wrong" and "knowing what could go wrong." That second distance is still fully on you.
 
 ## How this plays out differently across a codebase
+
+
+![monitor showing Java programming](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8Y29tcHV0ZXIlMjBwcm9ncmFtbWluZyUyMHRlY2hub2xvZ3l8ZW58MHwwfHx8MTc4NDYyMTY5OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Ilya Pavlov](https://unsplash.com/@ilyapavlov?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
 
 Not every part of a build carries the same risk if judgment is thin. A marketing page layout, an icon choice, a color palette — get those wrong and you fix them in five minutes with no lasting damage. Payment logic, authentication, anything touching another person's data — get those wrong and the damage compounds silently until a user notices, or worse, until someone malicious notices first. I've learned to calibrate how much scrutiny a piece of generated code gets based on where it sits on that spectrum. Cosmetic code gets a glance. Anything near money, identity, or permissions gets read line by line, and I ask myself explicitly what happens if this exact function receives input from someone actively trying to break it, not just someone using it normally. That mental shift — from "does this work" to "what happens when someone tries to make it not work" — is judgment, and it's the same judgment a senior engineer applies, just directed at a different point in the workflow.
 

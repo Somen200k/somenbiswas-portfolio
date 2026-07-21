@@ -28,6 +28,11 @@ Generated code can invent a plausible-looking function signature, an API paramet
 
 ## Check four: look for security gaps that don't announce themselves
 
+
+![Computer screen displaying code with a context menu.](https://images.unsplash.com/photo-1763568258235-f40425a94af9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8QSUyMENvZGUlMjBSZXZpZXclMjBDaGVja2xpc3QlMjBmb3IlMjBBSS1HZW5lcmF0ZWQlMjBDb2RlJTIwQmVmb3JlJTIwWW91JTIwTWVyZ2UlMjBzb2Z0d2FyZSUyMGRldmVsb3BlciUyMGNvZGluZyUyMHN8ZW58MHwwfHx8MTc4NDYyMTcwMXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Daniil Komov](https://unsplash.com/@dkomow?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
+
 Credentials or API keys embedded directly instead of pulled from environment variables, missing input sanitization on anything that reaches a database query, authorization checks that verify a user is logged in but not that they're allowed to access this specific resource — these are the security issues that slip through a fast review because the code still "works" in casual testing. Anything touching authentication, payments, or user-submitted data deserves a dedicated pass specifically looking for these gaps, separate from a general correctness review.
 
 ## Check five: ask what happens at meaningfully higher volume
@@ -43,6 +48,11 @@ Generated tests often check the same happy path the implementation was built aga
 Not every change deserves the same intensity of review, and pretending otherwise wastes time without making anything safer. A cosmetic copy change and a change to how permissions get checked are not the same category of risk, even if they arrived through the same fast workflow. Before starting a review, it's worth asking plainly what the actual blast radius is if this specific change is wrong — cosmetic, mildly annoying, or genuinely damaging to data or trust — and letting that answer set how carefully the rest of the checklist gets applied.
 
 ## Check eight: require explicit human sign-off on the highest-stakes categories
+
+
+![monitor showing Java programming](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8Y29tcHV0ZXIlMjBwcm9ncmFtbWluZyUyMHRlY2hub2xvZ3l8ZW58MHwwfHx8MTc4NDYyMTY5OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Ilya Pavlov](https://unsplash.com/@ilyapavlov?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
 
 Authentication, payments, infrastructure changes, data migrations, and anything touching personally identifiable information should never pass through on a routine review pass regardless of how clean the code looks. These categories warrant a deliberate, separate sign-off step — someone consciously deciding "I reviewed this specific change knowing what's at stake here," rather than folding it into a batch of otherwise low-risk changes reviewed at the same pace.
 

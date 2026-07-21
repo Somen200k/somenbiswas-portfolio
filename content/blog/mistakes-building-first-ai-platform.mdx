@@ -28,6 +28,11 @@ A task-completion feature sounds simple until real users start trying to game it
 
 ## 4. Not writing down pricing logic before building it
 
+
+![Computer screen displaying code with a context menu.](https://images.unsplash.com/photo-1763568258235-f40425a94af9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8OCUyME1pc3Rha2VzJTIwSSUyME1hZGUlMjBCdWlsZGluZyUyME15JTIwRmlyc3QlMjBBSS1Qb3dlcmVkJTIwUGxhdGZvcm0lMjBzb2Z0d2FyZSUyMGRldmVsb3BlciUyMGNvZGluZyUyMHNjcmVlbnxlbnwwfDB8fHwxNzg0NjIxNzEzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Daniil Komov](https://unsplash.com/@dkomow?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
+
 Deciding how money moves between parties is a business decision, not a coding task — but I made the mistake of half-deciding it in my head and letting the implementation drift from what I'd actually intended. Writing the exact rules down in plain language *before* building the logic would have saved a full afternoon of reconciling what the code did against what I meant it to do.
 
 ## 5. Skipping SEO until the product "felt done"
@@ -43,6 +48,11 @@ Every one of these mistakes came from treating a "later" problem as smaller than
 For the first stretch of building, every bug felt equally urgent, because there was no framework for triaging them against each other — a broken button and a broken payout got roughly the same panic response. That's an expensive habit, because it means genuinely important-but-not-urgent work (the fraud-prevention pass, the SEO structure, the admin tooling) kept losing to whatever felt loud in the moment. What eventually fixed it was a simple, explicit rule: does this affect money or trust right now, today? If yes, it jumps the queue. If no, it gets scheduled, not reacted to. Building that filter took embarrassingly long to formalize, given how obviously it should have existed from day one.
 
 ## Mistake seven: assuming one round of testing was enough
+
+
+![monitor showing Java programming](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8Y29tcHV0ZXIlMjBwcm9ncmFtbWluZyUyMHRlY2hub2xvZ3l8ZW58MHwwfHx8MTc4NDYyMTY5OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Ilya Pavlov](https://unsplash.com/@ilyapavlov?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
 
 The first version of the task-verification flow got tested by me, a handful of times, in the way I expected a normal user to use it. It shipped, and within days, contributors found ways to interact with it I hadn't remotely considered — not maliciously, just differently than my own mental model assumed. I'd treated my own testing as sufficient because it felt thorough at the time. It wasn't, because I am not a representative user; I built the feature, so I only ever tested the paths I'd already thought of. The fix was deliberately seeking out real usage data and real confusion points after every launch, not just before it, and treating the first week of real usage as an extension of testing rather than the finish line.
 
