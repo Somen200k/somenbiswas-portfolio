@@ -1,6 +1,6 @@
-// One-time script: adds 2 relevant inline Pexels images to each existing blog post
+// One-time script: adds 2 relevant inline Unsplash images to each existing blog post
 // that doesn't already have any. Run with: node scripts/retrofit-blog-images.mjs
-// Requires PEXELS_API_KEY in .env.local.
+// Requires UNSPLASH_ACCESS_KEY in .env.local.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, "..");
 const blogDir = path.join(repoRoot, "content", "blog");
+const APP_NAME = "somenbiswas.com";
 
 function loadEnvLocal() {
   const envPath = path.join(repoRoot, ".env.local");
@@ -37,18 +38,30 @@ function getImageQueries(category, topic) {
   return [`${topic} ${specific}`.slice(0, 90), fallback];
 }
 
-async function searchPexelsPhoto(query) {
-  const apiKey = process.env.PEXELS_API_KEY;
-  if (!apiKey) return null;
+async function searchUnsplashPhoto(query) {
+  const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+  if (!accessKey) return null;
   const res = await fetch(
-    `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`,
-    { headers: { Authorization: apiKey } }
+    `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`,
+    { headers: { Authorization: `Client-ID ${accessKey}` } }
   );
   if (!res.ok) return null;
   const data = await res.json();
-  const photo = data.photos?.[0];
+  const photo = data.results?.[0];
   if (!photo) return null;
-  return { url: photo.src.large, alt: photo.alt || query };
+
+  if (photo.links?.download_location) {
+    fetch(`${photo.links.download_location}&client_id=${accessKey}`).catch(() => {});
+  }
+
+  const photographerUrl = `${photo.user.links.html}?utm_source=${APP_NAME}&utm_medium=referral`;
+  const unsplashUrl = `https://unsplash.com/?utm_source=${APP_NAME}&utm_medium=referral`;
+
+  return {
+    url: photo.urls.regular,
+    alt: photo.alt_description || query,
+    credit: `Photo by [${photo.user.name}](${photographerUrl}) on [Unsplash](${unsplashUrl})`,
+  };
 }
 
 function insertImagesIntoContent(content, images) {
@@ -69,7 +82,11 @@ function insertImagesIntoContent(content, images) {
         ];
 
   const inserts = points
-    .map((idx, i) => ({ idx, markdown: `\n![${images[i].alt}](${images[i].url})\n` }))
+    .map((idx, i) => {
+      const image = images[i];
+      const caption = image.credit ? `\n*${image.credit}*\n` : "";
+      return { idx, markdown: `\n![${image.alt}](${image.url})\n${caption}` };
+    })
     .sort((a, b) => b.idx - a.idx);
 
   for (const { idx, markdown } of inserts) {
@@ -81,7 +98,7 @@ function insertImagesIntoContent(content, images) {
 }
 
 function parseFrontmatter(raw) {
-  const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!match) return null;
   const [, frontmatter, body] = match;
   const titleMatch = frontmatter.match(/title:\s*"((?:[^"\\]|\\.)*)"/);
@@ -95,8 +112,8 @@ function parseFrontmatter(raw) {
 }
 
 async function main() {
-  if (!process.env.PEXELS_API_KEY) {
-    console.error("PEXELS_API_KEY is not set in .env.local — aborting.");
+  if (!process.env.UNSPLASH_ACCESS_KEY) {
+    console.error("UNSPLASH_ACCESS_KEY is not set in .env.local — aborting.");
     process.exit(1);
   }
 
@@ -114,14 +131,14 @@ async function main() {
       continue;
     }
 
-    if (/!\[.*\]\(https?:\/\/images\.pexels\.com/.test(parsed.body)) {
+    if (/!\[.*\]\(https?:\/\/images\.unsplash\.com/.test(parsed.body)) {
       console.log(`skip (already has images): ${file}`);
       skipped++;
       continue;
     }
 
     const [q1, q2] = getImageQueries(parsed.category, parsed.title);
-    const [p1, p2] = await Promise.all([searchPexelsPhoto(q1), searchPexelsPhoto(q2)]);
+    const [p1, p2] = await Promise.all([searchUnsplashPhoto(q1), searchUnsplashPhoto(q2)]);
     const photos = [p1, p2].filter(Boolean);
 
     if (photos.length === 0) {

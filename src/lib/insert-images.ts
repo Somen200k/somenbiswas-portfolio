@@ -16,6 +16,8 @@ export function getImageQueries(category: string, topic: string): [string, strin
 interface Photo {
   url: string;
   alt: string;
+  /** Markdown attribution line (required by Unsplash's API guidelines), rendered as a small caption. */
+  credit?: string;
 }
 
 /** Inserts markdown images after two "## " headings spaced roughly a third and two-thirds through the post. */
@@ -38,7 +40,11 @@ export function insertImagesIntoContent(content: string, images: Photo[]): strin
         ];
 
   const inserts = points
-    .map((idx, i) => ({ idx, markdown: `\n![${images[i].alt}](${images[i].url})\n` }))
+    .map((idx, i) => {
+      const image = images[i];
+      const caption = image.credit ? `\n*${image.credit}*\n` : "";
+      return { idx, markdown: `\n![${image.alt}](${image.url})\n${caption}` };
+    })
     .sort((a, b) => b.idx - a.idx);
 
   for (const { idx, markdown } of inserts) {

@@ -166,10 +166,12 @@ export function ArticleGenerator() {
       const queries = getImageQueries(draft.category, draft.keyword || draft.title);
       const results = await Promise.all(
         queries.map((q) =>
-          fetch(`/api/admin/pexels?query=${encodeURIComponent(q)}`).then((r) => r.json())
+          fetch(`/api/admin/unsplash?query=${encodeURIComponent(q)}`).then((r) => r.json())
         )
       );
-      const photos = results.filter((r) => r.success).map((r) => ({ url: r.url, alt: r.alt }));
+      const photos = results
+        .filter((r) => r.success)
+        .map((r) => ({ url: r.url, alt: r.alt, credit: r.credit }));
       if (photos.length === 0) {
         setImageError(results.find((r) => !r.success)?.error || "No images found.");
         return;
