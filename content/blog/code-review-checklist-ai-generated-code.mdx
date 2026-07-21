@@ -1,0 +1,59 @@
+---
+title: "A Code Review Checklist for AI-Generated Code Before You Merge"
+date: "2026-07-21"
+category: "AI Building"
+excerpt: "A practical code review checklist for AI-generated code — the specific failure modes that slip past a casual read, and how to catch them before production."
+tags: ["AI Building", "Code Review", "Best Practices"]
+coverImage: "/images/blog/ai-building-cover.svg"
+published: true
+---
+
+AI-assisted development has made writing code faster than reviewing it, which means review has quietly become the actual bottleneck in any serious build. A proper code review checklist for AI-generated code isn't the same as a normal PR checklist — the failure modes are different, because the code reads as confident and clean whether or not it's actually correct. Here's a checklist built around the specific ways AI-generated code goes wrong.
+
+## Why this needs a different checklist than normal code review
+
+Human-written code tends to fail in ways that look like it's failing — a rushed implementation, an obvious shortcut, a comment admitting "this is a hack." AI-generated code doesn't carry those tells. It's formatted consistently, named sensibly, and reads as though the author understood the problem deeply, regardless of whether that's actually true. That's exactly why a generic review pass isn't enough — the visual and stylistic signals reviewers normally rely on to sense "something's off here" are much weaker or entirely absent.
+
+## Check one: does it actually solve the problem specified, not a nearby one
+
+The first and most overlooked failure mode is subtle scope drift — code that solves a plausible-sounding version of the request rather than the exact one given. This happens most with ambiguous instructions, where a reasonable-sounding interpretation gets implemented instead of the intended one. The fix isn't more careful code reading, it's checking the implementation against the original requirement line by line before looking at how it's built.
+
+## Check two: read the error handling, not just the happy path
+
+AI-generated code almost always handles the success case correctly, because that's the most common pattern in whatever it was trained on. The failure modes are where it breaks down — empty catch blocks, swallowed errors, missing null checks, or error handling that logs a problem without actually preventing bad data from propagating further. A code review checklist for AI-generated code should specifically force a read-through of every catch block and every conditional guard, asking what happens when the input isn't what was expected.
+
+## Check three: verify every external API or library call actually exists as written
+
+Generated code can invent a plausible-looking function signature, an API parameter that doesn't exist, or a library method that was deprecated or renamed in a newer version. This is one of the more dangerous failure modes because it often still runs without erroring during a quick manual test, only to break under a slightly different input or a different library version. Checking function and method calls against the actual current documentation for that specific version, rather than assuming they're correct because they look right, catches this category of bug reliably.
+
+## Check four: look for security gaps that don't announce themselves
+
+Credentials or API keys embedded directly instead of pulled from environment variables, missing input sanitization on anything that reaches a database query, authorization checks that verify a user is logged in but not that they're allowed to access this specific resource — these are the security issues that slip through a fast review because the code still "works" in casual testing. Anything touching authentication, payments, or user-submitted data deserves a dedicated pass specifically looking for these gaps, separate from a general correctness review.
+
+## Check five: ask what happens at meaningfully higher volume
+
+A piece of code that works cleanly against a handful of test records can still contain an assumption that breaks down at real scale — an unindexed query that's fine at 100 rows and unusable at 100,000, a loop that makes one API call per item with no batching, a cache that was never actually invalidated correctly. The diagnostic question worth asking on anything non-trivial: what does this do at meaningfully higher volume than what was just tested? If the honest answer is "not sure," that's the signal to find out before merging, not after.
+
+## Check six: confirm test coverage actually tests the real edge cases
+
+Generated tests often check the same happy path the implementation was built against, which means a passing test suite can still miss the actual failure modes that matter — a duplicate submission, a malformed input, a race condition between two near-simultaneous requests. A code review checklist for AI-generated code should treat "tests pass" as a starting point, not a conclusion, and specifically check whether the tests exercise the edge cases the domain is actually known for, not just whatever the generation happened to produce by default.
+
+## Check seven: calibrate review depth to actual consequence
+
+Not every change deserves the same intensity of review, and pretending otherwise wastes time without making anything safer. A cosmetic copy change and a change to how permissions get checked are not the same category of risk, even if they arrived through the same fast workflow. Before starting a review, it's worth asking plainly what the actual blast radius is if this specific change is wrong — cosmetic, mildly annoying, or genuinely damaging to data or trust — and letting that answer set how carefully the rest of the checklist gets applied.
+
+## Check eight: require explicit human sign-off on the highest-stakes categories
+
+Authentication, payments, infrastructure changes, data migrations, and anything touching personally identifiable information should never pass through on a routine review pass regardless of how clean the code looks. These categories warrant a deliberate, separate sign-off step — someone consciously deciding "I reviewed this specific change knowing what's at stake here," rather than folding it into a batch of otherwise low-risk changes reviewed at the same pace.
+
+## What "properly reviewed" actually means before merging
+
+Code is ready to merge when the diff is fully understood line by line, its scope matches what was actually requested, its error paths have been read (not just its happy path), any external calls have been checked against real documentation, and anything high-stakes has had explicit, deliberate sign-off. None of this is about distrusting AI-assisted development — it's about recognizing that the bottleneck shifted from writing code to verifying it, and treating verification with the seriousness that shift actually demands.
+
+## Turning this into an actual routine, not a one-off effort
+
+A checklist only helps if it survives contact with a deadline, which is where most good intentions around reviewing AI-generated code quietly fail. The practical fix is making the highest-value checks — error path reading, external API verification, and security gaps — a fixed part of the workflow rather than something applied inconsistently depending on how rushed a given day feels. Teams that treat this as optional "when there's time" tend to apply it exactly when it matters least, on the easy changes, and skip it exactly when it matters most, under deadline pressure on the risky ones. Building it into the actual process, not just the intention, is what makes a code review checklist for AI-generated code hold up under real conditions.
+
+## The habit that matters more than any single checklist item
+
+If this checklist gets reduced to one habit, it's this: never let a clean-looking diff substitute for genuinely understanding what it does. Confident-sounding, well-formatted code is precisely the kind that slips past a tired or rushed reviewer, which is exactly backwards from how much scrutiny it should get. A code review checklist for AI-generated code only works if it's actually followed on the code that looks most obviously fine — because that's the code most likely to hide a problem nobody thought to look for.
