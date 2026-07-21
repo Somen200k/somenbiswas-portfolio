@@ -28,6 +28,7 @@ interface Draft {
   excerpt: string;
   tags: string[];
   content: string;
+  keyword: string;
 }
 
 function wordCount(text: string) {
@@ -51,6 +52,43 @@ interface SeoCheck {
   detail: string;
 }
 
+function keywordChecks(draft: Draft): SeoCheck[] {
+  const keyword = draft.keyword.trim().toLowerCase();
+  if (!keyword) return [];
+
+  const titleLower = draft.title.toLowerCase();
+  const excerptLower = draft.excerpt.toLowerCase();
+  const contentLower = draft.content.toLowerCase();
+  const first150 = draft.content.trim().split(/\s+/).slice(0, 150).join(" ").toLowerCase();
+
+  const occurrences = contentLower.split(keyword).length - 1;
+  const words = wordCount(draft.content);
+  const density = words > 0 ? (occurrences / words) * 100 : 0;
+
+  return [
+    {
+      label: "Keyword in title",
+      pass: titleLower.includes(keyword),
+      detail: keyword,
+    },
+    {
+      label: "Keyword in excerpt / meta description",
+      pass: excerptLower.includes(keyword),
+      detail: keyword,
+    },
+    {
+      label: "Keyword in opening paragraph",
+      pass: first150.includes(keyword),
+      detail: "first ~150 words",
+    },
+    {
+      label: "Keyword density",
+      pass: occurrences >= 3 && density <= 2,
+      detail: `${occurrences} mentions, ${density.toFixed(2)}% density (target 3+ mentions, under 2%)`,
+    },
+  ];
+}
+
 function runChecks(draft: Draft): SeoCheck[] {
   const words = wordCount(draft.content);
   const heads = h2Count(draft.content);
@@ -58,6 +96,7 @@ function runChecks(draft: Draft): SeoCheck[] {
   const slug = slugify(draft.title);
 
   return [
+    ...keywordChecks(draft),
     {
       label: "Title length",
       pass: draft.title.length >= 40 && draft.title.length <= 75,
@@ -105,6 +144,7 @@ export function ArticleGenerator() {
   const [topic, setTopic] = useState("");
   const [category, setCategory] = useState<string>(BLOG_CATEGORIES[0]);
   const [angle, setAngle] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [generating, setGenerating] = useState(false);
   const [genError, setGenError] = useState("");
 
@@ -123,7 +163,7 @@ export function ArticleGenerator() {
       const res = await fetch("/api/admin/generate-article", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic, category, angle }),
+        body: JSON.stringify({ topic, category, angle, keyword }),
       });
       const data = await res.json();
       if (!data.success) {
@@ -136,6 +176,7 @@ export function ArticleGenerator() {
         excerpt: data.article.excerpt,
         tags: data.article.tags || [],
         content: data.article.content,
+        keyword,
       });
       setStatus("idle");
     } catch (err) {
@@ -178,6 +219,7 @@ export function ArticleGenerator() {
         setDraft(null);
         setTopic("");
         setAngle("");
+        setKeyword("");
         setStatus("idle");
       }, 1200);
     } else {
@@ -218,7 +260,18 @@ export function ArticleGenerator() {
           </AdminField>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <AdminField
+            label="Target keyword"
+            hint="The exact phrase you want this post to rank for on Google"
+          >
+            <input
+              className={inputClass}
+              placeholder="e.g. how to price freelance work"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+          </AdminField>
           <AdminField label="Specific angle (optional)" hint="Any particular point of view or detail to emphasize">
             <input
               className={inputClass}
@@ -241,7 +294,7 @@ export function ArticleGenerator() {
           <button
             type="button"
             onClick={() =>
-              setDraft({ title: "", category, excerpt: "", tags: [], content: "" })
+              setDraft({ title: "", category, excerpt: "", tags: [], content: "", keyword })
             }
             className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-muted hover:text-foreground"
           >
@@ -263,6 +316,19 @@ export function ArticleGenerator() {
                 onChange={(e) => setDraft({ ...draft, title: e.target.value })}
               />
             </AdminField>
+
+            <div className="mt-4">
+              <AdminField
+                label="Target keyword"
+                hint="The exact phrase this post should rank for"
+              >
+                <input
+                  className={inputClass}
+                  value={draft.keyword}
+                  onChange={(e) => setDraft({ ...draft, keyword: e.target.value })}
+                />
+              </AdminField>
+            </div>
 
             <div className="mt-4">
               <AdminField label="Excerpt">

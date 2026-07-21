@@ -28,6 +28,12 @@ STRUCTURE:
 - Markdown body only (no frontmatter). Use "## " for 6-9 section headings.
 - Substantive, concrete, specific advice per section — no padding.
 
+SEO (when a target keyword is given):
+- Use the exact target keyword phrase naturally in the title.
+- Use it naturally in the excerpt.
+- Use it naturally within the first 150 words of the content.
+- Use it a total of 3-6 times across the full article, and in at least one "## " heading — naturally, never forced or stuffed. Prioritize natural readability over hitting the count.
+
 Return ONLY a JSON object with this exact shape:
 {
   "title": string (55-75 characters, no clickbait),
@@ -38,10 +44,11 @@ Return ONLY a JSON object with this exact shape:
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { topic, category, angle } = body as {
+  const { topic, category, angle, keyword } = body as {
     topic?: string;
     category?: string;
     angle?: string;
+    keyword?: string;
   };
 
   if (!topic || !category) {
@@ -64,6 +71,7 @@ export async function POST(req: NextRequest) {
     `Category: ${category}`,
     categoryBrief ? `Category focus: ${categoryBrief}` : "",
     `Topic: ${topic}`,
+    keyword ? `Target keyword to rank for: "${keyword}"` : "",
     angle ? `Specific angle to take: ${angle}` : "",
   ]
     .filter(Boolean)
