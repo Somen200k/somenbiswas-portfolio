@@ -1,0 +1,39 @@
+{
+  "nexguild": {
+    "name": "NexGuild",
+    "url": "https://www.nexguild.in",
+    "telegram": "https://t.me/nexguild_community",
+    "tagline": "Earn real money completing tasks & surveys",
+    "description": "Global task and offerwall platform — complete tasks and surveys, earn NexCoins, redeem for real gift vouchers.",
+    "categories": ["Online Earning"]
+  },
+  "careerGrowthRemotely": {
+    "name": "Career Growth Remotely",
+    "youtube": "https://www.youtube.com/@CareerGrowthRemotely",
+    "telegram": "https://t.me/CareerGrowthRemotely",
+    "tagline": "Remote work and online earning, explained",
+    "description": "YouTube channel and Telegram community covering remote work, freelancing, and online earning.",
+    "categories": ["Remote Work & Freelancing"]
+  },
+  "xtoolkit": {
+    "name": "xtoolkit",
+    "url": "https://www.xtoolkit.live",
+    "tagline": "44 free tools, zero paywall",
+    "description": "A free online tool platform covering developer utilities, SEO, and AI writing tools.",
+    "categories": ["Web Development With AI", "AI Building"]
+  },
+  "portrayalOfTime": {
+    "name": "Portrayal of Time",
+    "youtube": "https://www.youtube.com/@PortrayalOfTimeYT",
+    "tagline": "Documentary storytelling, AI-generated visuals",
+    "description": "A documentary-style YouTube channel built with AI-generated visuals and voiceover.",
+    "categories": []
+  },
+  "starscoopdaily": {
+    "name": "StarScoopDaily",
+    "url": "https://www.starscoopdaily.site",
+    "tagline": "Fully automated AI content, published daily",
+    "description": "A celebrity news site running a fully automated AI article-generation pipeline.",
+    "categories": []
+  }
+}

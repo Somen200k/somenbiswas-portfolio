@@ -165,7 +165,7 @@ export default async function BlogPostPage({
         <ShareButtons title={post.title} url={url} />
       </div>
 
-      <NexGuildCta />
+      <NexGuildCta category={post.category} />
 
       {related.length > 0 && (
         <div className="mt-20">

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getPrimaryPlatform, getSecondaryPlatforms, type Platform } from "@/lib/platforms";
 
 const CATEGORY_BRIEFS: Record<string, string> = {
   "AI Building":
@@ -34,6 +35,11 @@ SEO (when a target keyword is given):
 - Use it naturally within the first 150 words of the content.
 - Use it a total of 3-6 times across the full article, and in at least one "## " heading — naturally, never forced or stuffed. Prioritize natural readability over hitting the count.
 
+CROSS-LINKING SIBLING PROPERTIES (when a "Relevant sibling properties" list is given):
+- At most ONE sibling property may get a natural inline markdown link within the body, and only if it genuinely fits the sentence it appears in — never a forced, bolted-on plug.
+- Never link more than one sibling property in a single article. Never link in the title, excerpt, or an H2 heading.
+- If nothing in the article naturally connects to any listed property, don't mention any of them. Silence is better than a forced plug.
+
 Return ONLY a JSON object with this exact shape:
 {
   "title": string (55-75 characters, no clickbait),
@@ -67,12 +73,20 @@ export async function POST(req: NextRequest) {
   }
 
   const categoryBrief = CATEGORY_BRIEFS[category] || "";
+  const siblings = [getPrimaryPlatform(category), ...getSecondaryPlatforms(category)].filter(
+    (p): p is Platform => Boolean(p)
+  );
+  const siblingsList = siblings
+    .map((p) => `- ${p.name} (${p.url || p.youtube || p.telegram}) — ${p.description}`)
+    .join("\n");
+
   const userPrompt = [
     `Category: ${category}`,
     categoryBrief ? `Category focus: ${categoryBrief}` : "",
     `Topic: ${topic}`,
     keyword ? `Target keyword to rank for: "${keyword}"` : "",
     angle ? `Specific angle to take: ${angle}` : "",
+    siblingsList ? `Relevant sibling properties:\n${siblingsList}` : "",
   ]
     .filter(Boolean)
     .join("\n");
