@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Sparkles, CheckCircle2, XCircle, FilePlus2 } from "lucide-react";
+import { Sparkles, CheckCircle2, XCircle, FilePlus2, ImagePlus } from "lucide-react";
 import { buildMdxSource, publishFile } from "@/lib/admin-client";
 import { AdminField, inputClass } from "@/components/admin/AdminField";
 import { SaveBar, type SaveStatus } from "@/components/admin/SaveBar";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { BLOG_CATEGORIES } from "@/lib/blog-categories";
+import { getImageQueries, insertImagesIntoContent } from "@/lib/insert-images";
 
 const COVER_IMAGES: Record<string, string> = {
   "AI Building": "/images/blog/ai-building-cover.svg",
@@ -151,9 +152,35 @@ export function ArticleGenerator() {
   const [draft, setDraft] = useState<Draft | null>(null);
   const [status, setStatus] = useState<SaveStatus>("idle");
   const [publishError, setPublishError] = useState("");
+  const [addingImages, setAddingImages] = useState(false);
+  const [imageError, setImageError] = useState("");
 
   const checks = useMemo(() => (draft ? runChecks(draft) : []), [draft]);
   const passCount = checks.filter((c) => c.pass).length;
+
+  async function handleAddImages() {
+    if (!draft) return;
+    setAddingImages(true);
+    setImageError("");
+    try {
+      const queries = getImageQueries(draft.category, draft.keyword || draft.title);
+      const results = await Promise.all(
+        queries.map((q) =>
+          fetch(`/api/admin/pexels?query=${encodeURIComponent(q)}`).then((r) => r.json())
+        )
+      );
+      const photos = results.filter((r) => r.success).map((r) => ({ url: r.url, alt: r.alt }));
+      if (photos.length === 0) {
+        setImageError(results.find((r) => !r.success)?.error || "No images found.");
+        return;
+      }
+      setDraft({ ...draft, content: insertImagesIntoContent(draft.content, photos) });
+    } catch (err) {
+      setImageError(err instanceof Error ? err.message : "Failed to fetch images.");
+    } finally {
+      setAddingImages(false);
+    }
+  }
 
   async function handleGenerate() {
     if (!topic.trim()) return;
@@ -357,8 +384,22 @@ export function ArticleGenerator() {
             </div>
 
             <div className="mt-4">
+              <div className="mb-1.5 flex items-center justify-between">
+                <span className="block text-xs uppercase tracking-wide text-dim">
+                  Content (Markdown)
+                </span>
+                <button
+                  type="button"
+                  onClick={handleAddImages}
+                  disabled={addingImages || !draft.content.trim()}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted hover:text-foreground disabled:opacity-60"
+                >
+                  <ImagePlus className="h-3.5 w-3.5" />
+                  {addingImages ? "Finding images..." : "Add Relevant Images"}
+                </button>
+              </div>
               <AdminField
-                label="Content (Markdown)"
+                label=""
                 hint="Paste the body here if you wrote this with ChatGPT/Claude — use ## for section headings"
               >
                 <textarea
@@ -369,6 +410,7 @@ export function ArticleGenerator() {
                   onChange={(e) => setDraft({ ...draft, content: e.target.value })}
                 />
               </AdminField>
+              {imageError && <p className="mt-2 text-sm text-red-400">{imageError}</p>}
             </div>
           </GlassCard>
 
