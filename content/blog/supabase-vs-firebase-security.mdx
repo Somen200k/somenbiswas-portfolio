@@ -1,0 +1,69 @@
+---
+title: "Supabase vs Firebase Security: Which Actually Protects Your Data"
+date: "2026-07-22"
+category: "Web Development With AI"
+excerpt: "Supabase vs Firebase security compared honestly — row-level policies enforced in the database versus rules enforced per service, and what that difference actually means in practice."
+tags: ["Web Development", "Supabase", "Firebase", "Security"]
+coverImage: "/images/blog/web-dev-ai-cover.svg"
+published: true
+---
+
+Choosing between Supabase and Firebase often comes down to a single underlying question that gets less attention than it deserves: where does access control actually get enforced, and what does that mean when something goes wrong. Supabase vs Firebase security isn't really a "which has more features" comparison — it's a comparison of two fundamentally different philosophies for the same problem. (For a plain-language introduction to the RLS side of this comparison, see [Row-Level Security explained for non-developers](/blog/row-level-security-explained-simply).)
+
+## The core philosophical difference
+
+Firebase enforces access control per service, through Firestore Security Rules — a custom, JSON-like rules language defining who can read or write which documents under which conditions. Supabase enforces access control inside the database engine itself, through PostgreSQL's native Row-Level Security (RLS), using real SQL policies rather than a separate rules language. That distinction — enforcement inside the database versus enforcement in a separate configuration layer — is the single most consequential difference between the two for anything security-related.
+
+## Why enforcement location actually matters
+
+When access control lives inside the database itself, every single query that touches the database — regardless of which part of the application issued it, regardless of whether a developer remembered to add a permission check in that specific code path — automatically gets filtered by the same policies. When access control lives in a separate rules layer sitting in front of the database, its correctness depends entirely on every access path actually routing through that layer correctly. A bug that lets a query bypass the intended path bypasses the security check with it. Database-level enforcement doesn't have that failure mode, because there's no path to the data that doesn't pass through the database engine.
+
+## What Firebase's security rules actually look like
+
+Firestore rules are written in a domain-specific language built specifically for this purpose — readable once learned, but a genuinely separate skill from anything else in a typical application stack. Rules are deployed as a distinct configuration artifact alongside the actual application code, which means keeping them in sync with the application's evolving data model is a manual discipline rather than something structurally enforced by the same system that stores the data.
+
+## What Supabase's row-level security actually looks like
+
+RLS policies in Supabase are standard SQL — a policy like restricting row access to `auth.uid() = user_id` is written in the same language a backend developer already uses for everything else touching the database. This has a real practical advantage: there's no separate rules language to learn, and complex access patterns involving joins across multiple tables or conditional logic based on related records are expressed the same way any other SQL query would express them, rather than needing to be translated into a more limited rules-specific syntax.
+
+## Where each approach shows its strengths
+
+
+![a blue and white logo](https://images.unsplash.com/photo-1667372283496-893f0b1e7c16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8ZGF0YWJhc2UlMjBzZXJ2ZXIlMjBzZWN1cml0eXxlbnwwfDB8fHwxNzg0Njk4ODc1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
+
+Firebase's rules language handles simple, document-level access patterns cleanly and is arguably easier to reason about for straightforward "does this user own this document" checks, especially for teams without existing SQL experience. Supabase's RLS shows its strength specifically as access patterns get more complex — permissions that depend on relationships between tables, role-based access spanning multiple resource types, or conditions that would require awkward workarounds in a document-rules language but are natural to express as a SQL policy.
+
+## The bypass risk, concretely
+
+The most concrete way to understand the practical difference: with Firebase, a server-side admin SDK call or a misconfigured cloud function can bypass Firestore rules entirely if it isn't deliberately scoped to respect them, because the rules exist at the client-facing service layer. With Supabase, RLS applies at the database level regardless of which client or service issued the query — an admin operation still has to explicitly bypass RLS (using a service-role key deliberately), which makes accidental privilege escalation structurally harder rather than just procedurally discouraged.
+
+## Setup complexity, honestly compared
+
+Firebase's rules are arguably faster to get started with for simple document-ownership patterns, especially for developers without a SQL background — the JSON-like syntax maps intuitively to "this user can read this document." Supabase's RLS has a steeper initial learning curve if SQL isn't already familiar, but that cost is front-loaded rather than compounding — the same SQL skill applies to every other part of the application that touches the database, unlike a rules-specific language that only applies to security configuration.
+
+## What this means for AI-assisted development specifically
+
+This distinction matters more, not less, when a meaningful share of code gets written with AI assistance. A security policy expressed as a standard SQL statement is something any competent reviewer can read and verify directly, using skills that transfer to reviewing the rest of the codebase. A policy expressed in a rules-specific DSL requires reviewers to context-switch into evaluating a different, narrower syntax — a real cost when review capacity is already the actual bottleneck in a fast-moving build.
+
+## Making the actual decision
+
+
+![monitor showing Java programming](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDAzNDE4fDB8MXxzZWFyY2h8MXx8d2ViJTIwZGVzaWduJTIwY29kaW5nJTIwc2NyZWVufGVufDB8MHx8fDE3ODQ2OTg4NzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Ilya Pavlov](https://unsplash.com/@ilyapavlov?utm_source=somenbiswas.com&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=somenbiswas.com&utm_medium=referral)*
+
+Neither platform is objectively "more secure" in the abstract — both can be configured correctly or incorrectly, and a carelessly written Firestore rule and a carelessly written RLS policy are both real security gaps. The decision comes down to the shape of the access patterns actually needed: straightforward document-level ownership checks favor Firebase's simplicity for teams without SQL depth; anything involving relational permission logic, joins, or role hierarchies favors Supabase's database-native approach, both for expressiveness and for how directly reviewable the resulting policies are.
+
+## Migration and lock-in considerations
+
+Firestore's rules language and document-based data model are specific to Firebase — moving away later means rewriting both the data access patterns and every security rule from scratch in whatever the new platform's model happens to be. Supabase's RLS, by contrast, is standard PostgreSQL running on a database that can, in principle, be exported and hosted anywhere Postgres runs — the security policies themselves are portable SQL, not a proprietary rules format tied to one vendor's infrastructure. This isn't usually the deciding factor early in a project, but it's a real, compounding cost difference that shows up later if a migration ever becomes necessary.
+
+## How this plays out in a real audit
+
+When a security review or audit happens — whether internal or from an external party — the Supabase vs Firebase security difference shows up concretely in how that audit actually gets conducted. Auditing SQL-based RLS policies means reading standard SQL, something any competent database engineer can do without additional training. Auditing Firestore rules requires either existing familiarity with that specific rules syntax or ramp-up time to learn it, adding friction to what should be a straightforward verification process. For a solo builder or small team without a dedicated security specialist, that reviewability difference has real practical weight.
+
+## The bottom line
+
+Supabase vs Firebase security isn't a question of which vendor tries harder — it's a structural difference in where enforcement lives and what failure modes that location creates. Database-level enforcement removes an entire category of bypass risk by making the database itself the single, unavoidable checkpoint; service-level rules trade that structural guarantee for a gentler initial learning curve. Knowing which tradeoff actually matters for a specific project's access patterns is the real decision, not a generic "which is better" verdict — and that decision is worth making deliberately, before the data model is deeply committed to one platform's approach, rather than defaulting to whichever tool was picked first for unrelated reasons.
